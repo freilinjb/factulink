@@ -50,8 +50,8 @@ export const ChoosePhotoWidget = (props) => {
                 </span>
                 <input type="file" />
                 <div className="d-md-block text-start">
-                  <div className="fw-normal text-dark mb-1">Choose Image</div>
-                  <div className="text-gray small">JPG, GIF or PNG. Max size of 800K</div>
+                  <div className="fw-normal text-dark mb-1">Elija una imagen</div>
+                  <div className="text-gray small">JPG, PNG</div>
                 </div>
               </div>
             </div>

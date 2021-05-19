@@ -149,6 +149,13 @@ export default (props = {}) => {
                 <NavItem title="Toasts" link={Routes.Toasts.path} />
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
               </CollapsableNavItem>
+
+              {/* PRUEBA */}
+              <CollapsableNavItem eventKey="add/" title="Paginas de pruebas" icon={faBoxOpen}>
+                <NavItem title="Product" link={Routes.Product.path} />
+                <NavItem title="SignIn" link={Routes.Signin.path} />
+              </CollapsableNavItem>
+              {/* FIN PRUEBA */}
               <NavItem external title="Themesberg" link="https://themesberg.com" target="_blank" image={ThemesbergLogo} />
 
             </Nav>
