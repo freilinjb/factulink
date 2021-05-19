@@ -1,10 +1,13 @@
 
-import React,{useContext, useState} from "react";
+import React,{useContext, useState, useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { Col, Row, Form, Card, Button, FormCheck, Container, InputGroup } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
+
+import { useToasts } from 'react-toast-notifications';
+
 
 import { Routes } from "../../routes";
 import BgImage from "../../assets/img/illustrations/signin.svg";
@@ -16,14 +19,25 @@ import validarSignIn from "../../validation/validarSignIn";
 
 export default () => {
   const authContext = useContext(AuthContext);
-  const { iniciarSesion } = authContext;
+  const { iniciarSesion, mensaje, cargando, autenticado } = authContext;
 
   const STATE_INICIAL = {
-    usuario: "",
-    clave: "",
+    usuario: "freilinjb",
+    clave: "1423",
     recordarme: false
   };
- 
+
+     const { addToast } = useToasts();
+      useEffect(() => {
+        console.log(`addToast: ${mensaje}`);
+        if(mensaje) {
+          addToast(mensaje, {
+            appearance: 'error',
+            autoDismiss: true,
+          });
+        }
+        
+      }, [mensaje]);
   
   const onSubmit = async () => {
     console.log("valores: ", valores);
@@ -49,7 +63,7 @@ export default () => {
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
-                  <h3 className="mb-0">Inicia sesión</h3>
+                  <h3 className="mb-0">Inicia sesión 1</h3>
                 </div>
                 <Form className="mt-4" onSubmit={handleSubmit}>
                   <Form.Group id="email" className="mb-4">

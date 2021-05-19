@@ -22,6 +22,7 @@ const reducer = (state, action) => {
         return {
           ...state,
           cargando: true,
+          mensaje: null,
         };
   
     case FINALIZANDO_CONSULTA:

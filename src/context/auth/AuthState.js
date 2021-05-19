@@ -67,7 +67,7 @@ const AuthState = (props) => {
           payload: respuesta.data,
         });
 
-        history.replace("/");
+        // history.replace("/");
       })
       .catch((error) => {
           if(!error.response) {
@@ -139,7 +139,7 @@ const AuthState = (props) => {
         usuario: state.usuario,
         nombre: state.nombre,
         cargando: state.cargando,
-        mensaje: state.cargando,
+        mensaje: state.mensaje,
         tipoUsuario: state.tipoUsuario,
         saludar,
         iniciarSesion,

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Routes } from "../routes";
 
+import { ToastProvider  } from "react-toast-notifications";
+
 // pages
 import Presentation from "./Presentation";
 import Upgrade from "./Upgrade";
@@ -106,6 +108,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 };
 
 export default () => (
+  <ToastProvider>
   <AuthState>
   <Switch>
     <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} />
@@ -159,4 +162,5 @@ export default () => (
     <Redirect to={Routes.NotFound.path} />
   </Switch>
   </AuthState>
+  </ToastProvider>
 );
