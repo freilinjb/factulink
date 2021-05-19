@@ -26,7 +26,7 @@ const Product = () => {
       ]
   return (
     <>
-      <div className="d-xl-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-4">
+      <div className="d-xl-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
         <div className="d-block mb-4 mb-xl-0">
           <Breadcrumb
             className="d-none d-md-inline-block"
@@ -136,7 +136,7 @@ const Product = () => {
 
                   <Form.Group id="proveedor" className="col-3 pt-3">
                     <Form.Label>Proveedor</Form.Label>
-                    <Select options={options} required theme={theme => ({...theme,borderRadius: 8,colors: {...theme.colors,primary: '#333152',}})} name="proveedor" placeholder="Seleccione los proveedores"/>
+                    <Select options={options} required theme={theme => ({...theme,borderRadius: 8,colors: {...theme.colors,primary: '#333152',}})} name="proveedor" placeholder="Seleccione una opción"/>
                   </Form.Group>
 
                   <Form.Group className="col-3 pt-4 pl-2">

@@ -52,7 +52,9 @@ import Tooltips from "./components/Tooltips";
 import Toasts from "./components/Toasts";
 import AuthState from "../context/auth/AuthState";
 
-import Product from "./add/Product";
+import addProduct  from "./add/Product";
+import Product from "./adminProduct/add/Product";
+
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -152,6 +154,7 @@ export default () => (
     
     {/* PAGINAS DE PRUEBAS */}
     <RouteWithSidebar exact path={Routes.Product.path} component={Product} />
+    <RouteWithSidebar exact path={Routes.addProduct.path} component={addProduct} />
 
     <Redirect to={Routes.NotFound.path} />
   </Switch>

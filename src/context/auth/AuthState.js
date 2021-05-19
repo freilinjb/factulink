@@ -70,11 +70,20 @@ const AuthState = (props) => {
         history.replace("/");
       })
       .catch((error) => {
-          console.log('error: ', error);
-        dispatch({
-          type: LOGIN_ERROR,
-          payload: "Usuario o contraseña invalido",
-        });
+          if(!error.response) {
+            console.log("Please check your internet connection.");
+            dispatch({
+              type: LOGIN_ERROR,
+              payload: "Por favor revise su conexion a internet.",
+            });
+          } else {
+            console.log('error: ', error);
+            dispatch({
+              type: LOGIN_ERROR,
+              payload: "Usuario o contraseña invalido",
+            });
+          }
+        
       });
   };
 

@@ -48,5 +48,7 @@ export const Routes = {
     Toasts: { path: "/components/toasts" },
     WidgetsComponent: { path: "/components/widgets" },
     ///REGISTROS DE PRUEBAS
-    Product: { path: "/add/Product" }
+   // Product: { path: "/add/Product" }
+    Product: { path: "/admin/Product" },
+    addProduct: { path: "/admin/add/Product" }
 };

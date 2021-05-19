@@ -16,7 +16,7 @@ import validarSignIn from "../validation/validarSignIn";
 
 export default () => {
   const authContext = useContext(AuthContext);
-  const { iniciarSesion } = authContext;
+  const { iniciarSesion, mensaje, autenticado } = authContext;
 
   const STATE_INICIAL = {
     usuario: "",
