@@ -1,16 +1,11 @@
-import clienteAxios from './axios';
+import clientAxios from './axios';
 
 const tokenAuth = token => {
-    //Colocar el token y enviarlo via heder y se utiliza para validar
+    console.log('tokenAuth: ', token);
     if(token) {
-        //agrergado como default
-        clienteAxios.defaults.headers.common['x-auth-token'] = token;
+        clientAxios.defaults.headers.common['authorization'] = token;
     } else {
-        //posiblemente cuando el usuario cierre sesion, no ba haver token
-        //o token ya expiro
-        //En caso de que no haya nada se elimina de nuestro header
-        delete clienteAxios.defaults.headers.common['x-auth-token'];
+        delete clientAxios.defaults.headers.common['authorization'];
     }
 }
-
-export default tokenAuth; 
+export default tokenAuth;

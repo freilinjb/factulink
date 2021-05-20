@@ -36,7 +36,7 @@ const AuthState = (props) => {
   const history = useHistory();
   const login = ({ token }) => {
     // console.log("hola: ", token);
-    cookie.set("token", token, { expires: 8 });
+    cookie.set("token", token, { expires: 48 });
   };
 
   const logut = () => {
@@ -49,6 +49,7 @@ const AuthState = (props) => {
   const saludar = (nombre) => console.log(`Hola ${nombre} como estas ?`);
 
   const iniciarSesion = async (correo, clave) => {
+    console.log('iniciarSesion');
     dispatch({
       type: INICIANDO_CONSULTA,
     });
@@ -61,7 +62,9 @@ const AuthState = (props) => {
         const token = respuesta.data.token;
         
         login({ token });
-
+        tokenAuth(`Bearer ${token}`);
+        console.log('token', token);
+        cookie.set("token", token, { expires: 48 });
         dispatch({
           type: LOGIN_EXITOSO,
           payload: respuesta.data,
@@ -85,6 +88,8 @@ const AuthState = (props) => {
           }
         
       });
+
+      console.log("final");
   };
 
   const usuarioAutenticado = async () => {

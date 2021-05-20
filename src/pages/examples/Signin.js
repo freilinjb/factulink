@@ -40,9 +40,8 @@ export default () => {
       }, [mensaje]);
   
   const onSubmit = async () => {
-    console.log("valores: ", valores);
+    console.log("valores222: ", valores);
     iniciarSesion(valores.usuario, valores.clave);
-    console.log('prueba: ');
   }
 
 

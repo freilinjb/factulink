@@ -1,3 +1,4 @@
+// import nextCookies from "next-cookies";
 import cookie from "js-cookie";
 
 
@@ -17,7 +18,7 @@ const reducer = (state, action) => {
   switch (action.type) {
 
     case INICIANDO_CONSULTA:
-        console.log('INICIANDO_CONSULTA');
+        // console.log('INICIANDO_CONSULTA');
 
         return {
           ...state,
@@ -26,7 +27,7 @@ const reducer = (state, action) => {
         };
   
     case FINALIZANDO_CONSULTA:
-        console.log('FINALIZANDO_CONSULTA');
+        // console.log('FINALIZANDO_CONSULTA');
 
         return {
             ...state,
@@ -35,28 +36,31 @@ const reducer = (state, action) => {
 
     case LOGIN_EXITOSO:
     case REGISTRO_EXITOSO: //Se guarda token en el LocalStorage
-        console.log('REGISTRO_EXITOSO');
+        // console.log('REGISTRO_EXITOSO');
+        // console.log('usuario: ', action.payload.data);
+        
         return {
             ...state,
             autenticado: true,
-            token: action.payload.token,
             idUsuario: action.payload.data.idUsuario,
+            token: action.payload.token,
             usuario: action.payload.data.usuario,
+            nombre: action.payload.data.nombre,
             mensaje: action.payload.message ? action.payload.message : null, //Mostrar mensaje de adventencia manejado con el state
             cargando: false,
         };
 
     case OBTENER_USUARIO:
-        console.log('OBTENER_USUARIO: ', action.payload.data);
+        // console.log('OBTENER_USUARIO: ', action.payload.data);
 
         return {
         ...state,
         autenticado: true,
         token: cookie.get("token") ? cookie.get("token") : null,
-        idUsuario: action.payload.data.idUsuario,
         usuario: action.payload.data.usuario,
         nombre: action.payload.data.nombre,
-        tipoUsuario: action.payload.data.tipoUsuario,
+        tipoUsuario: action.payload.data.tipo,
+        idUsuario: action.payload.data.idUsuario,
         cargando: false,
     }
 
@@ -67,8 +71,8 @@ const reducer = (state, action) => {
         localStorage.removeItem('token');
         
 
-        console.log('CERRAR_SESION');
-        console.log("prueba: ", action);
+        // console.log('CERRAR_SESION');
+        // console.log("prueba: ", action);
         return {
         ...state,
         token: null,

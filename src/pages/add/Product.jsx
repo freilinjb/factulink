@@ -101,17 +101,17 @@ const Product = () => {
                     <Select options={options} required theme={theme => ({...theme,borderRadius: 8,colors: {...theme.colors,primary: '#333152',}})} name="unidad" placeholder="Seleccione una Marca"/>
                   </Form.Group>
                 <hr className="mt-3 p-0"/>
-                  <Form.Group id="nombre" className="col-3">
+                  <Form.Group id="stockInicial" className="col-3">
                     <Form.Label>Stock Inicial</Form.Label>
                     <Form.Control required type="text" name="stockInicial" autoComplete="off" placeholder="Nombre del producto"></Form.Control>
                   </Form.Group>
 
-                  <Form.Group id="nombre" className="col-3">
+                  <Form.Group id="stockMinimo" className="col-3">
                     <Form.Label>Stock Minimo</Form.Label>
                     <Form.Control required type="text" name="stockMinimo" autoComplete="off" placeholder="Nombre del producto"></Form.Control>
                   </Form.Group>
 
-                    <Form.Group id="nombre" className="col-3">
+                    <Form.Group id="precioVenta" className="col-3">
                     <Form.Label>Precio de Venta</Form.Label>
                     <InputGroup>
                             <span className="input-group-text">$</span>
@@ -120,7 +120,7 @@ const Product = () => {
                             </InputGroup>
                     </Form.Group>
 
-                    <Form.Group id="nombre" className="col-3">
+                    <Form.Group id="precioCompra" className="col-3">
                     <Form.Label>Precio de Compra</Form.Label>
                     <InputGroup>
                             <span className="input-group-text">$</span>
@@ -151,7 +151,7 @@ const Product = () => {
 
                     <Form.Group className="mb-3" className="col-12 pt-4 pl-2">
                         <Form.Label>Observación</Form.Label>
-                        <Form.Control as="textarea" rows="1" />
+                        <Form.Control as="textarea" rows="1" name="observacion"/>
                     </Form.Group>
                     <div className="mt-3 col-auto">
                         <Button variant="primary" type="submit">Guardar</Button>
