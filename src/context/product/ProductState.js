@@ -273,18 +273,36 @@ const ProductState = (props) => {
   };
 
   const updateProduct = async (data) => {
-     console.log("data: ", data);
+     console.log("updateProduct: ", data);
 
-    const {
+     const {
+      codigo,
+      nombre,
+      categoria,
+      subCategoria,
+      marca,
+      unidad,
+      descripcion,
+      stockInicial,
+      stockMinimo,
+      reorden,
+      observacion,
+      incluyeItbis,
+      precioVenta,
+      precioCompra,
       imagen,
+      proveedor,
+      creado_por,
+      estado,
     } = data;
 
+
     const formulario = new FormData();
-    formulario.append("idProducto", data.idProducto);
+    // formulario.append("idProducto", data.idProducto);
     formulario.append("codigo", data.codigo);
     formulario.append("nombre", data.nombre);
     formulario.append("idCategoria", Number(data.categoria.value));
-    formulario.append("idSubCategoria", Number(data.subcategoria.value));
+    formulario.append("idSubCategoria", Number(data.subCategoria.value));
     formulario.append("idMarca", Number(data.marca.value));
     formulario.append("idUnidad", Number(data.unidad.value));
     formulario.append("descripcion", data.descripcion);
@@ -295,19 +313,19 @@ const ProductState = (props) => {
     formulario.append("incluyeItbis", (data.incluyeItbis) ? 1 : 0);
     formulario.append("precioVenta", Number(data.precioVenta));
     formulario.append("precioCompra", Number(data.precioCompra));
-    formulario.append("idProveedor", 4);
-    formulario.append("productImag", imagen);
+    formulario.append("idProveedor", [4,2]);
+    // formulario.append("productImag", imagen);
     formulario.append("creado_por", Number(data.creado_por));
     formulario.append("estado", Number(data.estado.value));
 
     await clienteAxios
-      .put("api/product/", formulario,{
+      .post("api/product/", formulario,{
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then(async (respuesta) => {
-        console.log("respuesta: ", respuesta);
+        console.log("respuestaUpdate: ", respuesta);
 
         // Swal.fire(
         //   'Good job!',

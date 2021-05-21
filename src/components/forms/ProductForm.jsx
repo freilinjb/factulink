@@ -15,7 +15,7 @@ import validarProducto from "../../validation/validarProducto";
 
 const ProductForm = (props) => {
   const productContext = useContext(ProductContext);
-  const { saludar , getCategory, getBrand, getSubCategory, getUnidPresentation, marcas, categorias, subCategorias, unidadPresentacion, estado} = productContext;
+  const { updateProduct , getCategory, getBrand, getSubCategory, getUnidPresentation, marcas, categorias, subCategorias, unidadPresentacion, estado} = productContext;
 
   const [campos, setCampos] = useState({
     codigo: "",
@@ -41,19 +41,25 @@ const ProductForm = (props) => {
   const [imgData, setImgData] = useState(null);
   const [picture, setPicture] = useState(null);
 
+  const [errores, setErrores] = useState({});
+
+
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
   ];
 
-  useEffect( async () => {
-    // saludar(" product ");
-    await getCategory();
+  const consultar = async () => {
+        await getCategory();
     await getBrand();
     await getSubCategory();
     await getUnidPresentation();
-  },[]);
+  }
+
+  useEffect ( () => {
+    consultar();
+  },[])
 
   const handleChange = (e) => {
     const target = e.target;
@@ -79,8 +85,6 @@ const ProductForm = (props) => {
   };  
 
   const onChangePicture = e => {
-    // console.log('e> ', e);
-      // console.log("picture: ", e.target.files[0]);
       const file = e.target.files[0];
       setPicture(file);
       const reader = new FileReader();
@@ -94,22 +98,24 @@ const ProductForm = (props) => {
       reader.readAsDataURL(file);
   };
 
+  const handleSubmit =(e) => {
+    e.preventDefault();
+    const resultados = validarProducto(campos);
+    console.log('resultados: ',resultados);
+
+    if(Object.entries(resultados).length === 0) {
+      updateProduct(campos);
+      console.log('se ha registrado con exito');
+      return;
+    }
+
+    setErrores(resultados);
+
+  }
+
   return (
     <>
-      <div className="d-xl-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
-        <div className="d-block mb-4 mb-xl-0">
-          <Breadcrumb
-            className="d-none d-md-inline-block"
-            listProps={{ className: "breadcrumb-dark breadcrumb-transparent" }}
-          >
-            <Breadcrumb.Item>
-              <FontAwesomeIcon icon={faHome} />
-            </Breadcrumb.Item>
-            <Breadcrumb.Item>Admin Product</Breadcrumb.Item>
-            <Breadcrumb.Item active>Add Product</Breadcrumb.Item>
-          </Breadcrumb>
-        </div>
-      </div>
+      
       <Row className="justify-content-center">
         <Col xs={12} xl={8}>
           <Card border="ligh" className="bg-white shadow-sm mb-4 px-3 pb-3">
@@ -117,7 +123,7 @@ const ProductForm = (props) => {
               <h5>Editar de Producto</h5>
             </Card.Header>
             <Card.Body>
-              <Form>
+              <Form onSubmit={handleSubmit}>
                 <Row>
                   <Col sm={12} xs={12} lg={6} md={12}>
                     <Row>
@@ -142,7 +148,7 @@ const ProductForm = (props) => {
                       >
                         <Form.Label>Nombre</Form.Label>
                         <Form.Control
-                          required
+                          
                           type="text"
                           name="nombre"
                           autoComplete="off"
@@ -152,7 +158,7 @@ const ProductForm = (props) => {
                         ></Form.Control>
                       </Form.Group>
 
-                      <Form.Group id="descripcion" className="col-12">
+                      <Form.Group id="descripcion" className="col-12 pt-3">
                         <Form.Label>Descripción</Form.Label>
                         <Form.Control
                           type="text"
@@ -168,7 +174,7 @@ const ProductForm = (props) => {
                   <Col sm={12} xs={12} lg={6} md={12}>
                     <Col md={12}>
                       <ChoosePhotoWidget
-                        title="Agregar una foto al producto"
+                        title="Agregar una foto"
                         photo={imgData ? imgData : Profile3}
                         onChangePicture={onChangePicture}
                       />
@@ -197,7 +203,7 @@ const ProductForm = (props) => {
                     <Form.Label>Sub Categoria</Form.Label>
                     <Select
                       options={subCategorias}
-                      required
+                      
                       theme={(theme) => ({
                         ...theme,
                         borderRadius: 8,
@@ -214,7 +220,7 @@ const ProductForm = (props) => {
                     <Form.Label>Marca</Form.Label>
                     <Select
                       options={marcas}
-                      required
+                      
                       theme={(theme) => ({
                         ...theme,
                         borderRadius: 8,
@@ -231,7 +237,7 @@ const ProductForm = (props) => {
                     <Form.Label>Marca</Form.Label>
                     <Select
                       options={unidadPresentacion}
-                      required
+                      
                       theme={(theme) => ({
                         ...theme,
                         borderRadius: 8,
@@ -244,10 +250,10 @@ const ProductForm = (props) => {
                     />
                   </Form.Group>
                   <hr className="mt-3 p-0" />
-                  <Form.Group id="nombre" className="col-3">
+                  <Form.Group id="stockInicial" className="col-3">
                     <Form.Label>Stock Inicial</Form.Label>
                     <Form.Control
-                      required
+                      
                       type="number"
                       name="stockInicial"
                       autoComplete="off"
@@ -260,7 +266,7 @@ const ProductForm = (props) => {
                   <Form.Group id="nombre" className="col-3">
                     <Form.Label>Stock Minimo</Form.Label>
                     <Form.Control
-                      required
+                      
                       type="number"
                       name="stockMinimo"
                       onChange={handleChange}
@@ -277,7 +283,7 @@ const ProductForm = (props) => {
                         type="text"
                         className="form-control"
                         name="precioVenta"
-                        required
+                        
                         value={campos.precioVenta}
                         onChange={handleChange}
                         autoComplete="off"
@@ -295,7 +301,7 @@ const ProductForm = (props) => {
                         type="number"
                         className="form-control"
                         name="precioCompra"
-                        required
+                        
                         value={campos.precioCompra}
                         onChange={handleChange}
                         autoComplete="off"
@@ -308,11 +314,11 @@ const ProductForm = (props) => {
                   <Form.Group id="reorden" className="col-3 pt-3">
                     <Form.Label>Punto de reorden</Form.Label>
                     <Form.Control
-                      required
+                      
                       type="number"
                       name="reorden"
                       autoComplete="off"
-                      required
+                      
                       value={campos.reorden}
                       onChange={handleChange}
                       placeholder="Nombre del producto"
@@ -323,7 +329,7 @@ const ProductForm = (props) => {
                     <Form.Label>Proveedor</Form.Label>
                     <Select
                       options={options}
-                      required
+                      
                       theme={(theme) => ({
                         ...theme,
                         borderRadius: 8,

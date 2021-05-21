@@ -9,12 +9,16 @@ const validarProducto = (valores) => {
     errores.categoria = "Debe seleccionar una Categoria";
   }
 
-  if (!valores.subcategoria) {
-    errores.subcategoria = "Debe seleccionar una SubCategoria";
+  if (!valores.subCategoria) {
+    errores.subCategoria = "Debe seleccionar una SubCategoria";
+  }
+
+  if (!valores.marca) {
+    errores.unidad = "Debe seleccionar una unidad de presentación";
   }
 
   if (!valores.unidad) {
-    errores.unidad = "Debe seleccionar una unidad de presentación";
+    errores.unidad = "Debe seleccionar la marca de presentación";
   }
 
   if (!valores.stockInicial) {
@@ -38,7 +42,7 @@ const validarProducto = (valores) => {
   }
 
   if (!valores.proveedor) {
-    errores.precioCompra = "Debe seleccionar el o los proveedores";
+    errores.proveedor = "Debe seleccionar el proveedor";
   }
 
   if (!valores.estado) {
