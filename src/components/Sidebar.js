@@ -103,7 +103,7 @@ export default (props = {}) => {
               
               {/* PRUEBA */}
               <CollapsableNavItem eventKey="admin/" title="Admin Product" icon={faBoxOpen}>
-                <NavItem title="Admin" link={Routes.Product.path} />
+                <NavItem title="Admin" link={Routes.AdminProduct.path} />
                 <NavItem title="Product Register" link={Routes.Product.path} />
                 <NavItem title="SignIn" link={Routes.Signin.path} />
               </CollapsableNavItem>

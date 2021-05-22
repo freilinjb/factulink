@@ -59,6 +59,7 @@ import SupplierState from "../context/supplier/SupplierState";
 
 import addProduct  from "./add/Product";
 import Product from "./adminProduct/add/Product";
+import AdminProduct from "./adminProduct/AdminProduct";
 
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
@@ -161,6 +162,7 @@ export default () => (
     <RouteWithSidebar exact path={Routes.DocsChangelog.path} component={DocsChangelog} />
     
     {/* PAGINAS DE PRUEBAS */}
+    <RouteWithSidebar exact path={Routes.AdminProduct.path} component={AdminProduct} />
     <RouteWithSidebar exact path={Routes.Product.path} component={Product} />
     <RouteWithSidebar exact path={Routes.addProduct.path} component={addProduct} />
 

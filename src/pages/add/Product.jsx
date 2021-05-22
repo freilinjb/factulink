@@ -159,8 +159,6 @@ const Product = () => {
                     <div className="mt-3 col-auto">
                         <Button variant="secondary" type="submit">Cancelar</Button>
                     </div>
-                    
-
               </Row>
             </Form>
           </Card.Body>
