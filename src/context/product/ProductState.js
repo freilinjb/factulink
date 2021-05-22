@@ -53,7 +53,7 @@ const ProductState = (props) => {
     await clienteAxios
       .get("api/product")
       .then(async (respuesta) => {
-        // console.log("respuesta: ", respuesta);
+        console.log("respuesta: ", respuesta);
 
         respuesta2 = respuesta.data;
         dispatch({
