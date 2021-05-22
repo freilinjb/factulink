@@ -100,6 +100,14 @@ export default (props = {}) => {
               <NavItem title="Volt React" link={Routes.Presentation.path} image={ReactHero} />
 
               <NavItem title="Overview" link={Routes.DashboardOverview.path} icon={faChartPie} />
+              
+              {/* PRUEBA */}
+              <CollapsableNavItem eventKey="admin/" title="Admin Product" icon={faBoxOpen}>
+                <NavItem title="Admin" link={Routes.Product.path} />
+                <NavItem title="Product Register" link={Routes.Product.path} />
+                <NavItem title="SignIn" link={Routes.Signin.path} />
+              </CollapsableNavItem>
+              
               <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
               <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
 
@@ -148,13 +156,6 @@ export default (props = {}) => {
                 <NavItem title="Tabs" link={Routes.Tabs.path} />
                 <NavItem title="Toasts" link={Routes.Toasts.path} />
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
-              </CollapsableNavItem>
-
-              {/* PRUEBA */}
-              <CollapsableNavItem eventKey="admin/" title="Admin Product" icon={faBoxOpen}>
-                <NavItem title="Admin" link={Routes.Product.path} />
-                <NavItem title="Product Register" link={Routes.addProduct.path} />
-                <NavItem title="SignIn" link={Routes.Signin.path} />
               </CollapsableNavItem>
               {/* FIN PRUEBA */}
               <NavItem external title="Themesberg" link="https://themesberg.com" target="_blank" image={ThemesbergLogo} />

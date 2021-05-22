@@ -49,6 +49,6 @@ export const Routes = {
     WidgetsComponent: { path: "/components/widgets" },
     ///REGISTROS DE PRUEBAS
    // Product: { path: "/add/Product" }
-    Product: { path: "/admin/Product" },
-    addProduct: { path: "/admin/add/Product" }
+    Product: { path: "/admin/add/Product" },
+    addProduct: { path: "/admin/add/Product2" }
 };

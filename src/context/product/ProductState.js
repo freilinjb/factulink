@@ -257,6 +257,14 @@ const ProductState = (props) => {
     dispatch({
       type: INICIANDO_CONSULTA
     });
+
+    // console.log('data: ', data);
+    // return;
+    let proveedores = [];
+    data.proveedor.forEach((key) => {
+      proveedores.push(key.value);
+      console.log("proveedorEnviado: ", key);
+    });
     
     const formulario = new FormData();
     // formulario.append("idProducto", data.idProducto);
@@ -274,7 +282,7 @@ const ProductState = (props) => {
     formulario.append("incluyeItbis", (data.incluyeItbis) ? 1 : 0);
     formulario.append("precioVenta", Number(data.precioVenta));
     formulario.append("precioCompra", Number(data.precioCompra));
-    formulario.append("idProveedor", [4,2]);
+    formulario.append("idProveedor", proveedores);
     formulario.append("productImag", data.imagen);
     formulario.append("creado_por", Number(data.creado_por));
     formulario.append("estado", Number(data.estado.value));

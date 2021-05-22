@@ -245,7 +245,7 @@ const ProductForm = (props) => {
                   </Form.Group>
 
                   <Form.Group id="unidad" className="col-6 pt-3">
-                    <Form.Label>Marca</Form.Label>
+                    <Form.Label>Unidad de presentación</Form.Label>
                     <Select
                       options={unidadPresentacion}
                       
@@ -347,6 +347,7 @@ const ProductForm = (props) => {
                         colors: { ...theme.colors, primary: "#333152" },
                       })}
                       name="proveedor"
+                      isMulti
                       value={campos.proveedor}
                       onChange={handleChangeSelect}
                       placeholder="Seleccione una opción"
