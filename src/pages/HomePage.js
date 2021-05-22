@@ -55,6 +55,7 @@ import Toasts from "./components/Toasts";
 
 import AuthState from "../context/auth/AuthState";
 import ProductState from "../context/product/ProductState";
+import SupplierState from "../context/supplier/SupplierState";
 
 import addProduct  from "./add/Product";
 import Product from "./adminProduct/add/Product";
@@ -112,6 +113,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 export default () => (
   <ToastProvider>
   <AuthState>
+  <SupplierState>
   <ProductState>
   <Switch>
     <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} />
@@ -165,6 +167,7 @@ export default () => (
     <Redirect to={Routes.NotFound.path} />
   </Switch>
   </ProductState>
+  </SupplierState>
   </AuthState>
   </ToastProvider>
 );

@@ -9,7 +9,7 @@ import AuthReducer from "./AuthReducer";
 import clienteAxios from "../../config/axios";
 import tokenAuth from "../../config/token";
 
-import { useHistory, useLocation, Redirect } from "react-router";
+import { useHistory } from "react-router";
 
 
 import {

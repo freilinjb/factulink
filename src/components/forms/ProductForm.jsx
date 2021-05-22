@@ -2,8 +2,6 @@ import React,{useContext, useEffect, useState} from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Col,Row,Card,Form,Button,InputGroup} from "@themesberg/react-bootstrap";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
-import { Breadcrumb } from "@themesberg/react-bootstrap";
 import Select from "react-select";
 import { useToasts } from 'react-toast-notifications';
 
@@ -11,13 +9,16 @@ import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { ChoosePhotoWidget } from "../../components/Widgets";
 
 import ProductContext from "../../context/product/ProductContext";
+import SupplierContext from "../../context/supplier/SupplierContext";
 
 import validarProducto from "../../validation/validarProducto";
 
 const ProductForm = (props) => {
   const { addToast } = useToasts();
   const productContext = useContext(ProductContext);
+  const supplierContext = useContext(SupplierContext);
   const { updateProduct , getCategory, getBrand, getSubCategory, getUnidPresentation, marcas, categorias, subCategorias, unidadPresentacion, estado, mensaje} = productContext;
+  const { getSupplier, proveedoresSelect } = supplierContext;
 
   const [campos, setCampos] = useState({
     codigo: "",
@@ -57,6 +58,7 @@ const ProductForm = (props) => {
     await getBrand();
     await getSubCategory();
     await getUnidPresentation();
+    await getSupplier();
   }
 
   useEffect ( () => {
@@ -125,7 +127,6 @@ const ProductForm = (props) => {
 
   return (
     <>
-      
       <Row className="justify-content-center">
         <Col xs={12} xl={8}>
           <Card border="ligh" className="bg-white shadow-sm mb-4 px-3 pb-3">
@@ -338,7 +339,7 @@ const ProductForm = (props) => {
                   <Form.Group id="proveedor" className="col-3 pt-3">
                     <Form.Label>Proveedor</Form.Label>
                     <Select
-                      options={options}
+                      options={proveedoresSelect}
                       
                       theme={(theme) => ({
                         ...theme,
