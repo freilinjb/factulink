@@ -5,6 +5,7 @@ import {Col,Row,Card,Form,Button,InputGroup} from "@themesberg/react-bootstrap";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
 import Select from "react-select";
+import { useToasts } from 'react-toast-notifications';
 
 import Profile3 from "../../assets/img/team/profile-picture-3.jpg";
 import { ChoosePhotoWidget } from "../../components/Widgets";
@@ -14,8 +15,9 @@ import ProductContext from "../../context/product/ProductContext";
 import validarProducto from "../../validation/validarProducto";
 
 const ProductForm = (props) => {
+  const { addToast } = useToasts();
   const productContext = useContext(ProductContext);
-  const { updateProduct , getCategory, getBrand, getSubCategory, getUnidPresentation, marcas, categorias, subCategorias, unidadPresentacion, estado} = productContext;
+  const { updateProduct , getCategory, getBrand, getSubCategory, getUnidPresentation, marcas, categorias, subCategorias, unidadPresentacion, estado, mensaje} = productContext;
 
   const [campos, setCampos] = useState({
     codigo: "",
@@ -51,7 +53,7 @@ const ProductForm = (props) => {
   ];
 
   const consultar = async () => {
-        await getCategory();
+    await getCategory();
     await getBrand();
     await getSubCategory();
     await getUnidPresentation();
@@ -60,6 +62,14 @@ const ProductForm = (props) => {
   useEffect ( () => {
     consultar();
   },[])
+
+  useEffect (() => {
+    addToast(mensaje, {
+      appearance: 'info',
+      autoDismiss: true,
+    });
+    console.log('mensaje: ', mensaje);
+  },[mensaje]);
 
   const handleChange = (e) => {
     const target = e.target;

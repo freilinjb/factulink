@@ -7,11 +7,32 @@ import {
     OBTENER_CATEGORIAS,
     OBTENER_SUBCATEGORIA,
     OBTENER_MARCAS,
-    OBTENER_UNIDAD_PRESENTACION
+    OBTENER_UNIDAD_PRESENTACION,
+    REGISTRO_EXITOSO,
+    REGISTRO_ERROR
   } from "../../types";
   
   const reducer = (state, action) => {
     switch (action.type) {
+      case REGISTRO_ERROR: {
+        return {
+          ...state,
+          mensaje: "Ah ocurrido un error"
+        }
+      }
+      case REGISTRO_EXITOSO: {
+        console.log('registro exitoso: ', action.payload);
+        let mensaje = null;
+        if(action.payload.length > 0) {
+          console.log('cumplio: ', action.payload[0].status);
+          mensaje = (action.payload[0].status == 200) ? "Producto registrado de forma exitosa" : "dsf asd";
+
+        }
+        return {
+          ...state,
+          mensaje: mensaje
+        }
+      }
       case INICIANDO_CONSULTA:
         // console.log("INICIANDO_CONSULTA");
         return {

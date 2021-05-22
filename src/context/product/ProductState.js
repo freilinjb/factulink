@@ -6,7 +6,7 @@ import ProductReducer from "./ProductReducer";
 
 import clienteAxios from "../../config/axios";
 
-// import Swal from "sweetalert2";
+import Swal from "sweetalert2";
 
 import {
   INICIANDO_CONSULTA,
@@ -17,7 +17,9 @@ import {
   OBTENER_SUBCATEGORIA,
   OBTENER_MARCAS,
   OBTENER_UNIDAD_PRESENTACION,
-  BUSCAR_PRODUCTOS
+  BUSCAR_PRODUCTOS,
+  REGISTRO_EXITOSO,
+  REGISTRO_ERROR
 } from "../../types";
 
 const ProductState = (props) => {
@@ -214,89 +216,6 @@ const ProductState = (props) => {
   const registrarProducto = async (data) => {
     console.log("data: ", data);
 
-    const {
-      codigo,
-      nombre,
-      categoria,
-      subcategoria,
-      marca,
-      unidad,
-      descripcion,
-      stockInicial,
-      stockMinimo,
-      reorden,
-      observacion,
-      incluyeItbis,
-      precioVenta,
-      precioCompra,
-      imagen,
-      proveedor,
-      creado_por,
-      estado,
-    } = data;
-
-    await clienteAxios
-      .post("api/product/", {
-        codigo,
-        nombre,
-        idCategoria: Number(categoria.value),
-        idSubCategoria: Number(subcategoria.value),
-        idMarca: Number(marca.value),
-        idUnidad: Number(unidad.value),
-        reorden: Number(reorden),
-        descripcion,
-        stockInicial: Number(stockInicial),
-        stockMinimo: Number(stockMinimo),
-        observacion,
-        incluyeItbis,
-        precioVenta: Number(precioVenta),
-        precioCompra: Number(precioCompra),
-        idProveedor: 4,
-        productImag: imagen,
-        creado_por,
-        estado: Number(estado.value),
-      })
-      .then(async (respuesta) => {
-        console.log("respuesta: ", respuesta.data);
-
-        // Swal.fire(
-        //   'Good job!',
-        //   'Se ha guardado de forma correcta!',
-        //   'success'
-        // )
-        // Router.push("/AdminProductos");
-        
-      })
-      .catch((error) => {
-        console.log("error: ", error);
-      });
-  };
-
-  const updateProduct = async (data) => {
-     console.log("updateProduct: ", data);
-
-     const {
-      codigo,
-      nombre,
-      categoria,
-      subCategoria,
-      marca,
-      unidad,
-      descripcion,
-      stockInicial,
-      stockMinimo,
-      reorden,
-      observacion,
-      incluyeItbis,
-      precioVenta,
-      precioCompra,
-      imagen,
-      proveedor,
-      creado_por,
-      estado,
-    } = data;
-
-
     const formulario = new FormData();
     // formulario.append("idProducto", data.idProducto);
     formulario.append("codigo", data.codigo);
@@ -314,7 +233,7 @@ const ProductState = (props) => {
     formulario.append("precioVenta", Number(data.precioVenta));
     formulario.append("precioCompra", Number(data.precioCompra));
     formulario.append("idProveedor", [4,2]);
-    // formulario.append("productImag", imagen);
+    formulario.append("productImag", data.imagen);
     formulario.append("creado_por", Number(data.creado_por));
     formulario.append("estado", Number(data.estado.value));
 
@@ -325,18 +244,80 @@ const ProductState = (props) => {
         },
       })
       .then(async (respuesta) => {
-        console.log("respuestaUpdate: ", respuesta);
+        console.log("respuestaUpdate: ", respuesta.data.data);
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      });
+  };
 
-        // Swal.fire(
-        //   'Good job!',
-        //   'Se ha guardado de forma correcta!',
-        //   'success'
-        // )
-        // Router.push("/AdminProductos");
+  const updateProduct = async (data) => {
+
+    console.log("updateProduct: ", data);
+    dispatch({
+      type: INICIANDO_CONSULTA
+    });
+    
+    const formulario = new FormData();
+    // formulario.append("idProducto", data.idProducto);
+    formulario.append("codigo", data.codigo);
+    formulario.append("nombre", data.nombre);
+    formulario.append("idCategoria", Number(data.categoria.value));
+    formulario.append("idSubCategoria", Number(data.subCategoria.value));
+    formulario.append("idMarca", Number(data.marca.value));
+    formulario.append("idUnidad", Number(data.unidad.value));
+    formulario.append("descripcion", data.descripcion);
+    formulario.append("stockInicial", Number(data.stockInicial));
+    formulario.append("stockMinimo", Number(data.stockMinimo));
+    formulario.append("reorden", Number(data.reorden));
+    formulario.append("observacion", data.observacion);
+    formulario.append("incluyeItbis", (data.incluyeItbis) ? 1 : 0);
+    formulario.append("precioVenta", Number(data.precioVenta));
+    formulario.append("precioCompra", Number(data.precioCompra));
+    formulario.append("idProveedor", [4,2]);
+    formulario.append("productImag", data.imagen);
+    formulario.append("creado_por", Number(data.creado_por));
+    formulario.append("estado", Number(data.estado.value));
+
+    await clienteAxios
+      .post("api/product/", formulario,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(async (respuesta) => {
+        console.log("respuestaUpdate: ", respuesta.data.data);
+
+        //  Agrega el mensaje de la operación
+        if(respuesta.data.data.length > 0) {
+          if(respuesta.data.data[0].status == 200) {
+            Swal.fire(
+              'Good job!',
+              'Se ha guardado de forma correcta!',
+              'success'
+            ).then((respuesta2) => {
+              //Redireccionar
+              console.log('prueba: ', respuesta2);
+            });
+          }
+        }
+
+
+        dispatch({
+          type: REGISTRO_EXITOSO,
+          payload: respuesta.data.data
+        });
         
       })
       .catch((error) => {
         console.log("error: ", error);
+        dispatch({
+          type: REGISTRO_ERROR,
+        });
+      }).finally(() => {
+        dispatch({
+          type: FINALIZANDO_CONSULTA
+        });
       });
   };
 
