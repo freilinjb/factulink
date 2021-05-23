@@ -1,4 +1,6 @@
 import React, { useReducer } from "react";
+import { useHistory } from "react-router";
+
 import cookie from "js-cookie";
 
 import ProductContext from "./ProductContext";
@@ -24,7 +26,6 @@ import {
 } from "../../types";
 
 const ProductState = (props) => {
-
   const initialState = {
     productos: [],
     total_page: [],
@@ -46,6 +47,7 @@ const ProductState = (props) => {
   };
 
   const [state, dispatch] = useReducer(ProductReducer, initialState);
+  const history = useHistory();
 
   const getProduct = async () => {
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
@@ -243,9 +245,21 @@ const ProductState = (props) => {
       });
   };
   
-  const registrarProducto = async (data) => {
-    console.log("data: ", data);
+  const addProduct = async (data) => {
+    
+    console.log("updateProduct: ", data);
+    dispatch({
+      type: INICIANDO_CONSULTA
+    });
 
+    // console.log('data: ', data);
+    // return;
+    let proveedores = [];
+    data.proveedor.forEach((key) => {
+      proveedores.push(key.value);
+      console.log("proveedorEnviado: ", key);
+    });
+    
     const formulario = new FormData();
     // formulario.append("idProducto", data.idProducto);
     formulario.append("codigo", data.codigo);
@@ -262,7 +276,7 @@ const ProductState = (props) => {
     formulario.append("incluyeItbis", (data.incluyeItbis) ? 1 : 0);
     formulario.append("precioVenta", Number(data.precioVenta));
     formulario.append("precioCompra", Number(data.precioCompra));
-    formulario.append("idProveedor", [4,2]);
+    formulario.append("idProveedor", proveedores);
     formulario.append("productImag", data.imagen);
     formulario.append("creado_por", Number(data.creado_por));
     formulario.append("estado", Number(data.estado.value));
@@ -275,10 +289,38 @@ const ProductState = (props) => {
       })
       .then(async (respuesta) => {
         console.log("respuestaUpdate: ", respuesta.data.data);
+
+        //  Agrega el mensaje de la operación
+        if(respuesta.data.data.length > 0) {
+          if(respuesta.data.data[0].status == 200) {
+            Swal.fire(
+              'Good job!',
+              'Se ha guardado de forma correcta!',
+              'success'
+            ).then((respuesta2) => {
+              //Redireccionar
+              history.replace("/admin/product");
+              console.log('prueba: ', respuesta2);
+            });
+          }
+        }
+        dispatch({
+          type: REGISTRO_EXITOSO,
+          payload: respuesta.data.data
+        });
+        
       })
       .catch((error) => {
         console.log("error: ", error);
+        dispatch({
+          type: REGISTRO_ERROR,
+        });
+      }).finally(() => {
+        dispatch({
+          type: FINALIZANDO_CONSULTA
+        });
       });
+
   };
 
   const updateProduct = async (data) => {
@@ -333,9 +375,10 @@ const ProductState = (props) => {
               'Good job!',
               'Se ha guardado de forma correcta!',
               'success'
-            ).then((respuesta2) => {
+            ).then((result) => {
               //Redireccionar
-              console.log('prueba: ', respuesta2);
+              history.replace("/admin/product");
+              console.log('prueba: ', result);
             });
           }
         }
@@ -400,7 +443,7 @@ const ProductState = (props) => {
         cargando: state.cargando,
         getProduct,
         getAllProduct,
-        registrarProducto,
+        addProduct,
         updateProduct,
         getProductByID,
         buscarProducto,

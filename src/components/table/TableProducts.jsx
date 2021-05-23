@@ -214,12 +214,16 @@ export const TransactionsTable = ({limit}) => {
   //   console.log('productosEffect: ', productos);
   // },[productos]);
 
+  useEffect(() => {
+    getAllProduct(limit, page);
+  },[limit, page]);
+
   const handleChange =e=> {
     const value = e.target.value;
     console.log('handleChange: ', e.target.text);
 
     setPage(e.target.text);
-    getAllProduct(limit,e.target.text);
+    //getAllProduct(limit,e.target.text);
   }
 
   const previousPage = (e) => {

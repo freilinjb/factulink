@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
@@ -17,7 +18,7 @@ const Product = () => {
             <Breadcrumb.Item>
               <FontAwesomeIcon icon={faHome} />
             </Breadcrumb.Item>
-            <Breadcrumb.Item>Admin Product</Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={'/admin/product'}><a>Admin Product</a></Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Add Product</Breadcrumb.Item>
           </Breadcrumb>
         </div>
