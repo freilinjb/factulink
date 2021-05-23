@@ -3,6 +3,7 @@ import {
     FINALIZANDO_CONSULTA,
     OBTENER_PRODUCTOS,
     OBTENER_PRODUCTO,
+    OBTENER_PRODUCTOS_POR_PAGINAS,
     BUSCAR_PRODUCTOS,
     OBTENER_CATEGORIAS,
     OBTENER_SUBCATEGORIA,
@@ -34,25 +35,34 @@ import {
         }
       }
       case INICIANDO_CONSULTA:
-        // console.log("INICIANDO_CONSULTA");
+         console.log("INICIANDO_CONSULTA");
         return {
           ...state,
           cargando: true,
         };
   
       case FINALIZANDO_CONSULTA:
-        // console.log("FINALIZANDO_CONSULTA");
+         console.log("FINALIZANDO_CONSULTA");
         return {
           ...state,
           cargando: false,
         };
   
         case OBTENER_PRODUCTOS:
-        // console.log("OBTENER_PRODUCTOS: ", action.payload);
+        console.log("OBTENER_PRODUCTOS: ", action.payload);
         return {
           ...state,
           productos: action.payload.data
         };
+
+        case OBTENER_PRODUCTOS_POR_PAGINAS:
+          console.log('OBTENER_PRODUCTOS_POR_PAGINAS', action.payload.data);
+          return {
+            ...state,
+            productos: action.payload.data.results,
+            total_page: action.payload.data.total_page,
+            page_cout: action.payload.data.page_cout
+          }
   
         case OBTENER_PRODUCTO:
          console.log("OBTENER_PRODUCTO: ", action.payload);

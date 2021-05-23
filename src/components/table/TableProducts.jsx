@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleDown, faAngleUp, faArrowDown, faArrowUp, faEdit, faEllipsisH, faExternalLinkAlt, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row, Nav, Card, Image, Button, Table, Dropdown, ProgressBar, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
@@ -8,6 +8,10 @@ import { Routes } from "../../routes";
 import { pageVisits, pageTraffic, pageRanking } from "../../data/tables";
 import transactions from "../../data/transactions";
 import commands from "../../data/commands";
+
+import ProductContext from "../../context/product/ProductContext";
+import pages from '../../data/pages';
+
 
 const ValueChange = ({ value, suffix }) => {
   const valueIcon = value < 0 ? faAngleDown : faAngleUp;
@@ -41,6 +45,7 @@ export const PageVisitsTable = () => {
       </tr>
     );
   };
+
 
   return (
     <Card border="light" className="shadow-sm">
@@ -186,8 +191,95 @@ export const RankingTable = () => {
   );
 };
 
+
+
 export const TransactionsTable = () => {
+  const productContext = useContext(ProductContext);
+  const { getAllProduct, productos } = productContext;
   const totalTransactions = transactions.length;
+  const [page, setPage] = useState(1);
+
+  useEffect(() => {
+    getAllProduct(20,1);
+  },[]);
+
+  // useEffect(() => {
+  //   if(Number(pages) > 0) {
+  //     console.log('page: ', page);
+  //     getAllProduct(20,Number(page));
+  //   }
+  // },[page]);
+
+  // useEffect(() => {
+  //   console.log('productosEffect: ', productos);
+  // },[productos]);
+
+  const handleChange =e=> {
+    const value = e.target.value;
+    console.log('handleChange: ', e.target.text);
+
+    setPage(e.target.text);
+    getAllProduct(20,e.target.text);
+  }
+
+  const previousPage = (e) => {
+    console.log('prueba:', e.target);
+  }
+
+  const nextPage = () => {
+    setPage(page+1);
+  }
+
+  let items = [];
+  for (let number = 1; number <= 5; number++) {
+    items.push(
+      <Pagination.Item key={number} active={number == page} onClick={handleChange}>
+        {number}
+      </Pagination.Item>,
+    );
+  }
+
+  const TablaRowProducto = ({producto, index}) => {
+    // console.log('TablaRowProducto: ', producto.nombre);
+    // const { idProducto, nombre } = producto;
+    return (
+      <>
+        <tr key={index +'-'+ producto.idProducto}>
+          <td>{index}</td>
+          <td>{producto.nombre}</td>
+          <td>{producto.marca}</td>
+          <td>{producto.categoria}</td>
+          <td>{producto.subcategoria}</td>
+          <td>{producto.reorden}</td>
+          <td>{producto.stockInicial}</td>
+          <td>{producto.stockInicial}</td>
+          <td>{producto.incluyeItbis}</td>
+          <td>{producto.estado}</td>
+          <td>
+          <Dropdown as={ButtonGroup}>
+            <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
+              <span className="icon icon-sm">
+                <FontAwesomeIcon icon={faEllipsisH} className="icon-dark" />
+              </span>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item>
+                <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <FontAwesomeIcon icon={faEdit} className="me-2" /> Edit
+              </Dropdown.Item>
+              <Dropdown.Item className="text-danger">
+                <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Remove
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </td>
+        </tr>
+      </>
+    )
+    
+  }
 
   const TableRow = (props) => {
     const { invoiceNumber, subscription, price, issueDate, dueDate, status } = props;
@@ -255,15 +347,15 @@ export const TransactionsTable = () => {
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
       <Card.Body className="pt-0">
         <Table hover className="user-table align-items-center">
-          <thead>
+          <thead className="thead-light">
             <tr>
               <th className="border-bottom">#</th>
               <th className="border-bottom">Nombre</th>
               <th className="border-bottom">Marca</th>
               <th className="border-bottom">Categoria</th>
               <th className="border-bottom">SubCategoria</th>
-              <th className="border-bottom">Precio de venta</th>
               <th className="border-bottom">Reorden</th>
+              <th className="border-bottom">Stock Inicial</th>
               <th className="border-bottom">Stock Inicial</th>
               <th className="border-bottom">ITBIS</th>
               <th className="border-bottom">Estado</th>
@@ -271,20 +363,19 @@ export const TransactionsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {transactions.map(t => <TableRow key={`transaction-${t.invoiceNumber}`} {...t} />)}
+            {/* {(productos.map(() => <h1>Hola</h1>))}  */}
+            {/* <TablaRowProducto productos={productos}/> */}
+            {productos.map((producto, index) => <TablaRowProducto producto={producto} index={index+1} key={producto.idProducto+'-'+index}/>)}
+            {/* {productos.map(t => <TableRow key={`transaction-${t.idProducto}`} {...t} />)} */}
           </tbody>
         </Table>
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
           <Nav>
-            <Pagination className="mb-2 mb-lg-0">
-              <Pagination.Prev>
+            <Pagination className="mb-2 mb-lg-0" >
+              <Pagination.Prev page={page} onClick={previousPage}>
                 Previous
               </Pagination.Prev>
-              <Pagination.Item active>1</Pagination.Item>
-              <Pagination.Item>2</Pagination.Item>
-              <Pagination.Item>3</Pagination.Item>
-              <Pagination.Item>4</Pagination.Item>
-              <Pagination.Item>5</Pagination.Item>
+              {items}
               <Pagination.Next>
                 Next
               </Pagination.Next>

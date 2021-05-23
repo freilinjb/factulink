@@ -5,16 +5,16 @@ import { faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
 import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup} from "@themesberg/react-bootstrap";
 
-import {TransactionsTable} from "../../components/table/TableProducts";
+import {TransactionsTable, RankingTable} from "../../components/table/TableProducts";
 import ProductContext from "../../context/product/ProductContext";
 const AdminProduct = () => {
 
     const productContext = useContext(ProductContext);
     const {  getProduct, productos } = productContext;
     
-    useEffect(  () => {
-         getProduct();
-    },[]);
+    // useEffect(  () => {
+    //      getProduct();
+    // },[]);
 
     useEffect( () => {
         console.log('productos: ', productos);
@@ -60,6 +60,7 @@ const AdminProduct = () => {
       </div>
 
       <TransactionsTable/>
+      <RankingTable/>
       </>
      );
 }

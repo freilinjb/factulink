@@ -12,6 +12,7 @@ import {
   INICIANDO_CONSULTA,
   OBTENER_PRODUCTOS,
   OBTENER_PRODUCTO,
+  OBTENER_PRODUCTOS_POR_PAGINAS,
   FINALIZANDO_CONSULTA,
   OBTENER_CATEGORIAS,
   OBTENER_SUBCATEGORIA,
@@ -26,6 +27,8 @@ const ProductState = (props) => {
 
   const initialState = {
     productos: [],
+    total_page: null,
+    page_cout: null,
     productosBuscar: [],
     productoEditar: [],
     productoSeleccionado: null,
@@ -45,6 +48,7 @@ const ProductState = (props) => {
   const [state, dispatch] = useReducer(ProductReducer, initialState);
 
   const getProduct = async () => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
     dispatch({
       type: INICIANDO_CONSULTA,
     });
@@ -71,6 +75,32 @@ const ProductState = (props) => {
       });
 
     return respuesta2.data;
+  };
+
+  const getAllProduct = async (limit, page) => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+    dispatch({
+      type: INICIANDO_CONSULTA,
+    });
+
+    await clienteAxios
+      .get(`api/product?page=${page > 0 ? page : 1}`)
+      .then(async (respuesta) => {
+        console.log("getAllProduct: ", respuesta);
+
+        dispatch({
+          type: OBTENER_PRODUCTOS_POR_PAGINAS,
+          payload: respuesta.data,
+        });
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      })
+      .finally(() => {
+        dispatch({
+          type: FINALIZANDO_CONSULTA,
+        });
+      });
   };
 
   const saludar = (nombre) => {
@@ -359,6 +389,8 @@ const ProductState = (props) => {
         productos: state.productos,
         productosBuscar: state.productosBuscar,
         productoEditar: state.productoEditar,
+        total_page: state.total_page,
+        page_cout: state.page_cout,
         productoSeleccionado: state.productoSeleccionado,
         categorias: state.categorias,
         subCategorias: state.subCategorias,
@@ -367,6 +399,7 @@ const ProductState = (props) => {
         estado: state.estado,
         cargando: state.cargando,
         getProduct,
+        getAllProduct,
         registrarProducto,
         updateProduct,
         getProductByID,
