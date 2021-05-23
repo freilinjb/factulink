@@ -1,9 +1,9 @@
-import React,{ useContext, useEffect } from 'react';
+import React,{ useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faSearch, faCog, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
-import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup} from "@themesberg/react-bootstrap";
+import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 
 import {TransactionsTable, RankingTable} from "../../components/table/TableProducts";
 import ProductContext from "../../context/product/ProductContext";
@@ -11,6 +11,7 @@ const AdminProduct = () => {
 
     const productContext = useContext(ProductContext);
     const {  getProduct, productos } = productContext;
+    const [limit, setLimit] = useState(10);
     
     // useEffect(  () => {
     //      getProduct();
@@ -20,6 +21,10 @@ const AdminProduct = () => {
         console.log('productos: ', productos);
     },[productos]);
 
+    const prueba = (e) => {
+      console.log('prueba: ', e.target.text);
+      setLimit(Number(e.target.text));
+    }
 
 
 
@@ -56,11 +61,28 @@ const AdminProduct = () => {
               <Form.Control type="text" placeholder="Search" />
             </InputGroup>
           </Col>
+          <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
+            <Dropdown as={ButtonGroup}>
+              <Dropdown.Toggle split as={Button} variant="link" className="text-dark m-0 p-0">
+                <span className="icon icon-sm icon-gray">
+                  <FontAwesomeIcon icon={faCog} />
+                </span>
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="dropdown-menu-xs dropdown-menu-right" onClick={prueba}>
+                <Dropdown.Item className="fw-bold text-dark">Show</Dropdown.Item>
+                <Dropdown.Item className="d-flex fw-bold">
+                  10 {limit == 10 && (<span className="icon icon-small ms-auto"><FontAwesomeIcon icon={faCheck} /></span>)}
+                </Dropdown.Item>
+                <Dropdown.Item className="fw-bold">20 {limit == 20 && (<span className="icon icon-small ms-auto"><FontAwesomeIcon icon={faCheck} /></span>)} </Dropdown.Item>
+                <Dropdown.Item className="fw-bold">30 {limit == 30 && (<span className="icon icon-small ms-auto"><FontAwesomeIcon icon={faCheck} /></span>)} </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </Col>
           </Row>
       </div>
 
-      <TransactionsTable/>
-      <RankingTable/>
+      <TransactionsTable limit={limit}/>
+      {/* <RankingTable/> */}
       </>
      );
 }

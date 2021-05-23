@@ -84,7 +84,7 @@ const ProductState = (props) => {
     });
 
     await clienteAxios
-      .get(`api/product?page=${page > 0 ? page : 1}`)
+      .get(`api/product?page=${page > 0 ? page : 1}&limit=${limit}`)
       .then(async (respuesta) => {
         console.log("getAllProduct: ", respuesta);
 

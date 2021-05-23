@@ -193,14 +193,14 @@ export const RankingTable = () => {
 
 
 
-export const TransactionsTable = () => {
+export const TransactionsTable = ({limit}) => {
   const productContext = useContext(ProductContext);
   const { getAllProduct, productos, total_page } = productContext;
   const totalTransactions = transactions.length;
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    getAllProduct(20,1);
+    getAllProduct(limit,1);
   },[]);
 
   // useEffect(() => {
@@ -219,7 +219,7 @@ export const TransactionsTable = () => {
     console.log('handleChange: ', e.target.text);
 
     setPage(e.target.text);
-    getAllProduct(20,e.target.text);
+    getAllProduct(limit,e.target.text);
   }
 
   const previousPage = (e) => {
