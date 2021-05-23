@@ -27,7 +27,7 @@ const ProductState = (props) => {
 
   const initialState = {
     productos: [],
-    total_page: null,
+    total_page: [],
     page_cout: null,
     productosBuscar: [],
     productoEditar: [],

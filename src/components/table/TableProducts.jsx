@@ -195,7 +195,7 @@ export const RankingTable = () => {
 
 export const TransactionsTable = () => {
   const productContext = useContext(ProductContext);
-  const { getAllProduct, productos } = productContext;
+  const { getAllProduct, productos, total_page } = productContext;
   const totalTransactions = transactions.length;
   const [page, setPage] = useState(1);
 
@@ -231,7 +231,7 @@ export const TransactionsTable = () => {
   }
 
   let items = [];
-  for (let number = 1; number <= 5; number++) {
+  for (let number = 1; number <= total_page.length; number++) {
     items.push(
       <Pagination.Item key={number} active={number == page} onClick={handleChange}>
         {number}
