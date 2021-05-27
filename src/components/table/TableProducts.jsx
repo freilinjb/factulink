@@ -271,7 +271,9 @@ export const TransactionsTable = ({limit}) => {
                 <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
               </Dropdown.Item>
               <Dropdown.Item>
-                <FontAwesomeIcon icon={faEdit} className="me-2" /> Edit
+                <Link to={`/admin/edit/Product/${producto.idProducto}`}>
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />Edit
+                </Link>
               </Dropdown.Item>
               <Dropdown.Item className="text-danger">
                 <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Remove

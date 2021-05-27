@@ -31,7 +31,7 @@ const ProductState = (props) => {
     total_page: [],
     page_cout: null,
     productosBuscar: [],
-    productoEditar: [],
+    productoEditar: {},
     productoSeleccionado: null,
     categorias: [],
     subCategorias: [],
@@ -340,6 +340,7 @@ const ProductState = (props) => {
     
     const formulario = new FormData();
     // formulario.append("idProducto", data.idProducto);
+    formulario.append("idProducto", data.idProducto);
     formulario.append("codigo", data.codigo);
     formulario.append("nombre", data.nombre);
     formulario.append("idCategoria", Number(data.categoria.value));
@@ -360,7 +361,7 @@ const ProductState = (props) => {
     formulario.append("estado", Number(data.estado.value));
 
     await clienteAxios
-      .post("api/product/", formulario,{
+      .put("api/product/", formulario,{
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -411,12 +412,13 @@ const ProductState = (props) => {
   }
 
   const getProductByID = async (idProducto) => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
     dispatch({
       type: INICIANDO_CONSULTA
     });
 
     await clienteAxios.get(`api/product/${idProducto}`).then( async(respuesta) => {
-      console.log('respuesta: ', respuesta.data.data);
+      console.log('respuesta: ', respuesta);
 
       dispatch({
         type: OBTENER_PRODUCTO,

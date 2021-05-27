@@ -59,6 +59,7 @@ import SupplierState from "../context/supplier/SupplierState";
 
 import addProduct  from "./add/Product";
 import Product from "./adminProduct/add/Product";
+import ProductEdit from "./adminProduct/edit/ProductEdit";
 import AdminProduct from "./adminProduct/AdminProduct";
 
 
@@ -164,7 +165,7 @@ export default () => (
     {/* PAGINAS DE PRUEBAS */}
     <RouteWithSidebar exact path={Routes.AdminProduct.path} component={AdminProduct} />
     <RouteWithSidebar exact path={Routes.Product.path} component={Product} />
-    <RouteWithSidebar exact path={Routes.addProduct.path} component={addProduct} />
+    <RouteWithSidebar exact path={Routes.editProduct.path} component={ProductEdit} />
 
     <Redirect to={Routes.NotFound.path} />
   </Switch>
