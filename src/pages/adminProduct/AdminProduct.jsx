@@ -12,10 +12,7 @@ const AdminProduct = () => {
     const productContext = useContext(ProductContext);
     const {  getProduct, productos } = productContext;
     const [limit, setLimit] = useState(10);
-    
-    // useEffect(  () => {
-    //      getProduct();
-    // },[]);
+    const [search, setSearch] = useState('');
 
     useEffect( () => {
         console.log('productos: ', productos);
@@ -59,7 +56,7 @@ const AdminProduct = () => {
               <InputGroup.Text>
                 <FontAwesomeIcon icon={faSearch} />
               </InputGroup.Text>
-              <Form.Control type="text" placeholder="Search" />
+              <Form.Control type="text" placeholder="Search" value={search} onChange={e=> setSearch(e.target.value)}/>
             </InputGroup>
           </Col>
           <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
@@ -71,6 +68,7 @@ const AdminProduct = () => {
               </Dropdown.Toggle>
               <Dropdown.Menu className="dropdown-menu-xs dropdown-menu-right" onClick={prueba}>
                 <Dropdown.Item className="fw-bold text-dark">Show</Dropdown.Item>
+                <Dropdown.Item className="fw-bold">5 {limit == 5 && (<span className="icon icon-small ms-auto"><FontAwesomeIcon icon={faCheck} /></span>)} </Dropdown.Item>
                 <Dropdown.Item className="d-flex fw-bold">
                   10 {limit == 10 && (<span className="icon icon-small ms-auto"><FontAwesomeIcon icon={faCheck} /></span>)}
                 </Dropdown.Item>

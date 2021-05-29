@@ -36,7 +36,7 @@ const ProductFormEdit = ({id}) => {
     precioCompra: "",
     reorden: "",
     proveedor: "",
-    incluyeItbis: false,
+    incluyeItbis: "",
     imagen: null,
     estado: "",
     observacion: "",
@@ -45,7 +45,9 @@ const ProductFormEdit = ({id}) => {
 
   useEffect(() => {
     if(productoEditar.idProducto > 0 ) {
-      console.log('prudcotEditar: ', productoEditar.idProducto);
+      console.log('prudcotEditar: ', productoEditar.stockMinimo);
+      console.log('incluyeItbis: ', (productoEditar.incluyeItbis == "activo"));
+      
       setCampos({
         ...campos,
                     codigo: productoEditar.codigo,
@@ -299,12 +301,12 @@ const ProductFormEdit = ({id}) => {
                     ></Form.Control>
                   </Form.Group>
 
-                  <Form.Group id="nombre" className="col-3">
+                  <Form.Group id="stockMinimo" className="col-3">
                     <Form.Label>Stock Minimo</Form.Label>
                     <Form.Control
-                      
                       type="number"
                       name="stockMinimo"
+                      value={campos.stockMinimo}
                       onChange={handleChange}
                       autoComplete="off"
                       placeholder="Nombre del producto"
@@ -319,7 +321,6 @@ const ProductFormEdit = ({id}) => {
                         type="text"
                         className="form-control"
                         name="precioVenta"
-                        
                         value={campos.precioVenta}
                         onChange={handleChange}
                         autoComplete="off"

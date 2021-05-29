@@ -1,13 +1,9 @@
 import React, { useReducer } from "react";
 import { useHistory } from "react-router";
-
 import cookie from "js-cookie";
-
 import ProductContext from "./ProductContext";
 import ProductReducer from "./ProductReducer";
-
 import clienteAxios from "../../config/axios";
-
 import Swal from "sweetalert2";
 
 import {
@@ -247,7 +243,6 @@ const ProductState = (props) => {
   
   const addProduct = async (data) => {
     
-    console.log("updateProduct: ", data);
     dispatch({
       type: INICIANDO_CONSULTA
     });
@@ -325,7 +320,6 @@ const ProductState = (props) => {
 
   const updateProduct = async (data) => {
 
-    console.log("updateProduct: ", data);
     dispatch({
       type: INICIANDO_CONSULTA
     });
@@ -427,6 +421,14 @@ const ProductState = (props) => {
 
     });
   } 
+
+  const getSearchProduct = async (search) => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+    dispatch({
+      type: INICIANDO_CONSULTA
+    });
+
+  }
 
   return (
     <ProductContext.Provider

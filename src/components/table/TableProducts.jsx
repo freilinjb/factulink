@@ -203,17 +203,6 @@ export const TransactionsTable = ({limit}) => {
     getAllProduct(limit,1);
   },[]);
 
-  // useEffect(() => {
-  //   if(Number(pages) > 0) {
-  //     console.log('page: ', page);
-  //     getAllProduct(20,Number(page));
-  //   }
-  // },[page]);
-
-  // useEffect(() => {
-  //   console.log('productosEffect: ', productos);
-  // },[productos]);
-
   useEffect(() => {
     getAllProduct(limit, page);
   },[limit, page]);
@@ -223,7 +212,6 @@ export const TransactionsTable = ({limit}) => {
     console.log('handleChange: ', e.target.text);
 
     setPage(e.target.text);
-    //getAllProduct(limit,e.target.text);
   }
 
   const previousPage = (e) => {
@@ -244,8 +232,6 @@ export const TransactionsTable = ({limit}) => {
   }
 
   const TablaRowProducto = ({producto, index}) => {
-    // console.log('TablaRowProducto: ', producto.nombre);
-    // const { idProducto, nombre } = producto;
     return (
       <>
         <tr key={index +'-'+ producto.idProducto}>
