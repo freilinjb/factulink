@@ -12,6 +12,7 @@ const AdminProduct = () => {
     const productContext = useContext(ProductContext);
     const {  getProduct, productos } = productContext;
     const [limit, setLimit] = useState(10);
+    const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
 
     useEffect( () => {
@@ -80,7 +81,7 @@ const AdminProduct = () => {
           </Row>
       </div>
 
-      <TransactionsTable limit={limit}/>
+      <TransactionsTable limit={limit} page={page} setPage={setPage}/>
       {/* <RankingTable/> */}
       </>
      );

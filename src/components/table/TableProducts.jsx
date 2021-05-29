@@ -193,11 +193,10 @@ export const RankingTable = () => {
 
 
 
-export const TransactionsTable = ({limit}) => {
+export const TransactionsTable = ({limit, page, setPage}) => {
   const productContext = useContext(ProductContext);
   const { getAllProduct, productos, total_page } = productContext;
   const totalTransactions = transactions.length;
-  const [page, setPage] = useState(1);
 
   useEffect(() => {
     getAllProduct(limit,1);
@@ -337,9 +336,9 @@ export const TransactionsTable = ({limit}) => {
 
   return (
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
-      <Card.Body className="pt-0">
+      <Card.Body className="p-0">
         <Table hover className="user-table align-items-center">
-          <thead className="thead-light">
+          <thead className="thead-dark">
             <tr>
               <th className="border-bottom">#</th>
               <th className="border-bottom">Nombre</th>
