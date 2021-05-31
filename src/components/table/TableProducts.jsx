@@ -193,7 +193,7 @@ export const RankingTable = () => {
 
 
 
-export const TransactionsTable = ({limit, page, setPage}) => {
+export const TransactionsTable = ({limit, page, setPage, search}) => {
   const productContext = useContext(ProductContext);
   const { getAllProduct, productos, total_page } = productContext;
   const totalTransactions = transactions.length;
@@ -203,7 +203,7 @@ export const TransactionsTable = ({limit, page, setPage}) => {
   },[]);
 
   useEffect(() => {
-    getAllProduct(limit, page);
+    getAllProduct(limit, page, search);
   },[limit, page]);
 
   const handleChange =e=> {

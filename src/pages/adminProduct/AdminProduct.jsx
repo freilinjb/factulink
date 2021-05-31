@@ -10,7 +10,7 @@ import ProductContext from "../../context/product/ProductContext";
 const AdminProduct = () => {
 
     const productContext = useContext(ProductContext);
-    const {  getProduct, productos } = productContext;
+    const {  getProduct, productos, getAllProduct } = productContext;
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
@@ -19,9 +19,15 @@ const AdminProduct = () => {
         console.log('productos: ', productos);
     },[productos]);
 
-    const prueba = (e) => {
+    const handleClick = (e) => {
       console.log('prueba: ', e.target.text);
       setLimit(Number(e.target.text));
+    }
+
+    const handlePress =(e)=> {
+      if(e.key == 'Enter') {
+        getAllProduct(limit, page, search);
+      }
     }
 
 
@@ -57,7 +63,7 @@ const AdminProduct = () => {
               <InputGroup.Text>
                 <FontAwesomeIcon icon={faSearch} />
               </InputGroup.Text>
-              <Form.Control type="text" placeholder="Search" value={search} onChange={e=> setSearch(e.target.value)}/>
+              <Form.Control type="text" placeholder="Search" value={search} onChange={e=> setSearch(e.target.value)} onKeyPress={handlePress}/>
             </InputGroup>
           </Col>
           <Col xs={4} md={2} xl={1} className="ps-md-0 text-end">
@@ -67,7 +73,7 @@ const AdminProduct = () => {
                   <FontAwesomeIcon icon={faCog} />
                 </span>
               </Dropdown.Toggle>
-              <Dropdown.Menu className="dropdown-menu-xs dropdown-menu-right" onClick={prueba}>
+              <Dropdown.Menu className="dropdown-menu-xs dropdown-menu-right" onClick={handleClick}>
                 <Dropdown.Item className="fw-bold text-dark">Show</Dropdown.Item>
                 <Dropdown.Item className="fw-bold">5 {limit == 5 && (<span className="icon icon-small ms-auto"><FontAwesomeIcon icon={faCheck} /></span>)} </Dropdown.Item>
                 <Dropdown.Item className="d-flex fw-bold">
@@ -81,7 +87,7 @@ const AdminProduct = () => {
           </Row>
       </div>
 
-      <TransactionsTable limit={limit} page={page} setPage={setPage}/>
+      <TransactionsTable limit={limit} page={page} setPage={setPage} search={search}/>
       {/* <RankingTable/> */}
       </>
      );

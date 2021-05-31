@@ -75,14 +75,14 @@ const ProductState = (props) => {
     return respuesta2.data;
   };
 
-  const getAllProduct = async (limit, page) => {
+  const getAllProduct = async (limit, page, search = 0) => {
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
     dispatch({
       type: INICIANDO_CONSULTA,
     });
 
     await clienteAxios
-      .get(`api/product?page=${page > 0 ? page : 1}&limit=${limit}`)
+      .get(`api/product?page=${page > 0 ? page : 1} ${search == 0 ? '' : '&search='+search } &limit=${limit}`)
       .then(async (respuesta) => {
         console.log("getAllProduct: ", respuesta);
 
@@ -427,6 +427,8 @@ const ProductState = (props) => {
     dispatch({
       type: INICIANDO_CONSULTA
     });
+
+    await clienteAxios.get(``)
 
   }
 
