@@ -62,6 +62,8 @@ import Product from "./adminProduct/add/Product";
 import ProductEdit from "./adminProduct/edit/ProductEdit";
 import AdminProduct from "./adminProduct/AdminProduct";
 
+import Supplier from "./adminSupplier/Supplier";
+
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -166,6 +168,8 @@ export default () => (
     <RouteWithSidebar exact path={Routes.AdminProduct.path} component={AdminProduct} />
     <RouteWithSidebar exact path={Routes.Product.path} component={Product} />
     <RouteWithSidebar exact path={Routes.editProduct.path} component={ProductEdit} />
+
+    <RouteWithSidebar exact path={Routes.AdminSupplier.path} component={Supplier} />
 
     <Redirect to={Routes.NotFound.path} />
   </Switch>

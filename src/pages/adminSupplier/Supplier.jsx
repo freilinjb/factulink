@@ -5,9 +5,9 @@ import { faHome, faSearch, faCog, faCheck } from "@fortawesome/free-solid-svg-ic
 import { Breadcrumb } from "@themesberg/react-bootstrap";
 import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 
-import {TransactionsTable, RankingTable} from "../../components/table/TableProducts";
+import TableSupplier from "../../components/table/TableSupplier";
 import ProductContext from "../../context/product/ProductContext";
-const AdminProduct = () => {
+const Supplier = () => {
 
     const productContext = useContext(ProductContext);
     const {  getProduct, productos, getAllProduct } = productContext;
@@ -43,15 +43,15 @@ const AdminProduct = () => {
             <Breadcrumb.Item>
             <FontAwesomeIcon icon={faHome} />
             </Breadcrumb.Item>
-            <Breadcrumb.Item active> Admin Product </Breadcrumb.Item>
+            <Breadcrumb.Item active> Admin Supplier </Breadcrumb.Item>
           </Breadcrumb>
-          <h4>Product Management</h4>
+          <h4>Supplier Management</h4>
         </div>
         <div className="btn-toolbar mb-2 mb-md-0">
           <ButtonGroup>
             <Button variant="outline-primary" size="sm">Share</Button>
             <Button variant="outline-primary" size="sm">Export</Button>
-            <Button variant="outline-primary" size="sm"><Link to={'/product/add'}>+ New Product</Link></Button>
+            <Button variant="outline-primary" size="sm"><Link to={'/admin/add/Product'}>+ New Supplier</Link></Button>
           </ButtonGroup>
         </div>
       </div>
@@ -87,10 +87,10 @@ const AdminProduct = () => {
           </Row>
       </div>
 
-      <TransactionsTable limit={limit} page={page} setPage={setPage} search={search}/>
+      <TableSupplier limit={limit} page={page} setPage={setPage} search={search}/>
       {/* <RankingTable/> */}
       </>
      );
 }
  
-export default AdminProduct;
+export default Supplier;

@@ -231,10 +231,12 @@ export const TransactionsTable = ({limit, page, setPage, search}) => {
   }
 
   const TablaRowProducto = ({producto, index}) => {
+
+
     return (
       <>
         <tr key={index +'-'+ producto.idProducto}>
-          <td>{index}</td>
+          <td>{(index)}</td>
           <td>{producto.nombre}</td>
           <td>{producto.marca}</td>
           <td>{producto.categoria}</td>
@@ -256,7 +258,7 @@ export const TransactionsTable = ({limit, page, setPage, search}) => {
                 <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to={`/admin/edit/Product/${producto.idProducto}`}>
+                <Link to={`/product/edit/${producto.idProducto}`}>
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Edit
                 </Link>
               </Dropdown.Item>
@@ -337,29 +339,35 @@ export const TransactionsTable = ({limit, page, setPage, search}) => {
   return (
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
       <Card.Body className="p-0">
-        <Table hover className="user-table align-items-center">
-          <thead className="thead-dark">
-            <tr>
-              <th className="border-bottom">#</th>
-              <th className="border-bottom">Nombre</th>
-              <th className="border-bottom">Marca</th>
-              <th className="border-bottom">Categoria</th>
-              <th className="border-bottom">SubCategoria</th>
-              <th className="border-bottom">Reorden</th>
-              <th className="border-bottom">Stock Inicial</th>
-              <th className="border-bottom">Stock Inicial</th>
-              <th className="border-bottom">ITBIS</th>
-              <th className="border-bottom">Estado</th>
-              <th className="border-bottom">Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            {/* {(productos.map(() => <h1>Hola</h1>))}  */}
-            {/* <TablaRowProducto productos={productos}/> */}
-            {productos.map((producto, index) => <TablaRowProducto producto={producto} index={index+1} key={producto.idProducto+'-'+index}/>)}
-            {/* {productos.map(t => <TableRow key={`transaction-${t.idProducto}`} {...t} />)} */}
+       
+          {productos.length > 0 ? (
+             <Table hover className="user-table align-items-center">
+             <thead className="thead-dark">
+               <tr>
+                 <th className="border-bottom">#</th>
+                 <th className="border-bottom">Nombre</th>
+                 <th className="border-bottom">Marca</th>
+                 <th className="border-bottom">Categoria</th>
+                 <th className="border-bottom">SubCategoria</th>
+                 <th className="border-bottom">Reorden</th>
+                 <th className="border-bottom">Stock Inicial</th>
+                 <th className="border-bottom">Stock Inicial</th>
+                 <th className="border-bottom">ITBIS</th>
+                 <th className="border-bottom">Estado</th>
+                 <th className="border-bottom">Acción</th>
+               </tr>
+             </thead>
+            <tbody>
+            {productos.map((producto, index) => <TablaRowProducto producto={producto} index={Number(page) > 1 ? ((Number(page)*Number(limit))+index) : (index+1)} key={producto.idProducto+'-'+index}/>)}
           </tbody>
         </Table>
+
+          )
+          :
+          (
+            <div className="alert alert-danger"> Sin Informacion</div>
+          )}
+          
         <Card.Footer className="px-3 border-0 d-lg-flex align-items-center justify-content-between">
           <Nav>
             <Pagination className="mb-2 mb-lg-0" >

@@ -49,7 +49,8 @@ export const Routes = {
     WidgetsComponent: { path: "/components/widgets" },
     ///REGISTROS DE PRUEBAS
    // Product: { path: "/add/Product" }
-    AdminProduct: { path: "/admin/product" },
-    Product: { path: "/admin/add/Product" },
-    editProduct: { path: "/admin/edit/Product/:id" },
+    AdminProduct: { path: "/product" },
+    Product: { path: "/product/add" },
+    editProduct: { path: "/product/edit/:id" },
+    AdminSupplier: { path: "/admin/supplier" }
 };

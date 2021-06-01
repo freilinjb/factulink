@@ -154,7 +154,7 @@ const Product = () => {
                         <Form.Control as="textarea" rows="1" name="observacion"/>
                     </Form.Group>
                     <div className="mt-3 col-auto">
-                        <Button variant="primary" type="submit">Guardar</Button>
+                        <Button variant="primary" type="submit">Guardar 222</Button>
                     </div>
                     <div className="mt-3 col-auto">
                         <Button variant="secondary" type="submit">Cancelar</Button>

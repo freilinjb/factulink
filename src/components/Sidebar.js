@@ -102,13 +102,22 @@ export default (props = {}) => {
               <NavItem title="Overview" link={Routes.DashboardOverview.path} icon={faChartPie} />
               
               {/* PRUEBA */}
-              <CollapsableNavItem eventKey="admin/" title="Admin Product" icon={faBoxOpen}>
+              <CollapsableNavItem eventKey="/product" title="Admin Product" icon={faBoxOpen}>
                 <NavItem title="Admin" link={Routes.AdminProduct.path} />
                 <NavItem title="Product Register" link={Routes.Product.path} />
                 <NavItem title="SignIn" link={Routes.Signin.path} />
               </CollapsableNavItem>
+
+              {/* PRUEBA */}
+              <CollapsableNavItem eventKey="admin/supplier" title="Admin Supplier" icon={faBoxOpen}>
+              <NavItem title="supplier" link={Routes.AdminSupplier.path} />
+              </CollapsableNavItem>
               
               <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
+              
+              <NavItem title="Admin Product" icon={faHandHoldingUsd} link={Routes.AdminProduct.path} />
+              <NavItem title="Admin Supplier" icon={faHandHoldingUsd} link={Routes.AdminSupplier.path} />
+              
               <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
 
               <CollapsableNavItem eventKey="tables/" title="Tables" icon={faTable}>

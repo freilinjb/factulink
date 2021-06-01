@@ -55,7 +55,7 @@ const ProductState = (props) => {
     await clienteAxios
       .get("api/product")
       .then(async (respuesta) => {
-        console.log("respuesta: ", respuesta);
+        // console.log("respuesta: ", respuesta);
 
         respuesta2 = respuesta.data;
         dispatch({
@@ -84,7 +84,7 @@ const ProductState = (props) => {
     await clienteAxios
       .get(`api/product?page=${page > 0 ? page : 1} ${search == 0 ? '' : '&search='+search } &limit=${limit}`)
       .then(async (respuesta) => {
-        console.log("getAllProduct: ", respuesta);
+        // console.log("getAllProduct: ", respuesta);
 
         dispatch({
           type: OBTENER_PRODUCTOS_POR_PAGINAS,
@@ -294,7 +294,7 @@ const ProductState = (props) => {
               'success'
             ).then((respuesta2) => {
               //Redireccionar
-              history.replace("/admin/product");
+              history.replace("/product");
               console.log('prueba: ', respuesta2);
             });
           }
@@ -372,7 +372,7 @@ const ProductState = (props) => {
               'success'
             ).then((result) => {
               //Redireccionar
-              history.replace("/admin/product");
+              history.replace("/product");
               console.log('prueba: ', result);
             });
           }

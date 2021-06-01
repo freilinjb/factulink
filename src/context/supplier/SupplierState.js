@@ -1,12 +1,8 @@
 import React, { useReducer } from "react";
-
 import SupplierContext from "./SupplierContext";
 import SupplierReducer from "./SupplierReducer";
-
 import clienteAxios from "../../config/axios";
-
 import { useHistory } from "react-router";
-
 
 import {
   INICIANDO_CONSULTA,
@@ -74,6 +70,10 @@ const SupplierState = (props) => {
         });
       });
   };
+
+  const getAllSupplier = async () => {
+
+  }
  
   return (
     <SupplierContext.Provider
@@ -84,7 +84,8 @@ const SupplierState = (props) => {
         proveedorSeleccionado: state.proveedorSeleccionado,
         estado: state.estado,
         cargando: state.cargando,
-        getSupplier
+        getSupplier,
+        getAllSupplier
       }}
     >
       {props.children}
