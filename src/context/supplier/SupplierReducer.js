@@ -2,6 +2,7 @@ import {
     INICIANDO_CONSULTA,
     FINALIZANDO_CONSULTA,
     OBTENER_PROVEEDORES,
+    OBTENER_PROVEEDORES_POR_PAGINAS,
     OBTENER_PROVEEDORES_SELECT
   } from "../../types";
   
@@ -35,7 +36,22 @@ import {
           proveedoresSelect: action.payload
         };
         
-  
+        case OBTENER_PROVEEDORES_POR_PAGINAS:
+          console.log('OBTENER_PROVEEDORES_POR_PAGINAS');
+
+          const total_page = action.payload.data.total_page;
+          let paginas = [];
+          for(let i  = 1; i <= total_page; i++) {
+            paginas.push(i);
+          }
+
+          return {
+            ...state,
+            proveedores: action.payload.data.results,
+            total_page: paginas,
+            page_cout: action.payload.data.page_cout,
+            total_rows: action.payload.data.total_rows,
+          }
   
       default:
         // console.log("default: ");

@@ -63,6 +63,7 @@ import ProductEdit from "./adminProduct/edit/ProductEdit";
 import AdminProduct from "./adminProduct/AdminProduct";
 
 import Supplier from "./adminSupplier/Supplier";
+import addSupplier from "./adminSupplier/add/Supplier";
 
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
@@ -170,6 +171,7 @@ export default () => (
     <RouteWithSidebar exact path={Routes.editProduct.path} component={ProductEdit} />
 
     <RouteWithSidebar exact path={Routes.AdminSupplier.path} component={Supplier} />
+    <RouteWithSidebar exact path={Routes.AddSupplier.path} component={addSupplier} />
 
     <Redirect to={Routes.NotFound.path} />
   </Switch>

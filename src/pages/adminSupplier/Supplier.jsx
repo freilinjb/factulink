@@ -6,18 +6,18 @@ import { Breadcrumb } from "@themesberg/react-bootstrap";
 import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 
 import TableSupplier from "../../components/table/TableSupplier";
-import ProductContext from "../../context/product/ProductContext";
+import SupplierContext from "../../context/supplier/SupplierContext";
 const Supplier = () => {
 
-    const productContext = useContext(ProductContext);
-    const {  getProduct, productos, getAllProduct } = productContext;
+    const supplierContext = useContext(SupplierContext);
+    const {  proveedores, getAllSupplier } = supplierContext;
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
 
     useEffect( () => {
-        console.log('productos: ', productos);
-    },[productos]);
+        console.log('productos: ', proveedores);
+    },[proveedores]);
 
     const handleClick = (e) => {
       console.log('prueba: ', e.target.text);
@@ -26,7 +26,7 @@ const Supplier = () => {
 
     const handlePress =(e)=> {
       if(e.key == 'Enter') {
-        getAllProduct(limit, page, search);
+        getAllSupplier(limit, page, search);
       }
     }
 
@@ -51,7 +51,7 @@ const Supplier = () => {
           <ButtonGroup>
             <Button variant="outline-primary" size="sm">Share</Button>
             <Button variant="outline-primary" size="sm">Export</Button>
-            <Button variant="outline-primary" size="sm"><Link to={'/admin/add/Product'}>+ New Supplier</Link></Button>
+            <Button variant="outline-primary" size="sm"><Link to={'/supplier/add'}>+ New Supplier</Link></Button>
           </ButtonGroup>
         </div>
       </div>

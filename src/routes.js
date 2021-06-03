@@ -52,5 +52,6 @@ export const Routes = {
     AdminProduct: { path: "/product" },
     Product: { path: "/product/add" },
     editProduct: { path: "/product/edit/:id" },
-    AdminSupplier: { path: "/admin/supplier" }
+    AdminSupplier: { path: "/admin/supplier" },
+    AddSupplier: { path: "/supplier/add" }
 };
