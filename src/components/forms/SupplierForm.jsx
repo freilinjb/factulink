@@ -1,6 +1,6 @@
 import React,{useContext, useEffect, useState} from "react";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Col,Row,Card,Form,Button,InputGroup} from "@themesberg/react-bootstrap";
 import Select from "react-select";
 import { useToasts } from 'react-toast-notifications';
@@ -11,14 +11,14 @@ import { ChoosePhotoWidget } from "../Widgets";
 import ProductContext from "../../context/product/ProductContext";
 import SupplierContext from "../../context/supplier/SupplierContext";
 
-import validarProducto from "../../validation/validarProducto";
+import validarSupplier from "../../validation/ValidarSupplier";
 
 const SupplierForm = (props) => {
   const { addToast } = useToasts();
   const productContext = useContext(ProductContext);
   const supplierContext = useContext(SupplierContext);
   const { updateProduct , getCategory, getBrand, getSubCategory, getUnidPresentation, marcas, categorias, subCategorias, unidadPresentacion, estado, mensaje} = productContext;
-  const { getSupplier, proveedoresSelect } = supplierContext;
+  const { getSupplier, proveedoresSelect, addSupplier, getCity, getProvince, ciudades, provincias } = supplierContext;
 
   const [campos, setCampos] = useState({
     nombre: "",
@@ -39,19 +39,13 @@ const SupplierForm = (props) => {
 
   const [errores, setErrores] = useState({});
 
-
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-  ];
-
   const consultar = async () => {
     await getCategory();
     await getBrand();
     await getSubCategory();
     await getUnidPresentation();
-    await getSupplier();
+    await getCity();
+    await getProvince();
   }
 
   useEffect ( () => {
@@ -105,11 +99,12 @@ const SupplierForm = (props) => {
 
   const handleSubmit =(e) => {
     e.preventDefault();
-    const resultados = validarProducto(campos);
+    const resultados = validarSupplier(campos);
     console.log('resultados: ',resultados);
 
     if(Object.entries(resultados).length === 0) {
-      updateProduct(campos);
+      console.log('Prueba: ', campos);
+      addSupplier(campos);
       console.log('se ha registrado con exito');
       return;
     }
@@ -132,7 +127,7 @@ const SupplierForm = (props) => {
                   <Col sm={12} xs={12} lg={6} md={12}>
                     <Row>
                       <Form.Group
-                        id="codigo"
+                        id="nombre"
                         className="col-lg-4 col-md-4 col-sm-6"
                       >
                         <Form.Label>Nombre</Form.Label>
@@ -141,7 +136,7 @@ const SupplierForm = (props) => {
                           name="nombre"
                           autoComplete="off"
                           placeholder="nombre"
-                          value={campos.codigo}
+                          value={campos.nombre}
                           onChange={handleChange}
                         ></Form.Control>
                       </Form.Group>
@@ -156,8 +151,8 @@ const SupplierForm = (props) => {
                           type="text"
                           name="razonSocial"
                           autoComplete="off"
-                          placeholder="Nombre del producto"
-                          value={campos.nombre}
+                          placeholder=""
+                          value={campos.razonSocial}
                           onChange={handleChange}
                         ></Form.Control>
                       </Form.Group>
@@ -168,7 +163,7 @@ const SupplierForm = (props) => {
                           type="text"
                           name="rnc"
                           autoComplete="off"
-                          placeholder="Ingrese una descripcion del producto"
+                          placeholder="Ingrese el RNC"
                           value={campos.rnc}
                           onChange={handleChange}
                         ></Form.Control>
@@ -215,31 +210,31 @@ const SupplierForm = (props) => {
                   <Form.Group id="categoria" className="col-4 pt-3">
                     <Form.Label>Ciudad</Form.Label>
                     <Select
-                      options={categorias}
+                      options={ciudades}
                       theme={(theme) => ({
                         ...theme,
                         borderRadius: 8,
                         colors: { ...theme.colors, primary: "#333152" },
                       })}
-                      name="categoria"
-                      value={campos.categoria}
+                      name="ciudad"
+                      value={campos.ciudad}
                       onChange={handleChangeSelect}
-                      placeholder="Seleccione una Categoria"
+                      placeholder="Seleccione una opción"
                     />
                   </Form.Group>
 
-                  <Form.Group id="subCategoria" className="col-3 pt-3">
+                  <Form.Group id="provincia" className="col-3 pt-3">
                     <Form.Label>Provincia</Form.Label>
                     <Select
-                      options={subCategorias}
+                      options={provincias}
                       
                       theme={(theme) => ({
                         ...theme,
                         borderRadius: 8,
                         colors: { ...theme.colors, primary: "#333152" },
                       })}
-                      name="subCategoria"
-                      value={campos.subCategoria}
+                      name="provincia"
+                      value={campos.provincia}
                       onChange={handleChangeSelect}
                       placeholder="Seleccione una opcion"
                     />

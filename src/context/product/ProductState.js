@@ -372,7 +372,7 @@ const ProductState = (props) => {
               'success'
             ).then((result) => {
               //Redireccionar
-              history.replace("/product");
+              history.replace("/admin/supplier");
               console.log('prueba: ', result);
             });
           }
@@ -420,16 +420,6 @@ const ProductState = (props) => {
       });
 
     });
-  } 
-
-  const getSearchProduct = async (search) => {
-    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
-    dispatch({
-      type: INICIANDO_CONSULTA
-    });
-
-    await clienteAxios.get(``)
-
   }
 
   return (

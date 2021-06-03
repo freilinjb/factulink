@@ -3,7 +3,9 @@ import {
     FINALIZANDO_CONSULTA,
     OBTENER_PROVEEDORES,
     OBTENER_PROVEEDORES_POR_PAGINAS,
-    OBTENER_PROVEEDORES_SELECT
+    OBTENER_PROVEEDORES_SELECT,
+    BUSCAR_CIUDADES,
+    BUSCAR_PROVINCIAS
   } from "../../types";
   
   const reducer = (state, action) => {
@@ -52,6 +54,18 @@ import {
             page_cout: action.payload.data.page_cout,
             total_rows: action.payload.data.total_rows,
           }
+
+        case  BUSCAR_CIUDADES:
+          return {
+            ...state,
+            ciudades: action.payload
+          };
+
+          case  BUSCAR_PROVINCIAS:
+            return {
+              ...state,
+              provincias: action.payload
+            };
   
       default:
         // console.log("default: ");

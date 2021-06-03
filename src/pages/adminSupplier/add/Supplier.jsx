@@ -18,8 +18,8 @@ const Supplier = () => {
             <Breadcrumb.Item>
               <FontAwesomeIcon icon={faHome} />
             </Breadcrumb.Item>
-            <Breadcrumb.Item><Link to={'/admin/supplier'}><a>Admin Product</a></Link></Breadcrumb.Item>
-            <Breadcrumb.Item active>Add Product</Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={'/admin/supplier'}><a>Admin Supplier</a></Link></Breadcrumb.Item>
+            <Breadcrumb.Item active>Add Supplier</Breadcrumb.Item>
           </Breadcrumb>
         </div>
       </div>
