@@ -66,7 +66,7 @@ const TableSupplier = ({limit, page, setPage, search}) => {
                 <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to={`/admin/edit/Product/${proveedor.idProveedor}`}>
+                <Link to={`/supplier/edit/${proveedor.idProveedor}`}>
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Edit
                 </Link>
               </Dropdown.Item>
