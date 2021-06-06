@@ -6,13 +6,17 @@ import { Link } from "react-router-dom";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
 
 import ProductFormEdit from "../../../components/forms/ProductFormEdit";
+import SupplierForm from "../../../components/forms/SupplierForm";
 
 const SupplierEdit = () => {
   const { id } = useParams();
 
-  useEffect(() => {
-    console.log(`idProvedor: `,id);
-  });
+  // useEffect(() => {
+  //   if(id > 0) {
+  //       console.log(`idProvedor: `,id);
+
+  //   }
+  // },[]);
 
   return (
     <>
@@ -25,12 +29,12 @@ const SupplierEdit = () => {
             <Breadcrumb.Item>
               <FontAwesomeIcon icon={faHome} />
             </Breadcrumb.Item>
-            <Breadcrumb.Item><Link to={'/admin/product'}><a>Admin Supplier</a></Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={'/admin/supplier'}><a>Admin Supplier</a></Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Edit Supplier</Breadcrumb.Item>
           </Breadcrumb>
         </div>
       </div>
-      <ProductFormEdit id={id}/>
+      <SupplierForm id={id}/>
     </>
   );
 };

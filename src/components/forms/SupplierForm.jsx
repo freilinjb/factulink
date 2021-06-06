@@ -13,12 +13,12 @@ import SupplierContext from "../../context/supplier/SupplierContext";
 
 import validarSupplier from "../../validation/ValidarSupplier";
 
-const SupplierForm = (props) => {
+const SupplierForm = ({id}) => {
   const { addToast } = useToasts();
   const productContext = useContext(ProductContext);
   const supplierContext = useContext(SupplierContext);
-  const { updateProduct , getCategory, getBrand, getSubCategory, getUnidPresentation, marcas, categorias, subCategorias, unidadPresentacion, estado, mensaje} = productContext;
-  const { getSupplier, proveedoresSelect, addSupplier, getCity, getProvince, ciudades, provincias } = supplierContext;
+  const { estado, mensaje} = productContext;
+  const { getSupplierByID, updateSupplier, addSupplier, proveedorSeleccionado, getCity, getProvince, ciudades, provincias } = supplierContext;
 
   const [campos, setCampos] = useState({
     nombre: "",
@@ -40,25 +40,24 @@ const SupplierForm = (props) => {
   const [errores, setErrores] = useState({});
 
   const consultar = async () => {
-    await getCategory();
-    await getBrand();
-    await getSubCategory();
-    await getUnidPresentation();
     await getCity();
     await getProvince();
+    if(id > 0) {
+      await getSupplierByID(id);
+    }
   }
 
   useEffect ( () => {
     consultar();
   },[])
 
-  useEffect (() => {
-    addToast(mensaje, {
-      appearance: 'info',
-      autoDismiss: true,
-    });
-    console.log('mensaje: ', mensaje);
-  },[mensaje]);
+  // useEffect (() => {
+  //   addToast(mensaje, {
+  //     appearance: 'info',
+  //     autoDismiss: true,
+  //   });
+  //   console.log('mensaje: ', mensaje);
+  // },[mensaje]);
 
   const handleChange = (e) => {
     const target = e.target;
@@ -103,15 +102,46 @@ const SupplierForm = (props) => {
     console.log('resultados: ',resultados);
 
     if(Object.entries(resultados).length === 0) {
-      console.log('Prueba: ', campos);
-      addSupplier(campos);
-      console.log('se ha registrado con exito');
+
+      console.log('Campos: ', campos);
+      if(id > 0) {
+        // console.log('Editando');
+        updateSupplier(campos);
+      } else {
+        addSupplier(campos);
+      }
       return;
     }
 
     setErrores(resultados);
 
   }
+
+  // const editar = async () => {
+  //   console.log('Estas editando: ', id);
+  // }
+
+  useEffect(() => {
+    if(proveedorSeleccionado.length > 0) {
+      const proveedor = proveedorSeleccionado[0];
+      setCampos({
+        ...campos,
+        idProveedor: proveedor.idProveedor,
+        nombre: proveedor.nombre,
+        razonSocial: proveedor.razonSocial,
+        rnc: proveedor.RNC,
+        correo: proveedor.correo,
+        telefono: proveedor.telefono,
+        ciudad: { value: proveedor.idCiudad, label: proveedor.ciudad},
+        provincia: { value: proveedor.idProvincia, label: proveedor.provincia},
+        direccion: proveedor.direccion,
+        observacion: proveedor.observacion,
+        estado: (proveedor.estado == 1) ? { value: 1, label: 'Activo'} : { value: 0, label: 'Inactivo'},
+      })
+    }
+  },[proveedorSeleccionado]);
+
+
 
   return (
     <>

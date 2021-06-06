@@ -105,6 +105,10 @@ export default (props = {}) => {
               <CollapsableNavItem eventKey="/product" title="Admin Product" icon={faBoxOpen}>
                 <NavItem title="Admin" link={Routes.AdminProduct.path} />
                 <NavItem title="Product Register" link={Routes.Product.path} />
+                <NavItem title="Category" link={Routes.Product.path} />
+                <NavItem title="SubCategory" link={Routes.Product.path} />
+                <NavItem title="Unidad Presentación" link={Routes.Product.path} />
+                <NavItem title="Product Register" link={Routes.Product.path} />
                 <NavItem title="SignIn" link={Routes.Signin.path} />
               </CollapsableNavItem>
 

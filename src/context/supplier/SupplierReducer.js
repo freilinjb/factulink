@@ -2,6 +2,7 @@ import {
     INICIANDO_CONSULTA,
     FINALIZANDO_CONSULTA,
     OBTENER_PROVEEDORES,
+    OBTENER_PROVEEDORE,
     OBTENER_PROVEEDORES_POR_PAGINAS,
     OBTENER_PROVEEDORES_SELECT,
     BUSCAR_CIUDADES,
@@ -54,7 +55,11 @@ import {
             page_cout: action.payload.data.page_cout,
             total_rows: action.payload.data.total_rows,
           }
-
+        case OBTENER_PROVEEDORE:
+          return {
+            ...state,
+            proveedorSeleccionado: action.payload
+          }
         case  BUSCAR_CIUDADES:
           return {
             ...state,

@@ -12,6 +12,7 @@ import {
   INICIANDO_CONSULTA,
   FINALIZANDO_CONSULTA,
   OBTENER_PROVEEDORES,
+  OBTENER_PROVEEDORE,
   OBTENER_PROVEEDORES_SELECT,
   OBTENER_PROVEEDORES_POR_PAGINAS,
   REGISTRO_EXITOSO,
@@ -95,7 +96,7 @@ const SupplierState = (props) => {
   await clienteAxios
     .get("api/city")
     .then(async (respuesta) => {
-      console.log('ciudades: ', respuesta);
+      // console.log('ciudades: ', respuesta);
       respuesta.data.data.forEach((key) => {
         ciudades.push({
           value: key.idCiudad,
@@ -127,14 +128,14 @@ const SupplierState = (props) => {
   await clienteAxios
     .get("api/province")
     .then(async (respuesta) => {
-      console.log('provincia: ', respuesta);
+      // console.log('provincia: ', respuesta);
       respuesta.data.data.forEach((key) => {
         provincia.push({
           value: key.idProvincia,
           label: key.provincia,
         });
       });
-      console.log('Pruebaprovincia: ', provincia);
+      // console.log('Pruebaprovincia: ', provincia);
       dispatch({
         type: BUSCAR_PROVINCIAS,
         payload: provincia,
@@ -247,6 +248,99 @@ const SupplierState = (props) => {
       });
   };
 
+  const updateSupplier = async (data) => {
+    dispatch({
+      type: INICIANDO_CONSULTA
+    });
+    
+    const formulario = new FormData();
+    formulario.append("idProveedor", data.idProveedor);
+    formulario.append("nombre", data.nombre);
+    formulario.append("razonSocial", data.razonSocial);
+    formulario.append("rnc", data.rnc);
+    formulario.append("correo", data.correo);
+    formulario.append("telefono", data.telefono);
+    formulario.append("idCiudad", Number(data.ciudad.value));
+    formulario.append("idProvincia", Number(data.provincia.value));
+    formulario.append("direccion", data.descripcion);
+    formulario.append("observacion", data.observacion);
+    formulario.append("creado_por", 1);
+    formulario.append("img", data.imagen);
+    formulario.append("estado", Number(data.estado.value));
+
+
+    await clienteAxios
+      .put("api/supplier/", formulario,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(async (respuesta) => {
+        console.log("respuestaUpdate: ", respuesta.data);
+
+        //  Agrega el mensaje de la operación
+        if(respuesta.data.data.length > 0) {
+          if(respuesta.data.data[0].status == 200) {
+            Swal.fire(
+              'Good job!',
+              'Se ha guardado de forma correcta!',
+              'success'
+            ).then((respuesta2) => {
+              //Redireccionar
+              history.replace("/admin/supplier");
+              console.log('prueba: ', respuesta2);
+            });
+          }
+        }
+        dispatch({
+          type: REGISTRO_EXITOSO,
+          payload: respuesta.data.data
+        });
+        
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+        dispatch({
+          type: REGISTRO_ERROR,
+        });
+      }).finally(() => {
+        dispatch({
+          type: FINALIZANDO_CONSULTA
+        });
+      });
+  }
+
+  const getSupplierByID = async (id) => {
+    dispatch({
+      type: INICIANDO_CONSULTA,
+    });
+
+    await clienteAxios
+      .get(`api/supplier/${id}`)
+      .then(async (respuesta) => {
+        console.log("getSupplierByID: ", respuesta.data.data[0]);
+
+
+        dispatch({
+          type: OBTENER_PROVEEDORE,
+          payload: respuesta.data.data,
+        });
+
+        dispatch({
+          type: OBTENER_PROVEEDORES,
+          payload: respuesta.data.data[0],
+        });
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      })
+      .finally(() => {
+        dispatch({
+          type: FINALIZANDO_CONSULTA,
+        });
+      });
+  }
+
   return (
     <SupplierContext.Provider
       value={{
@@ -266,6 +360,8 @@ const SupplierState = (props) => {
         getSupplier,
         getAllSupplier,
         addSupplier,
+        getSupplierByID,
+        updateSupplier,
         getCity,
         getProvince
       }}
