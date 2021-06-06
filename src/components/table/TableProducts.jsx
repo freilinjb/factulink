@@ -237,8 +237,8 @@ export const TransactionsTable = ({limit, page, setPage, search}) => {
       <>
         <tr key={index +'-'+ producto.idProducto}>
           <td>{(index)}</td>
-          <td>{producto.nombre}</td>
-          <td>{producto.marca}</td>
+          <td>{producto.nombre} {(producto.urlFoto != null  &&  <Image src={producto.urlFoto} className="image-sm rounded-circle me-2" /> )} </td>
+          <td>{producto.marca} </td>
           <td>{producto.categoria}</td>
           <td>{producto.subcategoria}</td>
           <td>{producto.reorden}</td>

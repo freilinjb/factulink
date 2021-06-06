@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEllipsisH, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
+import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup, Image } from '@themesberg/react-bootstrap';
+
 import { Link } from 'react-router-dom';
 
 import transactions from "../../data/transactions";
@@ -48,7 +49,7 @@ const TableSupplier = ({limit, page, setPage, search}) => {
       <>
         <tr key={index +'-'+ proveedor.idProveedor}>
           <td>{(index)}</td>
-          <td>{proveedor.nombre}</td>
+          <td>{proveedor.nombre} {(proveedor.urlFoto != null  &&  <Image src={proveedor.urlFoto} className="image-sm rounded-circle me-2" alt="Logo" /> )}  </td>
           <td>{proveedor.correo}</td>
           <td>{proveedor.telefono}</td>
           <td>{proveedor.ciudad}</td>
