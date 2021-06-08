@@ -4,6 +4,7 @@ import {
     OBTENER_PRODUCTOS,
     OBTENER_PRODUCTO,
     OBTENER_PRODUCTOS_POR_PAGINAS,
+    OBTENER_CATEGORIAS_POR_PAGINAS,
     BUSCAR_PRODUCTOS,
     OBTENER_CATEGORIAS,
     OBTENER_SUBCATEGORIA,
@@ -55,19 +56,19 @@ import {
           productos: action.payload.data
         };
 
-        case OBTENER_PRODUCTOS_POR_PAGINAS:
-          console.log('OBTENER_PRODUCTOS_POR_PAGINAS', action.payload.data);
+        case OBTENER_CATEGORIAS_POR_PAGINAS:
+          console.log('OBTENER_CATEGORIAS_POR_PAGINAS', action.payload.data);
           
-          const total_page = action.payload.data.total_page;
-          let paginas = [];
-          for(let i  = 1; i <= total_page; i++) {
-            paginas.push(i);
-          }
+          // const total_page = action.payload.data.total_page;
+          // let paginas = [];
+          // for(let i  = 1; i <= total_page; i++) {
+          //   paginas.push(i);
+          // }
           return {
             ...state,
-            productos: action.payload.data.results,
-            total_page: paginas,
-            page_cout: action.payload.data.page_cout
+            categorias: action.payload.data.results,
+            // total_page: paginas,
+            // page_cout: action.payload.data.page_cout
           }
   
         case OBTENER_PRODUCTO:

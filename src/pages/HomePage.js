@@ -56,6 +56,7 @@ import Toasts from "./components/Toasts";
 import AuthState from "../context/auth/AuthState";
 import ProductState from "../context/product/ProductState";
 import SupplierState from "../context/supplier/SupplierState";
+import CategoryState from "../context/category/CategoryState";
 
 import addProduct  from "./add/Product";
 import Product from "./adminProduct/add/Product";
@@ -124,6 +125,7 @@ export default () => (
   <AuthState>
   <SupplierState>
   <ProductState>
+    <CategoryState>
   <Switch>
     <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} />
     <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
@@ -181,6 +183,7 @@ export default () => (
     
     <Redirect to={Routes.NotFound.path} />
   </Switch>
+  </CategoryState>
   </ProductState>
   </SupplierState>
   </AuthState>

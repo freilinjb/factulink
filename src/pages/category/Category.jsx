@@ -5,12 +5,15 @@ import { faHome, faSearch, faCog, faCheck } from "@fortawesome/free-solid-svg-ic
 import { Breadcrumb } from "@themesberg/react-bootstrap";
 import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 
-import TableSupplier from "../../components/table/TableSupplier";
+import TableCategory from "../../components/table/TableCategory";
 import SupplierContext from "../../context/supplier/SupplierContext";
+import CategoryContext from "../../context/category/CategoryContext";
 const Category = () => {
 
     const supplierContext = useContext(SupplierContext);
+    const categoryContext = useContext(CategoryContext);
     const {  proveedores, getAllSupplier } = supplierContext;
+    const {  getAllCategory } = categoryContext;
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
@@ -26,7 +29,7 @@ const Category = () => {
 
     const handlePress =(e)=> {
       if(e.key == 'Enter') {
-        getAllSupplier(limit, page, search);
+        getAllCategory(limit, page, search);
       }
     }
 
@@ -87,8 +90,7 @@ const Category = () => {
           </Row>
       </div>
 
-      <TableSupplier limit={limit} page={page} setPage={setPage} search={search}/>
-      {/* <RankingTable/> */}
+      <TableCategory limit={limit} page={page} setPage={setPage} search={search}/>
       </>
      );
 }

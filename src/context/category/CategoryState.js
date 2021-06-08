@@ -8,9 +8,8 @@ import Swal from "sweetalert2";
 
 import {
   INICIANDO_CONSULTA,
-  OBTENER_PRODUCTOS,
   OBTENER_PRODUCTO,
-  OBTENER_PRODUCTOS_POR_PAGINAS,
+  OBTENER_CATEGORIAS_POR_PAGINAS,
   FINALIZANDO_CONSULTA,
   OBTENER_CATEGORIAS,
   OBTENER_SUBCATEGORIA,
@@ -20,17 +19,13 @@ import {
 
 const CategoryState = (props) => {
   const initialState = {
-    productos: [],
-    total_page: [],
-    page_cout: null,
-    productosBuscar: [],
-    productoEditar: {},
-    productoSeleccionado: null,
     categorias: [],
     subCategorias: [],
-    marcas: [],
-    unidadPresentacion: [],
-    proveedores: [],
+    page_cout: null,
+    productosBuscar: [],
+    categoriaEditar: {},
+    subCategoriaEditar: {},
+    productoSeleccionado: null,
     estado: [
       { value: "1", label: "Activo" },
       { value: "0", label: "Inactivo" },
@@ -47,14 +42,14 @@ const CategoryState = (props) => {
     dispatch({
       type: INICIANDO_CONSULTA,
     });
-
+    console.log('CATEGORIAS: ');
     await clienteAxios
-      .get(`api/product?page=${page > 0 ? page : 1} ${search == 0 ? '' : '&search='+search } &limit=${limit}`)
+      .get(`api/product/category?page=${page > 0 ? page : 1} ${search == 0 ? '' : '&search='+search } &limit=${limit}`)
       .then(async (respuesta) => {
-        // console.log("getAllProduct: ", respuesta);
+        console.log("Categorias: ", respuesta);
 
         dispatch({
-          type: OBTENER_PRODUCTOS_POR_PAGINAS,
+          type: OBTENER_CATEGORIAS_POR_PAGINAS,
           payload: respuesta.data,
         });
       })
@@ -325,7 +320,6 @@ const CategoryState = (props) => {
         subCategorias: state.subCategorias,
         estado: state.estado,
         cargando: state.cargando,
-        getProduct,
         getAllCategory,
         addCategory,
         updateCategory,
