@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEllipsisH, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup, Image } from '@themesberg/react-bootstrap';
+import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
 
 import { Link } from 'react-router-dom';
 

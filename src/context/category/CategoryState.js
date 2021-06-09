@@ -27,8 +27,8 @@ const CategoryState = (props) => {
     subCategoriaEditar: {},
     productoSeleccionado: null,
     estado: [
-      { value: "1", label: "Activo" },
-      { value: "0", label: "Inactivo" },
+      { value: 1, label: "Activo" },
+      { value: 0, label: "Inactivo" },
     ],
     busqueda: "",
     cargando: false,

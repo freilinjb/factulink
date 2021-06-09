@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSearch, faCog, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
-import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
+import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown, Modal} from "@themesberg/react-bootstrap";
+import Select from "react-select";
 
 import TableCategory from "../../components/table/TableCategory";
 import SupplierContext from "../../context/supplier/SupplierContext";
@@ -13,10 +14,13 @@ const Category = () => {
     const supplierContext = useContext(SupplierContext);
     const categoryContext = useContext(CategoryContext);
     const {  proveedores, getAllSupplier } = supplierContext;
-    const {  getAllCategory } = categoryContext;
+    const {  getAllCategory, estado } = categoryContext;
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
+
+    const [showModal, setShowModal] = useState(false);
+    const handleClose = () => setShowModal(false);
 
     useEffect( () => {
         console.log('productos: ', proveedores);
@@ -33,6 +37,10 @@ const Category = () => {
       }
     }
 
+    const options = [
+      { value: 1, label: "Activo" },
+      { value: 0, label: "Inactivo" },
+    ];
 
 
     return ( 
@@ -54,7 +62,7 @@ const Category = () => {
           <ButtonGroup>
             <Button variant="outline-primary" size="sm">Share</Button>
             <Button variant="outline-primary" size="sm">Export</Button>
-            <Button variant="outline-primary" size="sm"><Link to={'/supplier/add'}>+ New Category</Link></Button>
+            <Button variant="outline-primary" size="sm" onClick={() => setShowModal(true)}>+ New Category</Button>
           </ButtonGroup>
         </div>
       </div>
@@ -90,7 +98,54 @@ const Category = () => {
           </Row>
       </div>
 
-      <TableCategory limit={limit} page={page} setPage={setPage} search={search}/>
+      <TableCategory limit={limit} page={page} setPage={setPage} search={search} setShowModal={setShowModal}/>
+      <Button variant="primary" className="my-3" onClick={() => setShowModal(true)}>Default</Button>
+
+        <Modal as={Modal.Dialog} centered show={showModal} onHide={handleClose}>
+          <Modal.Header>
+            <Modal.Title className="h6">Add New Category</Modal.Title>
+            <Button variant="close" aria-label="Close" onClick={handleClose} />
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Row>
+                  <Form.Group
+                        id="codigo"
+                      >
+                        <Form.Label>Nombre</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="nombre"
+                          autoComplete="off"
+                          placeholder="nombre"
+                          // value={campos.codigo}
+                          // onChange={handleChange}
+                        ></Form.Control>
+                      </Form.Group>
+                      <Form.Group
+                        id="codigo"
+                      >
+                        <Form.Label>Estado</Form.Label>
+                        <Select options={estado}
+                            theme={(theme) => ({
+                              ...theme,
+                              borderRadius: 8,
+                              colors: { ...theme.colors, primary: "#333152" },
+                            })}
+                          name="categoria"/>
+                      </Form.Group>
+              </Row>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Save
+            </Button>
+            <Button variant="link" className="text-gray ms-auto" onClick={handleClose}>
+              Close
+          </Button>
+          </Modal.Footer>
+        </Modal>
       </>
      );
 }
