@@ -5,19 +5,24 @@ import { faHome, faSearch, faCog, faCheck } from "@fortawesome/free-solid-svg-ic
 import { Breadcrumb } from "@themesberg/react-bootstrap";
 import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown, Modal} from "@themesberg/react-bootstrap";
 import Select from "react-select";
+import Swal from "sweetalert2";
 
 import TableCategory from "../../components/table/TableCategory";
 import SupplierContext from "../../context/supplier/SupplierContext";
 import CategoryContext from "../../context/category/CategoryContext";
+
+import CategoryModal from '../../components/modal/CategoryModal';
+
 const Category = () => {
 
     const supplierContext = useContext(SupplierContext);
     const categoryContext = useContext(CategoryContext);
     const {  proveedores, getAllSupplier } = supplierContext;
-    const {  getAllCategory, estado } = categoryContext;
+    const {  getAllCategory, mensajeCategory } = categoryContext;
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
+    const [isEdit, setIsEdit] = useState(0);
 
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
@@ -42,6 +47,32 @@ const Category = () => {
       { value: 0, label: "Inactivo" },
     ];
 
+    const showModalNuewCategory = () => {
+      setShowModal(true);
+      //No se va a editar
+      setIsEdit(0);
+    }
+
+    const showModalEditCategory = (id) => {
+      setShowModal(true);
+      //No se va a editar
+      setIsEdit(id);
+
+      console.log('Editando la categoria ID: ', id);
+    }
+
+    const deleteCategoryfn = (id) => {
+      Swal.fire(
+        'Good job!',
+        'Se ha guardado de forma correcta!',
+        'warning'
+      ).then((respuesta2) => {
+        //Redireccionar
+        // history.replace("/product");
+        console.log('prueba: ', respuesta2);
+      });
+    }
+
 
     return ( 
         <>
@@ -62,7 +93,7 @@ const Category = () => {
           <ButtonGroup>
             <Button variant="outline-primary" size="sm">Share</Button>
             <Button variant="outline-primary" size="sm">Export</Button>
-            <Button variant="outline-primary" size="sm" onClick={() => setShowModal(true)}>+ New Category</Button>
+            <Button variant="outline-primary" size="sm" onClick={() => showModalNuewCategory()}>+ New Category</Button>
           </ButtonGroup>
         </div>
       </div>
@@ -98,10 +129,11 @@ const Category = () => {
           </Row>
       </div>
 
-      <TableCategory limit={limit} page={page} setPage={setPage} search={search} setShowModal={setShowModal}/>
+      <TableCategory limit={limit} page={page} setPage={setPage} search={search} showModalEditCategory={showModalEditCategory} deleteCategoryfn={deleteCategoryfn}/>
       <Button variant="primary" className="my-3" onClick={() => setShowModal(true)}>Default</Button>
 
-        <Modal as={Modal.Dialog} centered show={showModal} onHide={handleClose}>
+        <CategoryModal handleClose={handleClose} showModal={showModal} isEdit={isEdit}/>
+        {/* <Modal as={Modal.Dialog} centered show={showModal} onHide={handleClose}>
           <Modal.Header>
             <Modal.Title className="h6">Add New Category</Modal.Title>
             <Button variant="close" aria-label="Close" onClick={handleClose} />
@@ -146,6 +178,7 @@ const Category = () => {
           </Button>
           </Modal.Footer>
         </Modal>
+     */}
       </>
      );
 }

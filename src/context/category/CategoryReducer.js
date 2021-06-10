@@ -2,7 +2,7 @@ import {
     INICIANDO_CONSULTA,
     FINALIZANDO_CONSULTA,
     OBTENER_PRODUCTOS,
-    OBTENER_PRODUCTO,
+    OBTENER_CATEGORIA,
     OBTENER_PRODUCTOS_POR_PAGINAS,
     OBTENER_CATEGORIAS_POR_PAGINAS,
     BUSCAR_PRODUCTOS,
@@ -11,7 +11,8 @@ import {
     OBTENER_MARCAS,
     OBTENER_UNIDAD_PRESENTACION,
     REGISTRO_EXITOSO,
-    REGISTRO_ERROR
+    REGISTRO_ERROR,
+    ACTUALIZACION_EXITOSA
   } from "../../types";
   
   const reducer = (state, action) => {
@@ -25,14 +26,14 @@ import {
       case REGISTRO_EXITOSO: {
         console.log('registro exitoso: ', action.payload);
         let mensaje = null;
-        if(action.payload.length > 0) {
-          console.log('cumplio: ', action.payload[0].status);
-          mensaje = (action.payload[0].status == 200) ? "Producto registrado de forma exitosa" : "dsf asd";
+        // if(action.payload.length > 0) {
+        //   console.log('cumplio: ', action.payload.status);
+        //   mensaje = (action.payload.status == 200) ? "Producto registrado de forma exitosa" : "dsf asd";
 
-        }
+        // }
         return {
           ...state,
-          mensaje: mensaje
+          mensajeCategory: action.payload.msg
         }
       }
       case INICIANDO_CONSULTA:
@@ -47,6 +48,7 @@ import {
         return {
           ...state,
           cargando: false,
+          mensajeCategory: null
         };
   
         case OBTENER_PRODUCTOS:
@@ -59,23 +61,23 @@ import {
         case OBTENER_CATEGORIAS_POR_PAGINAS:
           console.log('OBTENER_CATEGORIAS_POR_PAGINAS', action.payload.data);
           
-          // const total_page = action.payload.data.total_page;
-          // let paginas = [];
-          // for(let i  = 1; i <= total_page; i++) {
-          //   paginas.push(i);
-          // }
+          const total_page = action.payload.data.total_page;
+          let paginas = [];
+          for(let i  = 1; i <= total_page; i++) {
+            paginas.push(i);
+          }
           return {
             ...state,
             categorias: action.payload.data.results,
-            // total_page: paginas,
-            // page_cout: action.payload.data.page_cout
+            total_page: paginas,
+            page_cout: action.payload.data.page_cout
           }
   
-        case OBTENER_PRODUCTO:
-         console.log("OBTENER_PRODUCTO: ", action.payload);
+        case OBTENER_CATEGORIA:
+         console.log("OBTENER_CATEGORIA: ", action.payload);
         return {
           ...state,
-          productoEditar: action.payload,
+          categoriaEditar: action.payload,
           cargando: false
         };
   

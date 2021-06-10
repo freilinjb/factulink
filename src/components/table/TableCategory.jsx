@@ -9,11 +9,11 @@ import SupplierContext from "../../context/supplier/SupplierContext";
 import CategoryContext from "../../context/category/CategoryContext";
 
 
-const TableCategory = ({limit, page, setPage, search}) => {
+const TableCategory = ({limit, page, setPage, search, showModalEditCategory, deleteCategoryfn}) => {
   const supplierContext = useContext(SupplierContext);
   const categoryContext = useContext(CategoryContext);
-  const { getAllSupplier, proveedores, total_page, total_rows } = supplierContext;
-  const { getAllCategory, categorias } = categoryContext;
+  const { getAllSupplier, proveedores} = supplierContext;
+  const { getAllCategory, categorias, total_page, total_rows, mensajeCategory } = categoryContext;
 
   useEffect(() => {
     getAllCategory(limit,1);
@@ -21,19 +21,20 @@ const TableCategory = ({limit, page, setPage, search}) => {
 
   useEffect(() => {
     getAllCategory(limit, page, search);
-  },[limit, page]);
+  },[limit, page, mensajeCategory]);
 
   const handleChange =e=> {
-    console.log('handleChange: ', e.target.text);
+    // console.log('handleChange: ', e.target.text);
     setPage(e.target.text);
   }
 
   const previousPage = (e) => {
-    console.log('prueba:', e.target);
+    // console.log('prueba:', e.target);
     setPage(page-1);
   }
 
   let items = [];
+  console.log('TOTAL_PAGE: ', total_page);
   for (let number = 1; number <= total_page.length; number++) {
     items.push(
       <Pagination.Item key={number} active={number == page} onClick={handleChange}>
@@ -60,15 +61,14 @@ const TableCategory = ({limit, page, setPage, search}) => {
               </span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item>
-                <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <Link to={`/supplier/edit/${categoria.idProveedor}`}>
+              <Dropdown.Item
+                onClick={() => showModalEditCategory(categoria.idCategoria)}
+              >         
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Edit
-                </Link>
               </Dropdown.Item>
-              <Dropdown.Item className="text-danger">
+              <Dropdown.Item className="text-danger"
+                // onClick={deleteCategoryfn(categoria.idCategoria)}
+              >
                 <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Remove
               </Dropdown.Item>
             </Dropdown.Menu>

@@ -8,10 +8,11 @@ import Swal from "sweetalert2";
 
 import {
   INICIANDO_CONSULTA,
-  OBTENER_PRODUCTO,
+  OBTENER_CATEGORIA,
   OBTENER_CATEGORIAS_POR_PAGINAS,
   FINALIZANDO_CONSULTA,
   OBTENER_CATEGORIAS,
+  ACTUALIZACION_EXITOSA,
   OBTENER_SUBCATEGORIA,
   REGISTRO_EXITOSO,
   REGISTRO_ERROR
@@ -21,6 +22,7 @@ const CategoryState = (props) => {
   const initialState = {
     categorias: [],
     subCategorias: [],
+    total_page: [],
     page_cout: null,
     productosBuscar: [],
     categoriaEditar: {},
@@ -31,6 +33,7 @@ const CategoryState = (props) => {
       { value: 0, label: "Inactivo" },
     ],
     busqueda: "",
+    mensajeCategory:"",
     cargando: false,
   };
 
@@ -141,61 +144,30 @@ const CategoryState = (props) => {
       type: INICIANDO_CONSULTA
     });
 
-    // console.log('data: ', data);
-    // return;
-    let proveedores = [];
-    data.proveedor.forEach((key) => {
-      proveedores.push(key.value);
-      console.log("proveedorEnviado: ", key);
-    });
-    
-    const formulario = new FormData();
-    // formulario.append("idProducto", data.idProducto);
-    formulario.append("codigo", data.codigo);
-    formulario.append("nombre", data.nombre);
-    formulario.append("idCategoria", Number(data.categoria.value));
-    formulario.append("idSubCategoria", Number(data.subCategoria.value));
-    formulario.append("idMarca", Number(data.marca.value));
-    formulario.append("idUnidad", Number(data.unidad.value));
-    formulario.append("descripcion", data.descripcion);
-    formulario.append("stockInicial", Number(data.stockInicial));
-    formulario.append("stockMinimo", Number(data.stockMinimo));
-    formulario.append("reorden", Number(data.reorden));
-    formulario.append("observacion", data.observacion);
-    formulario.append("incluyeItbis", (data.incluyeItbis) ? 1 : 0);
-    formulario.append("precioVenta", Number(data.precioVenta));
-    formulario.append("precioCompra", Number(data.precioCompra));
-    formulario.append("idProveedor", proveedores);
-    formulario.append("productImag", data.imagen);
-    formulario.append("creado_por", Number(data.creado_por));
-    formulario.append("estado", Number(data.estado.value));
 
     await clienteAxios
-      .post("api/product/", formulario,{
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      .post("api/product/category/", {
+        nombre: data.nombre,
+        estado: data.estado.value
       })
       .then(async (respuesta) => {
-        console.log("respuestaUpdate: ", respuesta.data.data);
+        console.log("addCategory: ", respuesta.data);
 
         //  Agrega el mensaje de la operación
-        if(respuesta.data.data.length > 0) {
-          if(respuesta.data.data[0].status == 200) {
-            Swal.fire(
-              'Good job!',
-              'Se ha guardado de forma correcta!',
-              'success'
-            ).then((respuesta2) => {
-              //Redireccionar
-              history.replace("/product");
-              console.log('prueba: ', respuesta2);
-            });
-          }
+        if(respuesta.data.status == 200) {
+          Swal.fire(
+            'Good job!',
+            'Se ha guardado de forma correcta!',
+            'success'
+          ).then((respuesta2) => {
+            //Redireccionar
+            // history.replace("/product/category");
+            console.log('prueba: ', respuesta2);
+          });
         }
         dispatch({
           type: REGISTRO_EXITOSO,
-          payload: respuesta.data.data
+          payload: respuesta.data
         });
         
       })
@@ -213,69 +185,38 @@ const CategoryState = (props) => {
   };
 
   const updateCategory = async (data) => {
-
+    console.log('Editando estos campos: ', data);
+    // return;
     dispatch({
       type: INICIANDO_CONSULTA
     });
 
-    // console.log('data: ', data);
-    // return;
-    let proveedores = [];
-    data.proveedor.forEach((key) => {
-      proveedores.push(key.value);
-      console.log("proveedorEnviado: ", key);
-    });
-    
-    const formulario = new FormData();
-    // formulario.append("idProducto", data.idProducto);
-    formulario.append("idProducto", data.idProducto);
-    formulario.append("codigo", data.codigo);
-    formulario.append("nombre", data.nombre);
-    formulario.append("idCategoria", Number(data.categoria.value));
-    formulario.append("idSubCategoria", Number(data.subCategoria.value));
-    formulario.append("idMarca", Number(data.marca.value));
-    formulario.append("idUnidad", Number(data.unidad.value));
-    formulario.append("descripcion", data.descripcion);
-    formulario.append("stockInicial", Number(data.stockInicial));
-    formulario.append("stockMinimo", Number(data.stockMinimo));
-    formulario.append("reorden", Number(data.reorden));
-    formulario.append("observacion", data.observacion);
-    formulario.append("incluyeItbis", (data.incluyeItbis) ? 1 : 0);
-    formulario.append("precioVenta", Number(data.precioVenta));
-    formulario.append("precioCompra", Number(data.precioCompra));
-    formulario.append("idProveedor", proveedores);
-    formulario.append("productImag", data.imagen);
-    formulario.append("creado_por", Number(data.creado_por));
-    formulario.append("estado", Number(data.estado.value));
-
     await clienteAxios
-      .put("api/product/", formulario,{
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      .put(`api/product/category/${data.idCategoria}`, {
+        idCategoria: data.idCategoria,
+        nombre: data.nombre,
+        estado: data.estado.value,
       })
       .then(async (respuesta) => {
-        console.log("respuestaUpdate: ", respuesta.data.data);
+        console.log("respuestaUpdate: ", respuesta.data);
 
         //  Agrega el mensaje de la operación
-        if(respuesta.data.data.length > 0) {
-          if(respuesta.data.data[0].status == 200) {
+          if(respuesta.data.status == 200) {
             Swal.fire(
               'Good job!',
-              'Se ha guardado de forma correcta!',
+              'Se ha actualizado de forma correcta!',
               'success'
             ).then((result) => {
               //Redireccionar
-              history.replace("/admin/supplier");
+              // history.replace("/admin/supplier");
               console.log('prueba: ', result);
             });
           }
-        }
 
 
         dispatch({
           type: REGISTRO_EXITOSO,
-          payload: respuesta.data.data
+          payload: respuesta.data
         });
         
       })
@@ -291,20 +232,20 @@ const CategoryState = (props) => {
       });
   };
 
-  const getCategoryByID = async (idProducto) => {
+  const getCategoryByID = async (idCategory) => {
+
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
     dispatch({
       type: INICIANDO_CONSULTA
     });
 
-    await clienteAxios.get(`api/product/${idProducto}`).then( async(respuesta) => {
+    await clienteAxios.get(`api/product/category/${idCategory}`).then( async(respuesta) => {
       console.log('respuesta: ', respuesta);
 
       dispatch({
-        type: OBTENER_PRODUCTO,
-        payload: respuesta.data.data
+        type: OBTENER_CATEGORIA,
+        payload: respuesta.data.data[0]
       });
-
     });
   }
 
@@ -313,13 +254,14 @@ const CategoryState = (props) => {
       value={{
         productos: state.productos,
         productosBuscar: state.productosBuscar,
-        productoEditar: state.productoEditar,
         total_page: state.total_page,
         page_cout: state.page_cout,
         categorias: state.categorias,
+        categoriaEditar: state.categoriaEditar,
         subCategorias: state.subCategorias,
         estado: state.estado,
         cargando: state.cargando,
+        mensajeCategory: state.mensajeCategory,
         getAllCategory,
         addCategory,
         updateCategory,
