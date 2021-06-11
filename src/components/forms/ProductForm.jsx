@@ -17,7 +17,7 @@ const ProductForm = (props) => {
   const { addToast } = useToasts();
   const productContext = useContext(ProductContext);
   const supplierContext = useContext(SupplierContext);
-  const { updateProduct , getCategory, getBrand, getSubCategory, getUnidPresentation, marcas, categorias, subCategorias, unidadPresentacion, estado, mensaje} = productContext;
+  const { addProduct , getCategory, getBrand, getSubCategory, getUnidPresentation, marcas, categorias, subCategorias, unidadPresentacion, estado, mensaje} = productContext;
   const { getSupplier, proveedoresSelect } = supplierContext;
 
   const [campos, setCampos] = useState({
@@ -116,7 +116,7 @@ const ProductForm = (props) => {
     console.log('resultados: ',resultados);
 
     if(Object.entries(resultados).length === 0) {
-      updateProduct(campos);
+      addProduct(campos);
       console.log('se ha registrado con exito');
       return;
     }

@@ -82,7 +82,7 @@ const Product = () => {
                   <hr className="m-0 p-0"/>
 
                   <Form.Group id="categoria" className="col-6 pt-3">
-                    <Form.Label>Categoria</Form.Label>
+                    <Form.Label>Categoria2</Form.Label>
                     <Select options={options} theme={theme => ({...theme,borderRadius: 8,colors: {...theme.colors,primary: '#333152',}})} name="categoria" placeholder="Seleccione una Categoria"/>
                   </Form.Group>
 

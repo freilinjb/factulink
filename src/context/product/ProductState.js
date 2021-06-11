@@ -184,7 +184,7 @@ const ProductState = (props) => {
         respuesta.data.data.forEach((key) => {
           subcategorias.push({
             value: key.idSubCategoria,
-            label: key.subcategoria,
+            label: key.subCategoria,
           });
         });
 
