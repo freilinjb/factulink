@@ -68,6 +68,7 @@ import addSupplier from "./adminSupplier/add/Supplier";
 import SupplierEdit from "./adminSupplier/edit/SupplierEdit";
 //Category
 import Category from "./category/Category";
+import SubCategory from "./sucategory/SubCategory";
 
 
 
@@ -180,6 +181,7 @@ export default () => (
     <RouteWithSidebar exact path={Routes.AddSupplier.path} component={addSupplier} />
     <RouteWithSidebar exact path={Routes.EditSupplier.path} component={SupplierEdit} />
     <RouteWithSidebar exact path={Routes.AdminCategory.path} component={Category} />
+    <RouteWithSidebar exact path={Routes.AdminSubCategory.path} component={SubCategory} />
     
     <Redirect to={Routes.NotFound.path} />
   </Switch>

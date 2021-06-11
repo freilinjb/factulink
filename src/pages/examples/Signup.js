@@ -11,12 +11,13 @@ import BgImage from "../../assets/img/illustrations/signin.svg";
 
 import AuthContext from "../../context/auth/AuthContext";
 
-export default () => {
+const Signup =() => {
   const authContext = useContext(AuthContext);
   const { saludar } = authContext;
 
   useEffect(() => {
     saludar();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -104,3 +105,5 @@ export default () => {
     </main>
   );
 };
+
+export default Signup;

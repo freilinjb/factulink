@@ -57,6 +57,5 @@ export const Routes = {
     EditSupplier: { path: "/supplier/edit/:id" },
     //CATEGORY
     AdminCategory: { path: '/product/category' },
-    AddCategory: { path: '/category/add' },
-    EditCategory: { path: '/category/edit/:id' },
+    AdminSubCategory: { path: '/product/subCategory' },
 };

@@ -1,5 +1,5 @@
 
-import React,{useContext, useState, useEffect} from "react";
+import React,{useContext, useEffect} from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faEnvelope, faUnlockAlt } from "@fortawesome/free-solid-svg-icons";
 import { faFacebookF, faGithub, faTwitter } from "@fortawesome/free-brands-svg-icons";
@@ -17,9 +17,9 @@ import AuthContext from "../../context/auth/AuthContext";
 import useValidacion from "../../hooks/useValidacion";
 import validarSignIn from "../../validation/validarSignIn";
 
-export default () => {
+const Signin = () => {
   const authContext = useContext(AuthContext);
-  const { iniciarSesion, mensaje, cargando, autenticado } = authContext;
+  const { iniciarSesion, mensaje } = authContext;
 
   const STATE_INICIAL = {
     usuario: "freilinjb",
@@ -45,7 +45,7 @@ export default () => {
   }
 
 
-  const {  valores, errores, handleSubmit, handleChange } = useValidacion(STATE_INICIAL, validarSignIn, onSubmit);
+  const {  valores, handleSubmit, handleChange } = useValidacion(STATE_INICIAL, validarSignIn, onSubmit);
 
   const { usuario, clave } = valores;
 
@@ -127,3 +127,5 @@ export default () => {
     </main>
   );
 };
+
+export default Signin;
