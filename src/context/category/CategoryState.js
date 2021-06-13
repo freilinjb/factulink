@@ -12,7 +12,6 @@ import {
   OBTENER_CATEGORIAS_POR_PAGINAS,
   FINALIZANDO_CONSULTA,
   OBTENER_CATEGORIAS,
-  ACTUALIZACION_EXITOSA,
   OBTENER_SUBCATEGORIA,
   REGISTRO_EXITOSO,
   REGISTRO_ERROR
@@ -21,13 +20,12 @@ import {
 const CategoryState = (props) => {
   const initialState = {
     categorias: [],
+    categoriasSelect: [],
     subCategorias: [],
     total_page: [],
     page_cout: null,
-    productosBuscar: [],
     categoriaEditar: {},
     subCategoriaEditar: {},
-    productoSeleccionado: null,
     estado: [
       { value: 1, label: "Activo" },
       { value: 0, label: "Inactivo" },
@@ -38,7 +36,7 @@ const CategoryState = (props) => {
   };
 
   const [state, dispatch] = useReducer(CategoryReducer, initialState);
-  const history = useHistory();
+  // const history = useHistory();
 
   const getAllCategory = async (limit, page, search = 0) => {
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
@@ -252,11 +250,10 @@ const CategoryState = (props) => {
   return (
     <CategoryContext.Provider
       value={{
-        productos: state.productos,
-        productosBuscar: state.productosBuscar,
         total_page: state.total_page,
         page_cout: state.page_cout,
         categorias: state.categorias,
+        categoriasSelect: state.categoriasSelect,
         categoriaEditar: state.categoriaEditar,
         subCategorias: state.subCategorias,
         estado: state.estado,

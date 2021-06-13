@@ -100,7 +100,7 @@ import {
         // console.log("OBTENER_CATEGORIAS: ", action.payload);
         return {
           ...state,
-          categorias: action.payload
+          categoriasSelect: action.payload
         };
   
         case OBTENER_SUBCATEGORIA:
