@@ -2,8 +2,9 @@ import React,{ useContext, useEffect, useState } from "react";
 import Select from "react-select";
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SubCategoryContext from "../../context/subcategory/SubCategoryContext";
 import CategoryContext from "../../context/category/CategoryContext";
-import validarCategory from "../../validation/ValidarCategory";
+import ValidarSubCategory from "../../validation/ValidarSubCategory";
 
 import {
   Row,
@@ -13,8 +14,11 @@ import {
 } from "@themesberg/react-bootstrap";
 
 const SubCategoryModal = ({handleClose, showModal, isEdit}) => {
+  const subCategoryContext = useContext(SubCategoryContext);
   const categoryContext = useContext(CategoryContext);
-  const {  updateCategory, addCategory, getCategoryByID, categoriaEditar, estado } = categoryContext;
+
+  const {  updateSubCategory, addSubCategory, getSubCategoryByID, subcategoriaEditar, estado } = subCategoryContext;
+  const { categoriasSelect, getCategory } = categoryContext;
   const [campos, setCampos] = useState({
     nombre: "",
     categoria: "",
@@ -32,9 +36,12 @@ const SubCategoryModal = ({handleClose, showModal, isEdit}) => {
   };
 
   useEffect(() => {
-    // console.log('prueba');
+    getCategory();
+  },[]);
+
+  useEffect(() => {
     if(isEdit > 0) {
-      getCategoryByID(isEdit);
+      getSubCategoryByID(isEdit);
     } else {
       setCampos({
         ...campos,
@@ -46,17 +53,17 @@ const SubCategoryModal = ({handleClose, showModal, isEdit}) => {
   }, [isEdit]);
 
   useEffect(() => {
-    // console.log('Prueba verificado: ', categoriaEditar);
 
-    if(Object.entries(categoriaEditar).length !== 0) {
+    if(Object.entries(subcategoriaEditar).length !== 0) {
         // console.log('asdfasdf');
         setCampos({
           ...campos,
-          nombre: categoriaEditar.categoria,
-          estado: categoriaEditar.estado == 'activo' ? { value: 1, label: "Activo" } : { value: 0, label: "Inactivo" }
+          nombre: subcategoriaEditar.subCategoria,
+          categoria: { value: subcategoriaEditar.idCategoria, label: subcategoriaEditar.categoria, },
+          estado: subcategoriaEditar.estado == 'activo' ? { value: 1, label: "Activo" } : { value: 0, label: "Inactivo" }
         })
       }
-  },[categoriaEditar]);
+  },[subcategoriaEditar]);
 
 
 
@@ -70,23 +77,27 @@ const SubCategoryModal = ({handleClose, showModal, isEdit}) => {
   
   const handleSubmit =(e)=> {
     e.preventDefault();
-    const validacion = validarCategory(campos);
+    const validacion = ValidarSubCategory(campos);
     // console.log('Campos a registrar2: ', validacion);
-
-    
+    console.log('Campos validados: ', campos);
+    // return;
     if(Object.entries(validacion).length === 0) {
       if(isEdit > 0) {
         // console.log('Campos a actualizado: ', campos);
-        campos.idCategoria = isEdit;
-        updateCategory(campos);
+        campos.idSubCategoria = isEdit;
+        console.log('Actualizando');
+        // return;
+        updateSubCategory(campos);
+        
         setTimeout(() => {
           handleClose();
         }, 300);
         // console.log('se ha actualizado con exito: ', campos);
-        return;
+        // return;
       } else {
         // console.log('Campos a registrar: ', campos);
-        addCategory(campos);
+        console.log('Registrando');
+        addSubCategory(campos);
         setTimeout(() => {
           handleClose();
         }, 300);
@@ -103,14 +114,14 @@ const SubCategoryModal = ({handleClose, showModal, isEdit}) => {
   return (
     <Modal as={Modal.Dialog} centered show={showModal} onHide={handleClose}>
       <Modal.Header>
-        <Modal.Title className="h6"> { isEdit > 0 ? 'Update Category' : 'New Category' }</Modal.Title>
+        <Modal.Title className="h6"> { isEdit > 0 ? 'Update SubCategory' : 'New SubCategory' }</Modal.Title>
         <Button variant="close" aria-label="Close" onClick={handleClose} />
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Row>
-            <Form.Group id="codigo">
-              <input type="hidden" name="idCategoria" id="idCategoria" value={isEdit}/>
+            <Form.Group id="nombre">
+              <input type="hidden" name="idSubCategoria" id="idSubCategoria" value={isEdit}/>
               <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
@@ -121,17 +132,17 @@ const SubCategoryModal = ({handleClose, showModal, isEdit}) => {
                 onChange={handleChange}
               ></Form.Control>
             </Form.Group>
-            <Form.Group id="codigo">
+            <Form.Group id="categoria">
               <Form.Label>Categoria</Form.Label>
               <Select
-                options={estado}
+                options={categoriasSelect}
                 theme={(theme) => ({
                   ...theme,
                   borderRadius: 8,
                   colors: { ...theme.colors, primary: "#333152" },
                 })}
                 name="categoria"
-                value={campos.estado}
+                value={campos.categoria}
                 onChange={handleChangeSelect}
                 placeholder="Seleccione una opción"
               />

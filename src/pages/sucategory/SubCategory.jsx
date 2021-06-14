@@ -5,18 +5,18 @@ import { Breadcrumb } from "@themesberg/react-bootstrap";
 import {Col,Row,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 import Swal from "sweetalert2";
 
-import TableCategory from "../../components/table/TableCategory";
+import TableSubCategory from "../../components/table/TableSubCategory";
 import SupplierContext from "../../context/supplier/SupplierContext";
 import CategoryContext from "../../context/category/CategoryContext";
+import SubCategoryContext from "../../context/subcategory/SubCategoryContext";
 
-import CategoryModal from '../../components/modal/CategoryModal';
+import SubCategoryModal from '../../components/modal/SubCategoryModal';
 
 const SubCategory = () => {
 
     const supplierContext = useContext(SupplierContext);
-    const categoryContext = useContext(CategoryContext);
-    const {  proveedores } = supplierContext;
-    const {  getAllCategory } = categoryContext;
+    const subCategoryContext = useContext(SubCategoryContext);
+    const {  getASubCategoryPaged, mensajeSubCategory } = subCategoryContext;
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
@@ -25,9 +25,6 @@ const SubCategory = () => {
     const [showModal, setShowModal] = useState(false);
     const handleClose = () => setShowModal(false);
 
-    useEffect( () => {
-        console.log('productos: ', proveedores);
-    },[proveedores]);
 
     const handleClick = (e) => {
       console.log('prueba: ', e.target.text);
@@ -36,7 +33,7 @@ const SubCategory = () => {
 
     const handlePress =(e)=> {
       if(e.key === 'Enter') {
-        getAllCategory(limit, page, search);
+        getASubCategoryPaged(limit, page, search);
       }
     }
 
@@ -86,7 +83,7 @@ const SubCategory = () => {
           <ButtonGroup>
             <Button variant="outline-primary" size="sm">Share</Button>
             <Button variant="outline-primary" size="sm">Export</Button>
-            <Button variant="outline-primary" size="sm" onClick={() => showModalNuewCategory()}>+ New Category</Button>
+            <Button variant="outline-primary" size="sm" onClick={() => showModalNuewCategory()}>+ New SubCategory</Button>
           </ButtonGroup>
         </div>
       </div>
@@ -122,10 +119,10 @@ const SubCategory = () => {
           </Row>
       </div>
 
-      <TableCategory limit={limit} page={page} setPage={setPage} search={search} showModalEditCategory={showModalEditCategory} deleteCategoryfn={deleteCategoryfn}/>
+      <TableSubCategory limit={limit} page={page} setPage={setPage} search={search} showModalEditCategory={showModalEditCategory} deleteCategoryfn={deleteCategoryfn}/>
       <Button variant="primary" className="my-3" onClick={() => setShowModal(true)}>Default</Button>
 
-        <CategoryModal handleClose={handleClose} showModal={showModal} isEdit={isEdit}/>
+        <SubCategoryModal handleClose={handleClose} showModal={showModal} isEdit={isEdit}/>
       </>
      );
 }

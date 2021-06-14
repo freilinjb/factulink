@@ -71,7 +71,7 @@ import {
               ...state,
               provincias: action.payload
             };
-  
+            
       default:
         // console.log("default: ");
         return {
