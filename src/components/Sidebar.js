@@ -107,20 +107,21 @@ export default (props = {}) => {
                 <NavItem title="Product Register" link={Routes.Product.path} />
                 <NavItem title="Category" link={Routes.AdminCategory.path} />
                 <NavItem title="SubCategory" link={Routes.AdminSubCategory.path} />
-                <NavItem title="Unidad Presentación" link={Routes.Product.path} />
+                <NavItem title="Unidad" link={Routes.AdminUnid.path} />
                 <NavItem title="Product Register" link={Routes.Product.path} />
                 <NavItem title="SignIn" link={Routes.Signin.path} />
               </CollapsableNavItem>
 
               {/* PRUEBA */}
-              <CollapsableNavItem eventKey="admin/supplier" title="Admin Supplier" icon={faBoxOpen}>
+              {/* <CollapsableNavItem eventKey="admin/supplier" title="Admin Supplier" icon={faBoxOpen}>
               <NavItem title="supplier" link={Routes.AdminSupplier.path} />
-              </CollapsableNavItem>
+              </CollapsableNavItem> */}
               
               <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
               
               <NavItem title="Admin Product" icon={faHandHoldingUsd} link={Routes.AdminProduct.path} />
-              <NavItem title="Admin Supplier" icon={faHandHoldingUsd} link={Routes.AdminSupplier.path} />
+              <NavItem title="Supplier" icon={faHandHoldingUsd} link={Routes.AdminSupplier.path} />
+              <NavItem title="Customer" icon={faHandHoldingUsd} link={Routes.AdminSupplier.path} />
               
               <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
 

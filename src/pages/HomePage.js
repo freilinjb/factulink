@@ -58,8 +58,8 @@ import ProductState from "../context/product/ProductState";
 import SupplierState from "../context/supplier/SupplierState";
 import CategoryState from "../context/category/CategoryState";
 import SubCategoryState from "../context/subcategory/SubCategoryState";
+import UnidState from "../context/unid/UnidState";
 
-import addProduct from "./add/Product";
 import Product from "./adminProduct/add/Product";
 import ProductEdit from "./adminProduct/edit/ProductEdit";
 import AdminProduct from "./adminProduct/AdminProduct";
@@ -70,6 +70,9 @@ import SupplierEdit from "./adminSupplier/edit/SupplierEdit";
 //Category
 import Category from "./category/Category";
 import SubCategory from "./sucategory/SubCategory";
+
+//Unid
+import Unid from "./unid/Unid";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -142,6 +145,7 @@ export default () => (
         <ProductState>
           <CategoryState>
             <SubCategoryState>
+              <UnidState>
               <Switch>
                 <RouteWithLoader
                   exact
@@ -343,8 +347,8 @@ export default () => (
                 />
                 <RouteWithSidebar
                   exact
-                  path={Routes.Product.path}
-                  component={Product}
+                  path={Routes.AdminUnid.path}
+                  component={Unid}
                 />
                 <RouteWithSidebar
                   exact
@@ -380,6 +384,7 @@ export default () => (
 
                 <Redirect to={Routes.NotFound.path} />
               </Switch>
+              </UnidState>
             </SubCategoryState>
           </CategoryState>
         </ProductState>
