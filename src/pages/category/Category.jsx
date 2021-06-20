@@ -1,10 +1,9 @@
 import React,{ useContext, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSearch, faCog, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
-import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown, Modal} from "@themesberg/react-bootstrap";
-import Select from "react-select";
+import {Col,Row,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 import Swal from "sweetalert2";
 
 import TableCategory from "../../components/table/TableCategory";
@@ -17,8 +16,8 @@ const Category = () => {
 
     const supplierContext = useContext(SupplierContext);
     const categoryContext = useContext(CategoryContext);
-    const {  proveedores, getAllSupplier } = supplierContext;
-    const {  getAllCategory, mensajeCategory } = categoryContext;
+    const {  proveedores } = supplierContext;
+    const {  getAllCategory } = categoryContext;
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');

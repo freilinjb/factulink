@@ -1,4 +1,4 @@
-import React,{ useContext, useEffect, useState } from 'react';
+import React,{ useContext, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSearch, faCog, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
@@ -6,17 +6,14 @@ import {Col,Row,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg
 import Swal from "sweetalert2";
 
 import TableSubCategory from "../../components/table/TableSubCategory";
-import SupplierContext from "../../context/supplier/SupplierContext";
-import CategoryContext from "../../context/category/CategoryContext";
 import SubCategoryContext from "../../context/subcategory/SubCategoryContext";
 
 import SubCategoryModal from '../../components/modal/SubCategoryModal';
 
 const SubCategory = () => {
 
-    const supplierContext = useContext(SupplierContext);
     const subCategoryContext = useContext(SubCategoryContext);
-    const {  getASubCategoryPaged, mensajeSubCategory } = subCategoryContext;
+    const {  getASubCategoryPaged } = subCategoryContext;
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
