@@ -131,7 +131,7 @@ const ProductForm = (props) => {
         <Col xs={12} xl={8}>
           <Card border="ligh" className="bg-white shadow-sm mb-4 px-3 pb-3">
             <Card.Header>
-              <h5>Editar de Producto</h5>
+              <h5>Add Product</h5>
             </Card.Header>
             <Card.Body>
               <Form onSubmit={handleSubmit}>
