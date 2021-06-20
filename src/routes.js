@@ -61,4 +61,8 @@ export const Routes = {
     AdminSubCategory: { path: '/product/subCategory' },
     //SUBCATEGORY
     AdminUnid: { path: '/product/unid' },
+    //CUSTOMER
+    AdminCustomer: { path: '/customer' },
+    AddCustomer: { path: '/customer/add' },
+    UpdateCustomer: { path: '/customer/edit/:id' },
 };

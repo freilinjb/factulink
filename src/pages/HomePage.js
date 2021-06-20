@@ -55,12 +55,12 @@ import Toasts from "./components/Toasts";
 
 import AuthState from "../context/auth/AuthState";
 import ProductState from "../context/product/ProductState";
+import CustomerState from "../context/customer/CustomerState";
 import SupplierState from "../context/supplier/SupplierState";
 import CategoryState from "../context/category/CategoryState";
 import SubCategoryState from "../context/subcategory/SubCategoryState";
 import UnidState from "../context/unid/UnidState";
 
-import Product from "./adminProduct/add/Product";
 import ProductEdit from "./adminProduct/edit/ProductEdit";
 import AdminProduct from "./adminProduct/AdminProduct";
 
@@ -73,6 +73,11 @@ import SubCategory from "./sucategory/SubCategory";
 
 //Unid
 import Unid from "./unid/Unid";
+
+//AdminCustomer
+import AdminCustomer from "./customer/AdminCustomer";
+import CustomerEdit from "./customer/edit/CustomerEdit";
+import CustomerAdd from "./customer/add/CustomerAdd";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -141,6 +146,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 export default () => (
   <ToastProvider>
     <AuthState>
+    <CustomerState>
       <SupplierState>
         <ProductState>
           <CategoryState>
@@ -382,6 +388,24 @@ export default () => (
                   component={SubCategory}
                 />
 
+                <RouteWithSidebar
+                  exact
+                  path={Routes.AdminCustomer.path}
+                  component={AdminCustomer}
+                />
+                
+                <RouteWithSidebar
+                  exact
+                  path={Routes.AddCustomer.path}
+                  component={CustomerAdd}
+                />
+
+                <RouteWithSidebar
+                  exact
+                  path={Routes.UpdateCustomer.path}
+                  component={CustomerEdit}
+                />
+
                 <Redirect to={Routes.NotFound.path} />
               </Switch>
               </UnidState>
@@ -389,6 +413,7 @@ export default () => (
           </CategoryState>
         </ProductState>
       </SupplierState>
+      </CustomerState>
     </AuthState>
   </ToastProvider>
 );
