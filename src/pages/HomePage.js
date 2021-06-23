@@ -45,6 +45,10 @@ import Forms from "./components/Forms";
 import Modals from "./components/Modals";
 import Navs from "./components/Navs";
 import Navbars from "./components/Navbars";
+
+import NavbarPOS from "../components/NavbarPOS";
+
+
 import Pagination from "./components/Pagination";
 import Popovers from "./components/Popovers";
 import Progress from "./components/Progress";
@@ -79,6 +83,10 @@ import AdminCustomer from "./customer/AdminCustomer";
 import CustomerEdit from "./customer/edit/CustomerEdit";
 import CustomerAdd from "./customer/add/CustomerAdd";
 
+//Billing
+import Billing from "./Billing";
+
+
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -94,6 +102,31 @@ const RouteWithLoader = ({ component: Component, ...rest }) => {
         <>
           {" "}
           <Preloader show={loaded ? false : true} /> <Component {...props} />{" "}
+        </>
+      )}
+    />
+  );
+};
+
+const RouteWithNavbarPOS = ({ component: Component, ...rest }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoaded(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <Route
+      {...rest}
+      render={(props) => (
+        <>
+          {" "}
+          <Preloader show={loaded ? false : true} /> 
+          <main className="">
+          <NavbarPOS/>
+          <Component {...props} />{" "}
+          </main>
         </>
       )}
     />
@@ -404,6 +437,12 @@ export default () => (
                   exact
                   path={Routes.UpdateCustomer.path}
                   component={CustomerEdit}
+                />
+
+                <RouteWithNavbarPOS
+                  exact
+                  path={Routes.Billing.path}
+                  component={Billing}
                 />
 
                 <Redirect to={Routes.NotFound.path} />

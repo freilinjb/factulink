@@ -11,6 +11,8 @@ import {
   OBTENER_CLIENTES,
   OBTENER_CLIENTE,
   OBTENER_CLIENTE_POR_PAGINAS,
+  OBTENER_COMPROBANTES,
+  OBTENER_IDENTIFICACIONES,
   FINALIZANDO_CONSULTA,
   REGISTRO_EXITOSO,
   REGISTRO_ERROR
@@ -19,6 +21,8 @@ import {
 const CustomerState = (props) => {
   const initialState = {
     clientes: [],
+    comprobantes: [],
+    identificaciones: [],
     total_page: [],
     page_cout: null,
     clientesBuscar: [],
@@ -97,38 +101,32 @@ const CustomerState = (props) => {
   };
   
   const addCustomer = async (data) => {
-    
+    console.log('addCustomer: ',data);
+    // return;
+
     dispatch({
       type: INICIANDO_CONSULTA
-    });
-
-    // console.log('data: ', data);
-    // return;
-    let proveedores = [];
-    data.proveedor.forEach((key) => {
-      proveedores.push(key.value);
-      console.log("proveedorEnviado: ", key);
     });
     
     const formulario = new FormData();
     // formulario.append("idProducto", data.idProducto);
-    formulario.append("codigo", data.codigo);
     formulario.append("nombre", data.nombre);
-    formulario.append("idCategoria", Number(data.categoria.value));
-    formulario.append("idSubCategoria", Number(data.subCategoria.value));
-    formulario.append("idMarca", Number(data.marca.value));
-    formulario.append("idUnidad", Number(data.unidad.value));
-    formulario.append("descripcion", data.descripcion);
-    formulario.append("stockInicial", Number(data.stockInicial));
-    formulario.append("stockMinimo", Number(data.stockMinimo));
-    formulario.append("reorden", Number(data.reorden));
-    formulario.append("observacion", data.observacion);
-    formulario.append("incluyeItbis", (data.incluyeItbis) ? 1 : 0);
-    formulario.append("precioVenta", Number(data.precioVenta));
-    formulario.append("precioCompra", Number(data.precioCompra));
-    formulario.append("idProveedor", proveedores);
-    formulario.append("productImag", data.imagen);
+    formulario.append("idTipoIdentificacion", Number(data.tipoIdentificacion.value));
+    formulario.append("identificacion", data.identificacion);
+    formulario.append("correo", data.correo);
+    formulario.append("telefono", data.telefono);
+    formulario.append("sitioWeb", data.sitioWeb);
+    formulario.append("tipoComprobante", Number(data.tipoComprobante.value));
+    formulario.append("idVendedor", Number(data.vendedor.value));
+    formulario.append("diasCredito", Number(data.plazoPago.value));
+    formulario.append("limiteCredito", Number(data.limiteCredito));
+    formulario.append("aplicaDescuento", Number(data.limiteCredito) > 0 ? 1 : 0 );
+    formulario.append("idProvincia", Number(data.provincia.value));
+    formulario.append("idCiudad", Number(data.ciudad.value));
+    formulario.append("direccion", data.direccion);
+    formulario.append("customerImg", data.imagen);
     formulario.append("creado_por", Number(data.creado_por));
+    formulario.append("observacion", data.observacion);
     formulario.append("estado", Number(data.estado.value));
 
     await clienteAxios
@@ -252,6 +250,56 @@ const CustomerState = (props) => {
       });
   };
 
+  const getIdentification = async () => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+    dispatch({
+      type: INICIANDO_CONSULTA,
+    });
+
+    await clienteAxios.get('api/identification/').then( async(respuesta) => {
+      console.log('getIdentification: ', respuesta);
+      let identificacion = [];
+
+      respuesta.data.data.forEach((key) => {
+        identificacion.push({
+          value: key.idTipo,
+          label: key.identificacion,
+        });
+      });
+      
+      dispatch({
+        type: OBTENER_IDENTIFICACIONES,
+        payload: identificacion
+      });
+
+    });
+  }
+
+  const getComprobantes = async () => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+    dispatch({
+      type: INICIANDO_CONSULTA,
+    });
+
+    await clienteAxios.get('api/customer/comprobante').then( async(respuesta) => {
+      console.log('getComprobantes: ', respuesta);
+      let comprobantes = [];
+
+      respuesta.data.data.forEach((key) => {
+        comprobantes.push({
+          value: key.tipoComprobante,
+          label: key.comprobante,
+        });
+      });
+      
+      dispatch({
+        type: OBTENER_COMPROBANTES,
+        payload: comprobantes
+      });
+
+    });
+  }
+
   const getCustomerByID = async (idCliente) => {
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
     dispatch({
@@ -273,6 +321,7 @@ const CustomerState = (props) => {
     <CustomerContext.Provider
       value={{
         clientes: state.clientes,
+        comprobantes: state.comprobantes,
         clientesBuscar: state.clientesBuscar,
         clienteEditar: state.clienteEditar,
         total_page: state.total_page,
@@ -281,11 +330,14 @@ const CustomerState = (props) => {
         estado: state.estado,
         cargando: state.cargando,
         mensajeCliente: state.mensajeCliente,
+        identificaciones: state.identificaciones,
         getCustomer,
         getCustomerPage,
         addCustomer,
         updateCustomer,
         getCustomerByID,
+        getComprobantes,
+        getIdentification,
         saludar,
       }}
     >

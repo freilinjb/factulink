@@ -4,7 +4,7 @@ import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
 
-import ProductForm from "../../../components/forms/ProductForm";
+import CustomerForm from "../../../components/forms/CustomerForm";
 
 const Product = () => {
   return (
@@ -21,9 +21,10 @@ const Product = () => {
             <Breadcrumb.Item><Link to={'/customer'}><a>Admin Customer</a></Link></Breadcrumb.Item>
             <Breadcrumb.Item active>Add Customer</Breadcrumb.Item>
           </Breadcrumb>
+          <h4>New Cliente</h4>
         </div>
       </div>
-      <ProductForm />
+      <CustomerForm />
     </>
   );
 };

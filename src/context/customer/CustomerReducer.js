@@ -4,9 +4,11 @@ import {
     OBTENER_CLIENTES,
     OBTENER_CLIENTE,
     OBTENER_CLIENTE_POR_PAGINAS,
+    OBTENER_IDENTIFICACIONES,
     BUSCAR_CLIENTE,
     REGISTRO_EXITOSO,
-    REGISTRO_ERROR
+    REGISTRO_ERROR,
+    OBTENER_COMPROBANTES
   } from "../../types";
   
   const reducer = (state, action) => {
@@ -73,6 +75,20 @@ import {
           clienteEditar: action.payload,
           cargando: false
         };
+
+        case OBTENER_COMPROBANTES:
+        console.log("OBTENER_COMPROBANTES: ", action.payload);
+        return {
+          ...state,
+          comprobantes: action.payload
+        };
+
+        case OBTENER_IDENTIFICACIONES:
+          console.log("OBTENER_IDENTIFICACIONES: ", action.payload);
+          return {
+            ...state,
+            identificaciones: action.payload
+          };
   
         case BUSCAR_CLIENTE:
         // console.log("BUSCAR_CLIENTE: ", action.payload);
