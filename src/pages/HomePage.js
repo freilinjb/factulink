@@ -436,7 +436,7 @@ export default () => (
                 <RouteWithSidebar
                   exact
                   path={Routes.UpdateCustomer.path}
-                  component={CustomerEdit}
+                  component={CustomerAdd}
                 />
 
                 <RouteWithNavbarPOS

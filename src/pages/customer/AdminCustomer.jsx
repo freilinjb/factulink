@@ -15,6 +15,7 @@ const AdminCustomer = () => {
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
+    const [customerEdit, setCustomerEdit] = useState(0);
 
     useEffect( () => {
         console.log('clientes: ', clientes);
@@ -88,7 +89,7 @@ const AdminCustomer = () => {
           </Row>
       </div>
 
-      <TableCustomer limit={limit} page={page} setPage={setPage} search={search}/>
+      <TableCustomer limit={limit} page={page} setPage={setPage} search={search} setCustomerEdit={setCustomerEdit} customerEdit={customerEdit}/>
       {/* <RankingTable/> */}
       </>
      );

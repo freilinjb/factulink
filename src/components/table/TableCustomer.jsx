@@ -8,7 +8,7 @@ import transactions from "../../data/transactions";
 
 import CustomerContext from "../../context/customer/CustomerContext";
 
-const TableCustomer = ({limit, page, setPage, search}) => {
+const TableCustomer = ({limit, page, setPage, search, setCustomerEdit}) => {
   const customerContext = useContext(CustomerContext);
   const { getCustomerPage, clientes, total_page } = customerContext;
   const totalTransactions = transactions.length;
@@ -69,7 +69,7 @@ const TableCustomer = ({limit, page, setPage, search}) => {
                 <FontAwesomeIcon icon={faEye} className="me-2" /> View Details
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to={`/customer/edit/${clientes.idCliente}`}>
+                <Link to={`/customer/edit/${cliente.idCliente}`}>
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Edit
                 </Link>
               </Dropdown.Item>

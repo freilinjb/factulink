@@ -1,4 +1,5 @@
 import React,{useContext, useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
 
 import {Col,Row,Card,Form,Button,InputGroup} from "@themesberg/react-bootstrap";
 import Select from "react-select";
@@ -13,11 +14,13 @@ import SupplierContext from "../../context/supplier/SupplierContext";
 import validarCustomer from "../../validation/validarCustomer";
 
 const CustomerForm = (props) => {
+  const { id } = useParams();
+
   const { addToast } = useToasts();
   const customerContext = useContext(CustomerContext);
   const supplierContext = useContext(SupplierContext);
 
-  const { addCustomer, getComprobantes, getIdentification, comprobantes, identificaciones, mensajeCliente, estado } = customerContext;
+  const { addCustomer, updateCustomer, getCustomerByID, getComprobantes, getIdentification, clienteEditar, comprobantes, identificaciones, mensajeCliente, estado } = customerContext;
   const { getCity, getProvince, ciudades, provincias } = supplierContext;
 
   const [campos, setCampos] = useState({
@@ -70,8 +73,12 @@ const CustomerForm = (props) => {
   }
 
   useEffect ( () => {
+    if(id > 0) {
+      getCustomerByID(id)
+    }
+    // console.log('IDcLIENTE: ', id);
     consultar();
-  },[])
+  },[]);
 
   useEffect (() => {
     addToast(mensajeCliente, {
@@ -92,6 +99,31 @@ const CustomerForm = (props) => {
       [name]: value,
     });
   };
+
+  useEffect(() => {
+    if(clienteEditar.idCliente > 0 ) {
+      console.log('prudcotEditar: ', clienteEditar.stockMinimo);
+      console.log('incluyeItbis: ', (clienteEditar.incluyeItbis == "activo"));
+      
+      setCampos({
+        ...campos,
+        idCliente: clienteEditar.idCliente,
+        nombre: clienteEditar.nombre,
+        telefono: clienteEditar.telefono,
+        correo: clienteEditar.correo,
+        identificacion: clienteEditar.RNC,
+        limiteCredito: clienteEditar.limiteCredito,
+        plazoPago: {value: clienteEditar.diasCredito, label: `${clienteEditar.diasCredito} Días`},
+        tipoIdentificacion: {value: clienteEditar.idTipoIdentificacion, label: clienteEditar.tipoIdentificacion},
+        direccion: clienteEditar.direccion,
+        observacion: clienteEditar.observacion,
+        ciudad: {value: clienteEditar.idCiudad, label: clienteEditar.ciudad},
+        provincia: {value: clienteEditar.idProvincia, label: clienteEditar.provincia},
+        estado: (clienteEditar.estado == 1) ? {value: 1, label: 'Activo'} : {value: 0, label: 'Inactivo'},
+      });
+    }
+
+  },[clienteEditar]);
 
   const handleChangeSelect = (valorSeleccionado, s) => {
     const { name } = s;
@@ -124,7 +156,11 @@ const CustomerForm = (props) => {
     console.log('resultados: ',resultados);
 
     if(Object.entries(resultados).length === 0) {
-      addCustomer(campos);
+      if(id > 0) {
+        updateCustomer(campos);
+      } else {
+        addCustomer(campos);
+      }
       console.log('se ha registrado con exito');
       return;
     }
@@ -224,7 +260,7 @@ const CustomerForm = (props) => {
                           name="correo"
                           autoComplete="off"
                           placeholder="Ingrese una descripcion del producto"
-                          value={campos.descripcion}
+                          value={campos.correo}
                           onChange={handleChange}
                         ></Form.Control>
                       </Form.Group>

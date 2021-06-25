@@ -307,11 +307,11 @@ const CustomerState = (props) => {
     });
 
     await clienteAxios.get(`api/customer/${idCliente}`).then( async(respuesta) => {
-      console.log('respuesta: ', respuesta);
+      console.log('getCustomerByID: ', respuesta.data.data[0]);
 
       dispatch({
         type: OBTENER_CLIENTE,
-        payload: respuesta.data.data
+        payload: respuesta.data.data[0]
       });
 
     });

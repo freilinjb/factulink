@@ -11,7 +11,7 @@ import ProductFormEdit from "../../../components/forms/ProductFormEdit";
 // import { ChoosePhotoWidget, ProfileCardWidget } from "../../components/Widgets";
 
 
-const ProductEdit = () => {
+const CustomerEdit = () => {
   const { id } = useParams();
 
   useEffect(() => {
@@ -43,4 +43,4 @@ const ProductEdit = () => {
   );
 };
 
-export default ProductEdit;
+export default CustomerEdit;
