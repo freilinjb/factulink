@@ -438,6 +438,26 @@ export default () => (
                   path={Routes.UpdateCustomer.path}
                   component={CustomerAdd}
                 />
+                {/* START USER */}
+                <RouteWithSidebar
+                  exact
+                  path={Routes.AdminUser.path}
+                  component={AdminCustomer}
+                />
+                
+                <RouteWithSidebar
+                  exact
+                  path={Routes.AddUser.path}
+                  component={CustomerAdd}
+                />
+
+                <RouteWithSidebar
+                  exact
+                  path={Routes.UpdateUser.path}
+                  component={CustomerAdd}
+                />
+
+                {/* END USER */}
 
                 <RouteWithNavbarPOS
                   exact
