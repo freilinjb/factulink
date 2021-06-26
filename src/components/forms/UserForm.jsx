@@ -26,8 +26,8 @@ const CustomerForm = (props) => {
   const { addUser, updateUser, getTypesUser, getUserByID, usaurioEditar, tiposUsuarios, mensajeUsuario, estado } = userContext;
 
   const [campos, setCampos] = useState({
-    nombre: "Freilin",
-    apellido: "Jerez",
+    nombre: "",
+    apellido: "",
     tipoIdentificacion: "",
     identificacion: "",
     sexo: "",
@@ -167,7 +167,7 @@ const CustomerForm = (props) => {
         <Col xs={12} xl={8}>
           <Card border="ligh" className="bg-white shadow-sm mb-4 px-3 pb-3">
             <Card.Header>
-              <h5>New User</h5>
+              <h5>{id > 0 ? 'Update User' : 'New User'}</h5>
             </Card.Header>
             <Card.Body>
               <Form onSubmit={handleSubmit}>

@@ -58,6 +58,7 @@ import Tooltips from "./components/Tooltips";
 import Toasts from "./components/Toasts";
 
 import AuthState from "../context/auth/AuthState";
+import UserState from "../context/user/UserState";
 import ProductState from "../context/product/ProductState";
 import CustomerState from "../context/customer/CustomerState";
 import SupplierState from "../context/supplier/SupplierState";
@@ -80,8 +81,11 @@ import Unid from "./unid/Unid";
 
 //AdminCustomer
 import AdminCustomer from "./customer/AdminCustomer";
-import CustomerEdit from "./customer/edit/CustomerEdit";
 import CustomerAdd from "./customer/add/CustomerAdd";
+
+//AdminUser
+import AdminUser from "./user/AdminUser";
+import User from "./user/action/User";
 
 //Billing
 import Billing from "./Billing";
@@ -179,6 +183,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 export default () => (
   <ToastProvider>
     <AuthState>
+      <UserState>
     <CustomerState>
       <SupplierState>
         <ProductState>
@@ -442,19 +447,19 @@ export default () => (
                 <RouteWithSidebar
                   exact
                   path={Routes.AdminUser.path}
-                  component={AdminCustomer}
+                  component={AdminUser}
                 />
                 
                 <RouteWithSidebar
                   exact
                   path={Routes.AddUser.path}
-                  component={CustomerAdd}
+                  component={User}
                 />
 
                 <RouteWithSidebar
                   exact
                   path={Routes.UpdateUser.path}
-                  component={CustomerAdd}
+                  component={User}
                 />
 
                 {/* END USER */}
@@ -473,6 +478,7 @@ export default () => (
         </ProductState>
       </SupplierState>
       </CustomerState>
+      </UserState>
     </AuthState>
   </ToastProvider>
 );

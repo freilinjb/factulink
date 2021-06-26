@@ -111,11 +111,6 @@ export default (props = {}) => {
                 <NavItem title="Product Register" link={Routes.Product.path} />
                 <NavItem title="SignIn" link={Routes.Signin.path} />
               </CollapsableNavItem>
-
-              {/* PRUEBA */}
-              {/* <CollapsableNavItem eventKey="admin/supplier" title="Admin Supplier" icon={faBoxOpen}>
-              <NavItem title="supplier" link={Routes.AdminSupplier.path} />
-              </CollapsableNavItem> */}
               
               <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
               
