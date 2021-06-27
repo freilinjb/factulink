@@ -54,11 +54,11 @@ const TableUser = ({limit, page, setPage, search}) => {
         <tr key={index +'-'+ usuario.idUsuario}>
           <td>{(index)}</td>
           <td>{usuario.nombre} {(usuario.urlFoto != null  &&  <Image src={usuario.urlFoto} className="image-sm rounded-circle me-2" /> )} </td>
+          <td>{usuario.usuario.toUpperCase()}</td>
+          <td>{usuario.tipoUsuario.toUpperCase()}</td>
           <td>{usuario.telefono}</td>
           <td>{usuario.correo}</td>
-          <td>{usuario.RNC}</td>
-          <td>{usuario.ciudad}</td>
-          <td>{usuario.estado == 1 ? 'Activo' : 'Inactivo' }</td>
+          <td>{usuario.estado}</td>
           <td>
           <Dropdown as={ButtonGroup}>
             <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
@@ -97,10 +97,10 @@ const TableUser = ({limit, page, setPage, search}) => {
                <tr>
                  <th className="border-bottom">#</th>
                  <th className="border-bottom">Nombre</th>
+                 <th className="border-bottom">Usuario</th>
+                 <th className="border-bottom">Nivel de Acceso</th>
                  <th className="border-bottom">Telefono</th>
                  <th className="border-bottom">Correo</th>
-                 <th className="border-bottom">RNC</th>
-                 <th className="border-bottom">Ciudad</th>
                  <th className="border-bottom">Estado</th>
                  <th className="border-bottom">Acción</th>
                </tr>

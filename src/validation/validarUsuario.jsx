@@ -33,18 +33,6 @@ const validarUsuario = (valores) => {
     errores.claveRepetir = "Las claves no coinciden";
   }
 
-  if (!valores.telefono) {
-    errores.telefono = "Debe espesificar punto de reorden";
-  }
-
-  if (!valores.correo) {
-    errores.correo = "Debe seleccionar el proveedor";
-  }
-
-  if (!valores.fechaNacimiento) {
-    errores.fechaNacimiento = "Debe seleccionar la disponibilidad";
-  }
-
   if (!valores.provincia) {
     errores.provincia = "Debe espesificar el previo de compra";
   }

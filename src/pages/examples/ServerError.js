@@ -9,7 +9,8 @@ import { Routes } from "../../routes";
 import ErrorImage from "../../assets/img/illustrations/500.svg";
 
 
-export default () => {
+const ServerError =
+ () => {
   return (
     <main>
       <section className="vh-100 d-flex align-items-center justify-content-center">
@@ -36,3 +37,5 @@ export default () => {
     </main>
   );
 };
+
+export default ServerError;

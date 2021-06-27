@@ -18,6 +18,7 @@ import useValidacion from "../../hooks/useValidacion";
 import validarSignIn from "../../validation/validarSignIn";
 
 const Signin = () => {
+  const { addToast } = useToasts();
   const authContext = useContext(AuthContext);
   const { iniciarSesion, mensaje } = authContext;
 
@@ -27,7 +28,6 @@ const Signin = () => {
     recordarme: false
   };
 
-     const { addToast } = useToasts();
       useEffect(() => {
         console.log(`addToast: ${mensaje}`);
         if(mensaje) {

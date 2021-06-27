@@ -23,7 +23,7 @@ const CustomerForm = (props) => {
 
   const { getIdentification, identificaciones } = customerContext;
   const { getCity, getProvince, ciudades, provincias } = supplierContext;
-  const { addUser, updateUser, getTypesUser, getUserByID, usaurioEditar, tiposUsuarios, mensajeUsuario, estado } = userContext;
+  const { addUser, updateUser, getTypesUser, getUserByID, usuarioEditar, tiposUsuarios, mensajeUsuario, estado } = userContext;
 
   const [campos, setCampos] = useState({
     nombre: "",
@@ -94,28 +94,27 @@ const CustomerForm = (props) => {
   };
 
   useEffect(() => {
-    if(usaurioEditar.idCliente > 0 ) {
-      console.log('prudcotEditar: ', usaurioEditar.stockMinimo);
-      console.log('incluyeItbis: ', (usaurioEditar.incluyeItbis === "activo"));
+    if(usuarioEditar) {
       
       setCampos({
         ...campos,
-        idCliente: usaurioEditar.idCliente,
-        nombre: usaurioEditar.nombre,
-        apellido: usaurioEditar.apellido,
-        telefono: usaurioEditar.telefono,
-        correo: usaurioEditar.correo,
-        identificacion: usaurioEditar.RNC,
-        tipoIdentificacion: {value: usaurioEditar.idTipoIdentificacion, label: usaurioEditar.tipoIdentificacion},
-        direccion: usaurioEditar.direccion,
-        observacion: usaurioEditar.observacion,
-        ciudad: {value: usaurioEditar.idCiudad, label: usaurioEditar.ciudad},
-        provincia: {value: usaurioEditar.idProvincia, label: usaurioEditar.provincia},
-        estado: (usaurioEditar.estado === 1) ? {value: 1, label: 'Activo'} : {value: 0, label: 'Inactivo'},
+        idUsuario: usuarioEditar.idUsuario,
+        nombre: usuarioEditar.nombre,
+        apellido: usuarioEditar.apellido,
+        telefono: usuarioEditar.telefono,
+        correo: usuarioEditar.correo,
+        identificacion: usuarioEditar.RNC,
+        tipoIdentificacion: {value: usuarioEditar.idTipoIdentificacion, label: usuarioEditar.tipoIdentificacion},
+        usuario: usuarioEditar.usuario,
+        direccion: usuarioEditar.direccion,
+        observacion: usuarioEditar.observacion,
+        ciudad: {value: usuarioEditar.idCiudad, label: usuarioEditar.ciudad},
+        provincia: {value: usuarioEditar.idProvincia, label: usuarioEditar.provincia},
+        estado: (usuarioEditar.estado === 1) ? {value: 1, label: 'Activo'} : {value: 0, label: 'Inactivo'},
       });
     }
 
-  },[usaurioEditar]);
+  },[usuarioEditar]);
 
   const handleChangeSelect = (valorSeleccionado, s) => {
     const { name } = s;
@@ -339,7 +338,7 @@ const CustomerForm = (props) => {
                         ></Form.Control>
                       </Form.Group>
 
-                      <Form.Group id="fechaNacimiento" className="col-4 pt-3">
+                      <Form.Group controlId="date" id="fechaNacimiento" className="col-4 pt-3">
                         <Form.Label>Fecha de Nacimiento</Form.Label>
                         <Form.Control
                           type="date"

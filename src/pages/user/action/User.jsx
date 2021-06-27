@@ -1,5 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
@@ -7,6 +8,8 @@ import { Breadcrumb } from "@themesberg/react-bootstrap";
 import UserForm from "../../../components/forms/UserForm";
 
 const User = () => {
+  const { id } = useParams();
+
   return (
     <>
       <div className="d-xl-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
@@ -18,10 +21,10 @@ const User = () => {
             <Breadcrumb.Item>
               <FontAwesomeIcon icon={faHome} />
             </Breadcrumb.Item>
-            <Breadcrumb.Item><Link to={'/user'}><a>Admin User</a></Link></Breadcrumb.Item>
-            <Breadcrumb.Item active>Add User</Breadcrumb.Item>
+            <Breadcrumb.Item href="/#/user">Admin User</Breadcrumb.Item>
+            <Breadcrumb.Item active>{id > 0  ? 'Update User' : 'Add User'}</Breadcrumb.Item>
           </Breadcrumb>
-          <h4>New User</h4>
+          <h4>{id > 0  ? 'Update User' : 'New User'}</h4>
         </div>
       </div>
       <UserForm />

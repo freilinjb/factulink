@@ -26,7 +26,7 @@ const UserState = (props) => {
     total_page: [],
     page_cout: null,
     usuariosBuscar: [],
-    usaurioEditar: {},
+    usuarioEditar: {},
     usuarioSeleccionado: null,
     mensajeUsuario: null,
     estado: [
@@ -349,7 +349,7 @@ const UserState = (props) => {
         usuarios: state.usuarios,
         tiposUsuarios: state.tiposUsuarios,
         usuariosBuscar: state.usuariosBuscar,
-        usaurioEditar: state.usaurioEditar,
+        usuarioEditar: state.usuarioEditar,
         total_page: state.total_page,
         page_cout: state.page_cout,
         usuarioSeleccionado: state.usuarioSeleccionado,
