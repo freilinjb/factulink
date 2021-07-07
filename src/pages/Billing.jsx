@@ -9,13 +9,18 @@ import CustomerContext from "../context/customer/CustomerContext";
 import TableProductoFacturacion from "../components/table/TableProductoFacturacion";
 
 import ProductContext from "../context/product/ProductContext";
+import PagoFacturacionModal from '../components/modal/PagoFacturacionModal';
 
 const Billing = () => {
     const productContext = useContext(ProductContext);
     const {  getProduct, productos, getAllProduct } = productContext;
     const customerContext = useContext(CustomerContext);
     const { getCustomer, clientesSelect } = customerContext;
+    const [mostrarModal, setMostrarModal] = useState(false);
     const [productBilling, setProductBilling] = useState([]);
+
+    const [isEdit, setIsEdit] = useState(0);
+
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
@@ -50,6 +55,9 @@ const Billing = () => {
         }
       }
 
+    const handleClose = () => setMostrarModal(false);
+
+
     const handleChangeSelect = (valorSeleccionado, s) => {
         const { name } = s;
         setCampos({
@@ -57,14 +65,6 @@ const Billing = () => {
             [name]: valorSeleccionado,
         });
     }; 
-      
-  const handleChange = (e) => {
-    console.log(`${e.target.name}`, e.target.value);
-    setCampos({
-      ...campos,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const tipoVenta = [
     { value: 1, label: "Contado" },
@@ -100,17 +100,56 @@ const Billing = () => {
     // console.log('addProduct: ', cantidad);
 
     if(!encontrado) {
+      console.log('verificando: ', producto)
         const product = {
             idProducto: producto.idProducto,
+            codigo: producto.codigo,
             nombre: producto.nombre,
             marca: producto.marca,
             precio: producto.precioVenta,
+            categoria: producto.categoria,
+            subcategoria: producto.subcategoria,
             cantidad: cantidad,
             itbis: producto.incluyeItbis == 'activo' ? true : false
         }
         setProductBilling([...productBilling, product]);
+    } else {
+      let indice = null;
+      let resultados = [];
+      productBilling.forEach((key, index) => {
+        if(producto.idProducto == key.idProducto) {
+          const product = {
+            idProducto: key.idProducto,
+            codigo: key.codigo,
+            nombre: key.nombre,
+            marca: key.marca,
+            precio: key.precio,
+            categoria: key.categoria,
+            subcategoria: key.subcategoria,
+            cantidad: Number(cantidad),
+            itbis: key.itbis
+          }
 
-        
+          resultados.push(product);
+          
+        } else {
+          const product = {
+            idProducto: key.idProducto,
+            codigo: key.codigo,
+            nombre: key.nombre,
+            marca: key.marca,
+            precio: key.precio,
+            categoria: key.categoria,
+            subcategoria: key.subcategoria,
+            cantidad: Number(key.cantidad),
+            itbis: key.itbis
+          }
+          resultados.push(product);
+
+        }
+      })
+      setProductBilling(resultados);
+      console.log('indice: ', resultados);
     }
     
     // setProductBilling(
@@ -123,6 +162,20 @@ const Billing = () => {
     return productBilling.some(el => el.idProducto == id );
   }
 
+  const mostrarModalEditarProducto = (producto) => {
+    setMostrarModal(true);
+    //No se va a editar
+    console.log('producto: ', producto);
+    setIsEdit(producto.idProducto);
+
+    // console.log('Editando la categoria ID: ', producto);
+  }
+
+  const eliminarProducto = (product) => {
+    const resultados = productBilling.filter(p => p.idProducto !== product.idProducto);
+
+    setProductBilling(resultados);
+  }
 
   
     return ( 
@@ -170,6 +223,12 @@ const Billing = () => {
                                 placeholder="Tipo de Venta"
                             />  
                         </Form.Group>
+
+                        <div className="col-auto">
+                        <Button className="m-1 btn-primary">
+                          <FontAwesomeIcon icon={faEdit} className="me-2" /> Facturar
+                        </Button>
+                        </div>
                         
                         <div className="col-12">
                             
@@ -199,8 +258,12 @@ const Billing = () => {
                                             <td>{((product.precio * product.cantidad) * 0.18).toFixed(2)}</td>
                                             <td>{((product.precio * product.cantidad) * 1.18).toFixed(2)}</td>
                                             <td>
-                                                    <a className="text-info"><FontAwesomeIcon icon={faEdit} className="me-2" /></a>
-                                                    <a className="text-danger"><FontAwesomeIcon icon={faTrashAlt} className="me-2" /></a>
+                                                    <a className="text-info"
+                                                      onClick={() => mostrarModalEditarProducto(product)}
+                                                    ><FontAwesomeIcon icon={faEdit} className="me-2" /></a>
+                                                    <a className="text-danger"
+                                                      onClick={() => eliminarProducto(product)}
+                                                    ><FontAwesomeIcon icon={faTrashAlt} className="me-2" /></a>
                                             </td>
                                          </tr>   
                                     ))}
@@ -231,20 +294,31 @@ const Billing = () => {
                     <table className="table">
                       <tbody><tr>
                         <th >SUBTOTAL:</th>
-                        <td>{sumatoria.subTotal}</td>
+                        <td>{sumatoria.subTotal.toFixed(2)}</td>
                       </tr>
                       <tr>
                         <th>ITBIS (18%)</th>
-                        <td> RD$ {sumatoria.itbis}</td>
+                        <td> RD$ {sumatoria.itbis.toFixed(2)}</td>
                       </tr>
                       <tr>
                         <th>TOTAL:</th>
-                        <td>{sumatoria.total}</td>
+                        <td>{sumatoria.total.toFixed(2)}</td>
                       </tr>
                     </tbody></table>
                   </div>
                 </div>
+                {/* <Button variant="outline-primary" className="m-1">
+                  <FontAwesomeIcon icon={faEdit} className="me-2" /> Facturar
+                </Button> */}
+                <Button variant="outline-danger" className="m-1">
+                  <FontAwesomeIcon icon={faEdit} className="me-2" /> Cancelar
+                </Button>
+
+
                 {/* <!-- /.col --> */}
+
+                <PagoFacturacionModal handleClose={handleClose} showModal={mostrarModal} isEdit={isEdit}/>
+
               </div>
                             {/*  */}
                         </div>
