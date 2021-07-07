@@ -1,24 +1,23 @@
 import React, { useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEllipsisH, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup} from '@themesberg/react-bootstrap';
+import { faEdit, faEllipsisH, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
 
 // import { Link } from 'react-router-dom';
 
-import UnidContext from "../../context/unid/UnidContext";
+import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
 
-
-const TableUnid = ({limit, page, setPage, search, showModalEditUnid}) => {
-  const unidContext = useContext(UnidContext);
-  const {getUnidPaged, unidades, mensajeUnidad, total_page, total_rows} = unidContext;
+const TableComprobante = ({limit, page, setPage, search, showModalEditComprobante, deleteCategoryfn}) => {
+  const comprobanteContext = useContext(ComprobanteContext);
+  const { getAllComprobante, comprobantes, total_page, total_rows, mensajeComprobante} = comprobanteContext;
 
   useEffect(() => {
-    getUnidPaged(limit,1);
+    getAllComprobante(limit,1);
   },[]);
 
   useEffect(() => {
-    getUnidPaged(limit, page, search);
-  },[limit, page, mensajeUnidad]);
+    getAllComprobante(limit, page, search);
+  },[limit, page, mensajeComprobante]);
 
   const handleChange =e=> {
     // console.log('handleChange: ', e.target.text);
@@ -40,16 +39,22 @@ const TableUnid = ({limit, page, setPage, search, showModalEditUnid}) => {
     );
   }
 
-  const TablaRowUnid = ({unidad, index}) => {
+  const TablaRowComprobante = ({comprobante, index}) => {
 
     return (
       <>
-        <tr key={index +'-'+ unidad.idCategoria}>
+        <tr key={index +'-'+ comprobante.TipoCliente}>
           <td>{(index)}</td>
-          <td>{unidad.unidad}</td>
-          <td>{unidad.creado_por ? unidad.creado_por : ' - '}</td>
-          <td>{unidad.creado_en}</td>
-          <td>{unidad.estado}</td>
+          <td>{comprobante.descripcion}</td>
+          <td>{comprobante.tipo}</td>
+          <td>{comprobante.encabezado}</td>
+          <td>{comprobante.mostrarCliente ? 'Verdadero' : 'Falso'}</td>
+          <td>{comprobante.vencimiento ? comprobante.vencimiento : 0 }</td>
+          <td>{comprobante.encabezado}</td>
+
+          <td>{comprobante.creado_por ? comprobante.creado_por : ' - '}</td>
+          <td>{comprobante.creado_en}</td>
+          <td>{comprobante.estado}</td>
           <td>
           <Dropdown as={ButtonGroup}>
             <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
@@ -59,11 +64,12 @@ const TableUnid = ({limit, page, setPage, search, showModalEditUnid}) => {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item
-                onClick={() => showModalEditUnid(unidad.idUnidad)}
+                onClick={() => showModalEditComprobante(comprobante.tipoComprobante)}
               >         
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Edit
               </Dropdown.Item>
               <Dropdown.Item className="text-danger"
+                // onClick={deleteCategoryfn(comprobante.idCategoria)}
               >
                 <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Remove
               </Dropdown.Item>
@@ -84,7 +90,12 @@ const TableUnid = ({limit, page, setPage, search, showModalEditUnid}) => {
              <thead className="thead-dark">
                <tr>
                  <th className="border-bottom">#</th>
-                 <th className="border-bottom">Unidad</th>
+                 <th className="border-bottom">Comprobante</th>
+                 <th className="border-bottom">Tipo Comprobante</th>
+                 <th className="border-bottom">Encabezado</th>
+                 <th className="border-bottom">Mostrar al Cliente</th>
+                 <th className="border-bottom">Secuencia</th>
+                 <th className="border-bottom">Vencimiento</th>
                  <th className="border-bottom">Creado por</th>
                  <th className="border-bottom">Creado En</th>
                  <th className="border-bottom">Estado</th>
@@ -92,7 +103,7 @@ const TableUnid = ({limit, page, setPage, search, showModalEditUnid}) => {
                </tr>
              </thead>
             <tbody>
-            {unidades.map((unidad, index) => <TablaRowUnid unidad={unidad} index={Number(page) > 1 ? ((Number(page)*Number(limit))+index) : (index+1)} key={unidad.idUnidad+'-'+index}/>)}
+            {comprobantes.map((comprobante, index) => <TablaRowComprobante comprobante={comprobante} index={Number(page) > 1 ? ((Number(page)*Number(limit))+index) : (index+1)} key={comprobante.idCategoria+'-'+index}/>)}
           </tbody>
         </Table>
 
@@ -110,7 +121,7 @@ const TableUnid = ({limit, page, setPage, search, showModalEditUnid}) => {
             </Pagination>
           </Nav>
           <small className="fw-bold">
-            Showing <b>{unidades.length}</b> out of <b>{total_rows}</b> entries
+            Showing <b>{comprobantes.length}</b> out of <b>{total_rows}</b> entries
           </small>
         </Card.Footer>
       </Card.Body>
@@ -118,4 +129,4 @@ const TableUnid = ({limit, page, setPage, search, showModalEditUnid}) => {
   );
 };
 
-export default TableUnid;
+export default TableComprobante;

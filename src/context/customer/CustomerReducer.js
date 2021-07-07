@@ -50,7 +50,7 @@ import {
         console.log("OBTENER_CLIENTES: ", action.payload);
         return {
           ...state,
-          clientes: action.payload.data
+          clientesSelect: action.payload
         };
 
         case OBTENER_CLIENTE_POR_PAGINAS:

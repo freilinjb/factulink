@@ -118,7 +118,7 @@ export default (props = {}) => {
               <NavItem title="Supplier" icon={faHandHoldingUsd} link={Routes.AdminSupplier.path} />
               <NavItem title="Customer" icon={faHandHoldingUsd} link={Routes.AdminCustomer.path} />
               <NavItem title="User" icon={faUser} link={Routes.AdminUser.path} />
-              <NavItem title="Capalogo de C.F." icon={faUser} link={Routes.AdminUser.path} />
+              <NavItem title="Catalogo de C.F." icon={faUser} link={Routes.AdminComprobantes.path} />
               <NavItem title="Billing" icon={faHandHoldingUsd} link={Routes.Billing.path} />
               
               <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />

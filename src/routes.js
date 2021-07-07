@@ -71,4 +71,8 @@ export const Routes = {
     AdminUser: { path: '/user' },
     AddUser: { path: '/user/add' },
     UpdateUser: { path: '/user/edit/:id' },
+    //CUSTOMER
+    AdminComprobantes: { path: '/comprobantes' },
+    AddComprobante: { path: '/comprobantes/add' },
+    UpdateComprobante: { path: '/comprobantes/edit/:id' },
 };

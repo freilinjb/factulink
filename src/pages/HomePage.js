@@ -65,6 +65,7 @@ import SupplierState from "../context/supplier/SupplierState";
 import CategoryState from "../context/category/CategoryState";
 import SubCategoryState from "../context/subcategory/SubCategoryState";
 import UnidState from "../context/unid/UnidState";
+import ComprobanteState from "../context/comprobante/ComprobanteState";
 
 import ProductEdit from "./adminProduct/edit/ProductEdit";
 import AdminProduct from "./adminProduct/AdminProduct";
@@ -90,6 +91,8 @@ import User from "./user/action/User";
 //Billing
 import Billing from "./Billing";
 
+//Comprobantes
+import Comprobantes from "./comprobantes/Comprobantes";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -190,6 +193,7 @@ export default () => (
           <CategoryState>
             <SubCategoryState>
               <UnidState>
+                <ComprobanteState>
               <Switch>
                 <RouteWithLoader
                   exact
@@ -464,6 +468,12 @@ export default () => (
 
                 {/* END USER */}
 
+                <RouteWithSidebar
+                  exact
+                  path={Routes.AdminComprobantes.path}
+                  component={Comprobantes}
+                />
+
                 <RouteWithNavbarPOS
                   exact
                   path={Routes.Billing.path}
@@ -472,6 +482,7 @@ export default () => (
 
                 <Redirect to={Routes.NotFound.path} />
               </Switch>
+              </ComprobanteState>
               </UnidState>
             </SubCategoryState>
           </CategoryState>

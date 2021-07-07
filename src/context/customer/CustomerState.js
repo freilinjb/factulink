@@ -21,6 +21,7 @@ import {
 const CustomerState = (props) => {
   const initialState = {
     clientes: [],
+    clientesSelect: [],
     comprobantes: [],
     identificaciones: [],
     total_page: [],
@@ -45,17 +46,26 @@ const CustomerState = (props) => {
     dispatch({
       type: INICIANDO_CONSULTA,
     });
-
-    let respuesta2 = [];
+    console.log('getCustomer');
+    
     await clienteAxios
       .get("api/customer")
       .then(async (respuesta) => {
         // console.log("respuesta: ", respuesta);
+        
+        let clientes = [];
 
-        respuesta2 = respuesta.data;
+        respuesta.data.data.forEach((key) => {
+          clientes.push({
+            value: key.idCliente,
+            label: key.nombre ? key.nombre : key.razonSocial,
+          });
+        });
+        console.log('getCustomer: ', clientes);
+
         dispatch({
           type: OBTENER_CLIENTES,
-          payload: respuesta.data,
+          payload: clientes,
         });
       })
       .catch((error) => {
@@ -66,8 +76,6 @@ const CustomerState = (props) => {
           type: FINALIZANDO_CONSULTA,
         });
       });
-
-    return respuesta2.data;
   };
 
   const getCustomerPage = async (limit, page, search = 0) => {
@@ -177,38 +185,31 @@ const CustomerState = (props) => {
       type: INICIANDO_CONSULTA
     });
 
-    // console.log('data: ', data);
-    // return;
-    let proveedores = [];
-    data.proveedor.forEach((key) => {
-      proveedores.push(key.value);
-      console.log("proveedorEnviado: ", key);
-    });
-    
+
     const formulario = new FormData();
-    // formulario.append("idProducto", data.idProducto);
-    formulario.append("idProducto", data.idProducto);
-    formulario.append("codigo", data.codigo);
+    formulario.append("idCliente", data.idCliente);
     formulario.append("nombre", data.nombre);
-    formulario.append("idCategoria", Number(data.categoria.value));
-    formulario.append("idSubCategoria", Number(data.subCategoria.value));
-    formulario.append("idMarca", Number(data.marca.value));
-    formulario.append("idUnidad", Number(data.unidad.value));
-    formulario.append("descripcion", data.descripcion);
-    formulario.append("stockInicial", Number(data.stockInicial));
-    formulario.append("stockMinimo", Number(data.stockMinimo));
-    formulario.append("reorden", Number(data.reorden));
+    formulario.append("idTipoIdentificacion", Number(data.tipoIdentificacion.value));
+    formulario.append("identificacion", data.identificacion);
+    formulario.append("correo", data.correo);
+    formulario.append("telefono", data.telefono);
+    formulario.append("sitioWeb", data.sitioWeb);
+    formulario.append("tipoComprobante", Number(data.tipoComprobante.value));
+    formulario.append("idVendedor", Number(data.vendedor.value));
+    formulario.append("diasCredito", Number(data.plazoPago.value));
+    formulario.append("descuento", 0);
+    formulario.append("limiteCredito", Number(data.limiteCredito));
+    formulario.append("aplicaDescuento", Number(data.limiteCredito) > 0 ? 1 : 0 );
+    formulario.append("idProvincia", Number(data.provincia.value));
+    formulario.append("idCiudad", Number(data.ciudad.value));
+    formulario.append("direccion", data.direccion);
+    formulario.append("customerImg", data.imagen);
+    formulario.append("creado_por", 1);
     formulario.append("observacion", data.observacion);
-    formulario.append("incluyeItbis", (data.incluyeItbis) ? 1 : 0);
-    formulario.append("precioVenta", Number(data.precioVenta));
-    formulario.append("precioCompra", Number(data.precioCompra));
-    formulario.append("idProveedor", proveedores);
-    formulario.append("productImag", data.imagen);
-    formulario.append("creado_por", Number(data.creado_por));
     formulario.append("estado", Number(data.estado.value));
 
     await clienteAxios
-      .put("api/customer/", formulario,{
+      .put(`api/customer/${data.idCliente}`, formulario,{
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -225,7 +226,7 @@ const CustomerState = (props) => {
               'success'
             ).then((result) => {
               //Redireccionar
-              history.replace("/admin/supplier");
+              history.replace("/customer");
               console.log('prueba: ', result);
             });
           }
@@ -284,7 +285,6 @@ const CustomerState = (props) => {
     await clienteAxios.get('api/customer/comprobante').then( async(respuesta) => {
       console.log('getComprobantes: ', respuesta);
       let comprobantes = [];
-
       respuesta.data.data.forEach((key) => {
         comprobantes.push({
           value: key.tipoComprobante,
@@ -321,6 +321,7 @@ const CustomerState = (props) => {
     <CustomerContext.Provider
       value={{
         clientes: state.clientes,
+        clientesSelect: state.clientesSelect,
         comprobantes: state.comprobantes,
         clientesBuscar: state.clientesBuscar,
         clienteEditar: state.clienteEditar,
