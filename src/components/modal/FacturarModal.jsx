@@ -89,9 +89,7 @@ const FacturarModal = ({handleClose, showModal, facturar}) => {
           <Row className="justify-content-center">
             <div className="col-12">
               <div className="text-center">
-                <h4>Total RD$ {campos.subTotal}</h4>
-                <h4>Itbis(%18) RD$ {campos.itbisTotal}</h4>
-                <h4>Itbis(%18) RD$ {campos.total}</h4>
+                <h1>Total RD$ {campos.total}</h1>
               </div>
             </div>
           <hr/>

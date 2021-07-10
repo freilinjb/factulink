@@ -5,7 +5,8 @@ import {
     OBTENER_COMPROBANTES,
     REGISTRO_EXITOSO,
     REGISTRO_ERROR,
-    FINALIZANDO_CONSULTA
+    FINALIZANDO_CONSULTA,
+    OBTENER_FACTURA
   } from "../../types";
   
   const reducer = (state, action) => {
@@ -66,6 +67,13 @@ import {
           comprobanteEditar: action.payload,
           cargando: false
         };
+
+        case OBTENER_FACTURA:
+          console.log("OBTENER_FACTURA: ", action.payload);
+         return {
+           ...state,
+           factura: action.payload,
+         };
   
         case OBTENER_COMPROBANTES:
         // console.log("OBTENER_CATEGORIAS: ", action.payload);

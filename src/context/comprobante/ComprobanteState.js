@@ -11,6 +11,7 @@ import {
   OBTENER_COMPROBANTES_POR_PAGINAS,
   FINALIZANDO_CONSULTA,
   OBTENER_COMPROBANTES,
+  OBTENER_FACTURA,
   REGISTRO_EXITOSO,
   REGISTRO_ERROR,
 } from "../../types";
@@ -19,6 +20,7 @@ const ComprobanteState = (props) => {
   const initialState = {
     comprobantes: [],
     comprobantesSelect: [],
+    factura: [],
     total_page: [],
     page_cout: null,
     comprobanteEditar: {},
@@ -63,6 +65,30 @@ const ComprobanteState = (props) => {
     console.log("hola como estas ", nombre);
   };
 
+  const getInvoice = async (number) => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+    dispatch({
+      type: INICIANDO_CONSULTA,
+    });
+    await clienteAxios
+      .get(`/api/billing/invoice/${number}`)
+      .then(async (respuesta) => {
+        console.log('invoice: ', respuesta.data.data);
+
+        dispatch({
+          type: OBTENER_FACTURA,
+          payload: respuesta.data.data,
+        });
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      })
+      .finally(() => {
+        dispatch({
+          type: FINALIZANDO_CONSULTA,
+        });
+      });
+  }
   const addFactura = async (data) => {
 
     console.log('addFactura: ', data);
@@ -84,7 +110,11 @@ const ComprobanteState = (props) => {
         productos: data.productos, 
       })
       .then(async (respuesta) => {
-        console.log("Respuesta: ", respuesta);
+        if(respuesta.data.success == 1) {
+          window.open(`/#/billing/invoice/${respuesta.data.data[0].numFactura}`);
+          console.log('/#/Abrir factura: ',respuesta.data.data[0].numFactura);
+        }
+        console.log("Respuesta: ", respuesta.data.data);
       })
       .catch((error) => {
           console.log('Error: ', error);
@@ -251,12 +281,14 @@ const ComprobanteState = (props) => {
         estado: state.estado,
         cargando: state.cargando,
         mensajeComprobante: state.mensajeComprobante,
+        factura: state.factura,
         getAllComprobante,
         addComprobante,
         updateComprobante,
         getComprobanteByID,
         getComprobante,
         addFactura,
+        getInvoice,
         saludar,
       }}
     >

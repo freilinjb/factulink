@@ -73,6 +73,8 @@ const Billing = () => {
       datos.observacion = document.getElementById('observacionFacturacion').value;
       datos.productos = productBilling;
       addFactura(datos);
+      setMostrarModalFacturar(false);
+      setProductBilling([]);
       console.log('Facturando: ....', datos);
     }
 

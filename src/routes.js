@@ -67,6 +67,7 @@ export const Routes = {
     UpdateCustomer: { path: '/customer/edit/:id' },
     //Billing
     Billing: { path: '/billing' },
+    Invoice: { path: '/billing/invoice/:id' },
     //CUSTOMER
     AdminUser: { path: '/user' },
     AddUser: { path: '/user/add' },

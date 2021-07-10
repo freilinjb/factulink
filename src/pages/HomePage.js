@@ -90,6 +90,7 @@ import User from "./user/action/User";
 
 //Billing
 import Billing from "./Billing";
+import Invoice from "./billing/Invoice";
 
 //Comprobantes
 import Comprobantes from "./comprobantes/Comprobantes";
@@ -109,6 +110,25 @@ const RouteWithLoader = ({ component: Component, ...rest }) => {
         <>
           {" "}
           <Preloader show={loaded ? false : true} /> <Component {...props} />{" "}
+        </>
+      )}
+    />
+  );
+};
+
+const RouteWithOutLoader = ({ component: Component, ...rest }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(true);
+  },[]);
+  return (
+    <Route
+      {...rest}
+      render={(props) => (
+        <>
+          {" "}
+          <Preloader /> <Component {...props} />{" "}
         </>
       )}
     />
@@ -479,6 +499,14 @@ export default () => (
                   path={Routes.Billing.path}
                   component={Billing}
                 />
+
+                <RouteWithOutLoader
+                  exact
+                  path={Routes.Invoice.path}
+                  component={Invoice}
+                />
+
+
 
                 <Redirect to={Routes.NotFound.path} />
               </Switch>
