@@ -63,6 +63,35 @@ const ComprobanteState = (props) => {
     console.log("hola como estas ", nombre);
   };
 
+  const addFactura = async (data) => {
+
+    console.log('addFactura: ', data);
+  // return;    
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+    dispatch({
+      type: INICIANDO_CONSULTA,
+    });
+
+    await clienteAxios
+      .post("/api/billing", { 
+        idUsuario: data.idUsuario, 
+        tipoComprobante: data.tipoComprobante, 
+        idCliente: data.idCliente, 
+        idTipoFactura: data.idTipoFactura, 
+        idFormaPago: data.idFormaPago, 
+        descuento: data.descuento, 
+        observacion: data.observacion, 
+        productos: data.productos, 
+      })
+      .then(async (respuesta) => {
+        console.log("Respuesta: ", respuesta);
+      })
+      .catch((error) => {
+          console.log('Error: ', error);
+      });
+
+  };
+
   const getComprobante = async () => {
       clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
     dispatch({
@@ -227,6 +256,7 @@ const ComprobanteState = (props) => {
         updateComprobante,
         getComprobanteByID,
         getComprobante,
+        addFactura,
         saludar,
       }}
     >

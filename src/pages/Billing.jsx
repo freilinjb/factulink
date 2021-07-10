@@ -8,15 +8,20 @@ import CustomerContext from "../context/customer/CustomerContext";
 
 import TableProductoFacturacion from "../components/table/TableProductoFacturacion";
 
+import ComprobanteContext from "../context/comprobante/ComprobanteContext";
 import ProductContext from "../context/product/ProductContext";
 import PagoFacturacionModal from '../components/modal/PagoFacturacionModal';
+import FacturarModal from '../components/modal/FacturarModal';
 
 const Billing = () => {
     const productContext = useContext(ProductContext);
-    const {  getProduct, productos, getAllProduct } = productContext;
+    const comprobanteContext = useContext(ComprobanteContext);
+    const {  addFactura } = comprobanteContext;
+    const {  getAllProduct } = productContext;
     const customerContext = useContext(CustomerContext);
     const { getCustomer, clientesSelect } = customerContext;
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [mostrarModalFacturar, setMostrarModalFacturar] = useState(false);
     const [productBilling, setProductBilling] = useState([]);
 
     const [isEdit, setIsEdit] = useState(0);
@@ -26,7 +31,7 @@ const Billing = () => {
     const [search, setSearch] = useState('');
     const [campos, setCampos] = useState({
         cliente: "",
-        fechaVencimiento: "",
+        tipoFactura: "",
         inicio: "",
         final: "",
         secuencia: "",
@@ -53,9 +58,23 @@ const Billing = () => {
         if(e.key === 'Enter') {
             getAllProduct(limit, page, search);
         }
-      }
+    }
 
     const handleClose = () => setMostrarModal(false);
+    const handleCloseFacturar = () => setMostrarModalFacturar(false);
+
+    const facturar =() => {
+
+      let datos = {};
+      datos.idUsuario = 1;
+      datos.idCliente = campos.cliente.value;
+      datos.idTipoFactura = campos.tipoFactura.value;
+      datos.descuento = 0;
+      datos.observacion = document.getElementById('observacionFacturacion').value;
+      datos.productos = productBilling;
+      addFactura(datos);
+      console.log('Facturando: ....', datos);
+    }
 
 
     const handleChangeSelect = (valorSeleccionado, s) => {
@@ -66,9 +85,9 @@ const Billing = () => {
         });
     }; 
 
-  const tipoVenta = [
-    { value: 1, label: "Contado" },
-    { value: 2, label: "Credito" },
+  const tipoFactura = [
+    { value: 13, label: "Contado" },
+    { value: 14, label: "Credito" },
   ];
 
   useEffect(() => {
@@ -151,25 +170,21 @@ const Billing = () => {
       setProductBilling(resultados);
       console.log('indice: ', resultados);
     }
-    
-    // setProductBilling(
-    //     ...productBilling, product)
-
-      // console.log('productBilling: ', productBilling);
   }
 
   const varificarsiExiste = (id) => {
     return productBilling.some(el => el.idProducto == id );
   }
 
+
   const mostrarModalEditarProducto = (producto) => {
     setMostrarModal(true);
-    //No se va a editar
     console.log('producto: ', producto);
     setIsEdit(producto.idProducto);
 
-    // console.log('Editando la categoria ID: ', producto);
   }
+
+  
 
   const eliminarProducto = (product) => {
     const resultados = productBilling.filter(p => p.idProducto !== product.idProducto);
@@ -209,24 +224,32 @@ const Billing = () => {
                                 placeholder="Seleccione un Cliente"
                             />  
                         </Form.Group>
-                        <Form.Group id="tipoVenta" className="mt-1 col-4">
+                        <Form.Group id="tipoFactura" className="mt-1 col-4">
                             <Select
-                                options={tipoVenta}
+                                options={tipoFactura}
                                 theme={(theme) => ({
                                 ...theme,
                                 borderRadius: 8,
                                 colors: { ...theme.colors, primary: "#333152" },
                                 })}
-                                name="tipoComprobante"
-                                value={campos.tipoComprobante}
+                                name="tipoFactura"
+                                value={campos.tipoFactura}
                                 onChange={handleChangeSelect}
                                 placeholder="Tipo de Venta"
                             />  
                         </Form.Group>
 
                         <div className="col-auto">
-                        <Button className="m-1 btn-primary">
+                        <Button className="m-1 btn-primary"
+                          onClick={e => setMostrarModalFacturar(true) }
+                        >
                           <FontAwesomeIcon icon={faEdit} className="me-2" /> Facturar
+                        </Button>
+
+                        <Button className="m-1 btn-primary"
+                          onClick={e => window.print() }
+                        >
+                          <FontAwesomeIcon icon={faEdit} className="me-2" /> Imprimir
                         </Button>
                         </div>
                         
@@ -294,15 +317,15 @@ const Billing = () => {
                     <table className="table">
                       <tbody><tr>
                         <th >SUBTOTAL:</th>
-                        <td>{sumatoria.subTotal.toFixed(2)}</td>
+                        <td><div id="subTotal">{sumatoria.subTotal.toFixed(2)}</div></td>
                       </tr>
                       <tr>
                         <th>ITBIS (18%)</th>
-                        <td> RD$ {sumatoria.itbis.toFixed(2)}</td>
+                        <td> RD$ <div id="itbisTotal">{sumatoria.itbis.toFixed(2) } </div> </td>
                       </tr>
                       <tr>
                         <th>TOTAL:</th>
-                        <td>{sumatoria.total.toFixed(2)}</td>
+                        <td> <div id="total">{sumatoria.total.toFixed(2)} </div>  </td>
                       </tr>
                     </tbody></table>
                   </div>
@@ -314,12 +337,9 @@ const Billing = () => {
                   <FontAwesomeIcon icon={faEdit} className="me-2" /> Cancelar
                 </Button>
 
-
-                {/* <!-- /.col --> */}
-
-                <PagoFacturacionModal handleClose={handleClose} showModal={mostrarModal} isEdit={isEdit}/>
-
-              </div>
+                          <PagoFacturacionModal handleClose={handleClose} showModal={mostrarModal} isEdit={isEdit}/>
+                          <FacturarModal handleClose={handleCloseFacturar} showModal={mostrarModalFacturar} facturar={facturar}/>
+                            </div>
                             {/*  */}
                         </div>
                     </Row>
