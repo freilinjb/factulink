@@ -69,27 +69,31 @@ const TableProductoFacturacion = ({limit, page, setPage, search, addProduct, var
           </td>
           <td>{producto.precioVenta}</td>
           <td>
-
-              {varificarsiExiste(producto.idProducto) ? 
+              {producto.stockInicial > 0 ? (
+                varificarsiExiste(producto.idProducto) ? 
+                  (
+                    <Dropdown.Item className="text-secondary"
+                    onClick={ e=> addProduct(producto, campos[`cantidad-${producto.idProducto}`] ? campos[`cantidad-${producto.idProducto}`] : 1)}
+                >
+                  
+                    <FontAwesomeIcon icon={faEdit} className="me-2" 
+                    />  Actualizar
+                  </Dropdown.Item>
+                  ) : 
+                  (
+                    <Dropdown.Item className="text-info"
+                    onClick={ e=> addProduct(producto, campos[`cantidad-${producto.idProducto}`] ? campos[`cantidad-${producto.idProducto}`] : 1)}
+                >
+                  
+                  <FontAwesomeIcon icon={faShoppingCart} className="me-2" 
+                    />  Agregar
+                  </Dropdown.Item>
+                  )
+              ) 
+              :
               (
-                <Dropdown.Item className="text-secondary"
-                onClick={ e=> addProduct(producto, campos[`cantidad-${producto.idProducto}`] ? campos[`cantidad-${producto.idProducto}`] : 1)}
-            >
-              
-                <FontAwesomeIcon icon={faEdit} className="me-2" 
-                />  Update
-              </Dropdown.Item>
-              ) : 
-              (
-                <Dropdown.Item className="text-info"
-                onClick={ e=> addProduct(producto, campos[`cantidad-${producto.idProducto}`] ? campos[`cantidad-${producto.idProducto}`] : 1)}
-            >
-              
-              <FontAwesomeIcon icon={faShoppingCart} className="me-2" 
-                />  Add
-              </Dropdown.Item>
+                <p class="text-danger bg-light p-1">Productgo Agotado</p>
               )}
-               
           </td>
         </tr>
       </>

@@ -13,7 +13,12 @@ import ProductContext from "../context/product/ProductContext";
 import PagoFacturacionModal from '../components/modal/PagoFacturacionModal';
 import FacturarModal from '../components/modal/FacturarModal';
 
+import { useToasts } from 'react-toast-notifications';
+
+
 const Billing = () => {
+  const { addToast } = useToasts();
+
     const productContext = useContext(ProductContext);
     const comprobanteContext = useContext(ComprobanteContext);
     const {  addFactura } = comprobanteContext;
@@ -116,6 +121,16 @@ const Billing = () => {
   },[productBilling]);
   const addProduct = (producto, cantidad) => {
 
+    console.log('AddProduct: ', producto);
+    if(cantidad > producto.stockInicial) {
+      addToast(`Solo quedan ${producto.stockInicial} ${producto.nombre} disponible, no puedes vender ${cantidad}`, {
+        appearance: 'error',
+        autoDismiss: true,
+      });
+
+      return;
+    }
+    
     //Comprobar si el archivo existe
     const encontrado = productBilling.some(el => el.idProducto == producto.idProducto);
     // console.log('addProduct: ', cantidad);
@@ -135,7 +150,6 @@ const Billing = () => {
         }
         setProductBilling([...productBilling, product]);
     } else {
-      let indice = null;
       let resultados = [];
       productBilling.forEach((key, index) => {
         if(producto.idProducto == key.idProducto) {
@@ -166,7 +180,6 @@ const Billing = () => {
             itbis: key.itbis
           }
           resultados.push(product);
-
         }
       })
       setProductBilling(resultados);
