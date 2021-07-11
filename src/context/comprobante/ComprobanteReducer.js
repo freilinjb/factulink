@@ -2,6 +2,7 @@ import {
     INICIANDO_CONSULTA,
     OBTENER_COMPROBANTE,
     OBTENER_COMPROBANTES_POR_PAGINAS,
+    OBTENER_FACTURA_POR_DIA_ACTUAL,
     OBTENER_COMPROBANTES,
     REGISTRO_EXITOSO,
     REGISTRO_ERROR,
@@ -10,6 +11,8 @@ import {
   } from "../../types";
   
   const reducer = (state, action) => {
+    let total_page;
+    let paginas  = 0;
     switch (action.type) {
       case REGISTRO_ERROR: {
         return {
@@ -48,8 +51,8 @@ import {
         case OBTENER_COMPROBANTES_POR_PAGINAS:
           console.log('OBTENER_COMPROBANTES_POR_PAGINAS', action.payload.data);
           
-          const total_page = action.payload.data.total_page;
-          let paginas = [];
+          total_page = action.payload.data.total_page;
+          paginas = [];
           for(let i  = 1; i <= total_page; i++) {
             paginas.push(i);
           }
@@ -59,6 +62,21 @@ import {
             total_page: paginas,
             page_cout: action.payload.data.page_cout
           }
+
+          case OBTENER_FACTURA_POR_DIA_ACTUAL:
+            console.log('OBTENER_FACTURA_POR_DIA_ACTUAL', action.payload.data);
+            
+            total_page = action.payload.data.total_page;
+            paginas = [];
+            for(let i  = 1; i <= total_page; i++) {
+              paginas.push(i);
+            }
+            return {
+              ...state,
+              facturas_del_dia: action.payload.data.results,
+              total_page: paginas,
+            page_cout: action.payload.data.page_cout
+            }
   
         case OBTENER_COMPROBANTE:
          console.log("OBTENER_COMPROBANTE: ", action.payload);
