@@ -1,23 +1,35 @@
-import React,{ useContext, useState } from 'react';
-import { Breadcrumb } from "@themesberg/react-bootstrap";
+import React,{ useContext, useState, useEffect } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSearch, faCog, faPrint } from "@fortawesome/free-solid-svg-icons";
 import {Col,Row,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 
+import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
+import TableFacturasDelDia from "../../components/table/TableFacturasDelDia";
+import { OBTENER_FACTURA_POR_DIA_ACTUAL } from '../../types';
+
+
 const Ventas = () => {
+    const comprobanteContext = useContext(ComprobanteContext);
+    const {  getInvoiceForDay, factura } = comprobanteContext;
+
     const [limit, setLimit] = useState(10);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
-    const [isEdit, setIsEdit] = useState(0);
+    const [invoice, setInvoice] = useState([]);
 
     const handleClick = (e) => {
         console.log('prueba: ', e.target.text);
         setLimit(Number(e.target.text));
       }
 
+      useEffect(() => {
+        console.log('getInvoiceForDay: ', factura);
+        setInvoice(factura);
+      }, [factura])
+
       const handlePress =(e)=> {
         if(e.key === 'Enter') {
-        //   getASubCategoryPaged(limit, page, search);
+          getInvoiceForDay(limit, page, search);
         }
       }
 
@@ -45,7 +57,7 @@ const Ventas = () => {
         </div>
       </div>
 
-      <div className="table-settings mb-4 mx-3" style={{height: "300px"}}>
+      <div className="table-settings mb-4 mx-3">
         <Row className="justify-content-between align-items-center">
           <Col xs={8} md={6} lg={3} xl={4}>
             <InputGroup>
@@ -75,6 +87,138 @@ const Ventas = () => {
           </Col>
           </Row>
       </div>
+          
+          <div className="row mx-2">
+              <div className="col-6">
+                  <TableFacturasDelDia limit={limit} page={page} setPage={setPage} search={search}/>
+              </div>
+
+              <div className="col-6 bg-light rounded-top">
+              <section className="invoice" id="invoice">
+        <div className="row">
+          <div className="col-auto me-auto">
+            <h2 className="page-header">
+              <i className="fas fa-globe"></i> FactuLink, Inc.
+              <br/>
+            </h2>
+          </div>
+          <div className="col-auto">
+              <h2>
+                  <div className="px-2 float-start">..::Copia::..</div>
+              <ButtonGroup>
+                <Button variant="outline-primary" size="sm">Descargar</Button>
+                <Button variant="outline-primary" size="sm"><FontAwesomeIcon icon={faPrint}/> Print</Button>
+            </ButtonGroup>
+                    {/* <small className="float-right">#: { ('0000000000'+Number(factura[0].numFactura)).slice(-10) }</small> */}
+                    {/* <small className="float-right">Numero de Factura: {factura[0].fecha.substring(0,10) }</small> */}
+              </h2>
+          </div>
+        </div>
+        <div className="row invoice-info">
+          <div className="col-sm-4 invoice-col col-4">
+            From
+            <address>
+              <strong>FactuLink</strong>
+              <br />
+              795 Folsom Ave, Suite 600
+              <br />
+              San Francisco, CA 94107
+              <br />
+              Phone: (804) 123-5432
+              <br />
+              Email: info@almasaeedstudio.com
+            </address>
+          </div>
+          <div className="col-sm-4 invoice-col col-4">
+            To
+            <address>
+              <strong> asdf asdfas df</strong>
+              <br />
+              <strong>RNC</strong> 
+              <br />
+              aasdf asdf
+              <br />
+              Phone: 
+              <br />
+              Email: 
+            </address>
+          </div>
+          <div className="col-sm-4 invoice-col col-4">
+            <b>Factura: {factura.length > 0 && factura[0].numFactura} </b>
+            <br />
+            <b>NFC </b>
+            <br />
+            <b>Order ID:</b> 4F3S8J
+            <br />
+            <b>Payment Due:</b> 2/22/2014
+            <br />
+            <b>Account:</b> 968-34567
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-12 table-responsive">
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Producto</th>
+                  <th>Unidad</th>
+                  <th>Precio</th>
+                  <th>Cantidad</th>
+                  <th>Itbis</th>
+                  <th>Importe</th>
+                </tr>
+              </thead>
+              <tbody>
+                {invoice.length > 0 && (
+                      invoice.map((f, index) => (
+                        <tr key={f.codigo + ' ' + f.producto+''+index}>
+                            <td>{1+index}</td>
+                            <td>{f.producto + ' - ' + f.marca}</td>
+                            <td>{f.unidad}</td>
+                            <td>{f.precio.toFixed(2)}</td>
+                            <td>{f.cantidad}</td>
+                            <td>{f.itbis.toFixed(2)}</td>
+                            <td>{f.importe.toFixed(2)}</td>
+                        </tr>
+                    ))
+                  )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-6">
+
+          </div>
+          <div className="col-6">
+            <div className="table-responsive">
+              <table className="table">
+                <tr>
+                  <th style={{ width: "50%" }} className="p-0">Subtotal:</th>
+                  <td>$250.30</td>
+                </tr>
+                <tr>
+                  <th className="p-0">Tax (9.3%)</th>
+                  <td className="p-0">$10.34</td>
+                </tr>
+                <tr>
+                  <th className="p-0">Shipping:</th>
+                  <td className="p-0">$5.80</td>
+                </tr>
+                <tr>
+                  <th className="p-0">Total:</th>
+                  <td className="p-0">$265.24</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+              </div>
+          </div>
 
       </>
      );

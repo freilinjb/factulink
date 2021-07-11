@@ -12,6 +12,7 @@ import {
   FINALIZANDO_CONSULTA,
   OBTENER_COMPROBANTES,
   OBTENER_FACTURA,
+  OBTENER_FACTURA_POR_DIA_ACTUAL,
   REGISTRO_EXITOSO,
   REGISTRO_ERROR,
 } from "../../types";
@@ -21,6 +22,7 @@ const ComprobanteState = (props) => {
     comprobantes: [],
     comprobantesSelect: [],
     factura: [],
+    facturas_del_dia: [],
     total_page: [],
     page_cout: null,
     comprobanteEditar: {},
@@ -64,6 +66,32 @@ const ComprobanteState = (props) => {
   const saludar = (nombre) => {
     console.log("hola como estas ", nombre);
   };
+
+  const getInvoiceForDay = async (limit, page, search = 0) => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+    dispatch({
+      type: INICIANDO_CONSULTA,
+    });
+    console.log('getInvoiceForDay: ');
+    await clienteAxios
+      .get(`/api/billing/invoice_current?page=${page > 0 ? page : 1} ${search == 0 ? '' : '&search='+search } &limit=${limit}`)
+      .then(async (respuesta) => {
+        console.log("getInvoiceForDay: ", respuesta);
+
+        dispatch({
+          type: OBTENER_FACTURA_POR_DIA_ACTUAL,
+          payload: respuesta.data,
+        });
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      })
+      .finally(() => {
+        dispatch({
+          type: FINALIZANDO_CONSULTA,
+        });
+      });
+  }
 
   const getInvoice = async (number) => {
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
@@ -282,6 +310,7 @@ const ComprobanteState = (props) => {
         cargando: state.cargando,
         mensajeComprobante: state.mensajeComprobante,
         factura: state.factura,
+        facturas_del_dia: state.facturas_del_dia,
         getAllComprobante,
         addComprobante,
         updateComprobante,
@@ -289,6 +318,7 @@ const ComprobanteState = (props) => {
         getComprobante,
         addFactura,
         getInvoice,
+        getInvoiceForDay,
         saludar,
       }}
     >
