@@ -90,6 +90,7 @@ import User from "./user/action/User";
 
 //Billing
 import Billing from "./Billing";
+import Ventas from "./billing/Ventas";
 import Invoice from "./billing/Invoice";
 
 //Comprobantes
@@ -500,11 +501,19 @@ export default () => (
                   component={Billing}
                 />
 
+                
+                <RouteWithNavbarPOS
+                  exact
+                  path={Routes.Sales.path}
+                  component={Ventas}
+                />
+
                 <RouteWithOutLoader
                   exact
                   path={Routes.Invoice.path}
                   component={Invoice}
                 />
+
 
 
 

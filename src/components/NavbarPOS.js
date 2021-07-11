@@ -22,7 +22,7 @@ const NavbarPOS = () => {
           <Navbar.Collapse id="navbar-default-primary" className="w-100">
             <Nav className="navbar-nav-hover align-items-lg-center">
               <Nav.Link eventKey="billing" href="/#/billing">Facturación</Nav.Link>
-              <Nav.Link href={Routes.AdminCustomer.path}>Ventas</Nav.Link>
+              <Nav.Link eventKey="sales" href="/#/billing/sales">Ventas</Nav.Link>
               <Nav.Link href={Routes.AdminUser.path}>Caja</Nav.Link>
               <Nav.Link href={Routes.Billing.path}>Configuracion</Nav.Link>
             </Nav>
