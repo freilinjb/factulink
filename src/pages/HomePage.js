@@ -96,6 +96,10 @@ import Invoice from "./billing/Invoice";
 //Comprobantes
 import Comprobantes from "./comprobantes/Comprobantes";
 
+//Comprobantes
+import Reports from "./reports/Reports";
+import ReporteVentas from "./reports/ventas/ReporteVentas";
+
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -515,7 +519,17 @@ export default () => (
                 />
 
 
+              <RouteWithSidebar
+                  exact
+                  path={Routes.Reports.path}
+                  component={Reports}
+                />
 
+              <RouteWithSidebar
+                  exact
+                  path={Routes.ReporteVenta.path}
+                  component={ReporteVentas}
+                />
 
                 <Redirect to={Routes.NotFound.path} />
               </Switch>

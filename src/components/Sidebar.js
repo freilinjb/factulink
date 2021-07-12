@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBoxOpen, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTable, faTimes, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faBoxOpen, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTable, faTimes, faUser, faReceipt } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -115,13 +115,17 @@ export default (props = {}) => {
               <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
               
               <NavItem title="Admin Product" icon={faHandHoldingUsd} link={Routes.AdminProduct.path} />
-              <NavItem title="Supplier" icon={faHandHoldingUsd} link={Routes.AdminSupplier.path} />
-              <NavItem title="Customer" icon={faHandHoldingUsd} link={Routes.AdminCustomer.path} />
-              <NavItem title="User" icon={faUser} link={Routes.AdminUser.path} />
+              <NavItem title="Suplidores" icon={faHandHoldingUsd} link={Routes.AdminSupplier.path} />
+              <NavItem title="Clientes" icon={faHandHoldingUsd} link={Routes.AdminCustomer.path} />
+              <NavItem title="Usuarios" icon={faUser} link={Routes.AdminUser.path} />
               <NavItem title="Catalogo de C.F." icon={faUser} link={Routes.AdminComprobantes.path} />
-              <NavItem title="Billing" icon={faHandHoldingUsd} link={Routes.Billing.path} />
+              <NavItem title="Factuacion POS" icon={faHandHoldingUsd} link={Routes.Billing.path} />
               
               <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
+
+              <CollapsableNavItem eventKey="reports/" title="Reportes" icon={faReceipt}>
+                <NavItem title="Reportes" link={Routes.Reports.path} />
+              </CollapsableNavItem>
 
               <CollapsableNavItem eventKey="tables/" title="Tables" icon={faTable}>
                 <NavItem title="Bootstrap Table" link={Routes.BootstrapTables.path} />

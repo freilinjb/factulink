@@ -48,7 +48,7 @@ const TableFacturasDelDia = ({limit, page, setPage, search, showModalEditCategor
           <td>{factura.NFC}</td>
           <td>{(factura.fecha.substring(10,factura.fecha.length)).trim() }</td>
           <td>{factura.cliente}</td>
-          <td>{factura.cantidadProductom}</td>
+          <td>{factura.estatus}</td>
           <td>
           <Dropdown as={ButtonGroup}>
             <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
@@ -88,7 +88,7 @@ const TableFacturasDelDia = ({limit, page, setPage, search, showModalEditCategor
                  <th className="border-bottom">NCF</th>
                  <th className="border-bottom">Fecha</th>
                  <th className="border-bottom">Cliente</th>
-                 <th className="border-bottom">productos</th>
+                 <th className="border-bottom">Estado</th>
                  <th className="border-bottom">Total</th>
                </tr>
              </thead>

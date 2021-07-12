@@ -77,4 +77,7 @@ export const Routes = {
     AdminComprobantes: { path: '/comprobantes' },
     AddComprobante: { path: '/comprobantes/add' },
     UpdateComprobante: { path: '/comprobantes/edit/:id' },
+    //REPORTS
+    Reports: { path: '/reports' },
+    ReporteVenta: { path: '/reports/billing' },
 };

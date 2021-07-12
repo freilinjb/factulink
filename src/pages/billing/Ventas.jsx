@@ -5,7 +5,6 @@ import {Col,Row,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg
 
 import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
 import TableFacturasDelDia from "../../components/table/TableFacturasDelDia";
-import { OBTENER_FACTURA_POR_DIA_ACTUAL } from '../../types';
 
 
 const Ventas = () => {
