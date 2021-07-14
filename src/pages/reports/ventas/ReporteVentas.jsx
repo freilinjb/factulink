@@ -8,9 +8,7 @@ import { faHome, faSearch, faCog, faCheck } from "@fortawesome/free-solid-svg-ic
 import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 
 // import CustomerForm from "../../../components/forms/CustomerForm";
-import SupplierContext from "../../../context/supplier/SupplierContext";
 import CustomerContext from "../../../context/customer/CustomerContext";
-import ComprobanteContext from "../../../context/comprobante/ComprobanteContext";
 
 import TableReporteFacturacion from "../../../components/table/TableReporteFacturacion";
 
@@ -18,12 +16,9 @@ import clienteAxios from "../../../config/axios";
 
 
 const ReporteVentas = () => {
-  const supplierContext = useContext(SupplierContext);
   const customerContext = useContext(CustomerContext);
-  // const comprobanteContext = useContext(ComprobanteContext);
 
   const { getCustomer, clientesSelect } = customerContext;
-  const { getSupplier, proveedoresSelect } = supplierContext;
   // const { getReportFactura } = comprobanteContext;
 
   const [limit, setLimit] = useState(10);
@@ -33,7 +28,7 @@ const ReporteVentas = () => {
   const [facturas, setFacturas] = useState([]);
 
   const [campos, setCampos] = useState({
-    proveedor:"",
+    tipoFactura:"",
     cliente: "",
     fechaDesde: "",
     fechaHasta: "",
@@ -43,7 +38,9 @@ const ReporteVentas = () => {
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
 
     await clienteAxios
-    .get(`/api/report/invoice/?page=${page > 0 ? page : 1} &limit=${limit} ${cliente > 0 ? '&cliente=' + cliente : ''} ${tipoFactura > 0 ? '&tipoFactura=' + tipoFactura : ''} `)
+    .get(`/api/report/invoice/?page=${page > 0 ? page : 1} &limit=${limit} ${cliente > 0 ? '&cliente=' + cliente : ''} ${tipoFactura > 0 ? '&tipoFactura=' + tipoFactura : ''} 
+    ${desde > 0 ? '&fechaInicio=' + desde : ''} ${hasta > 0 ? '&tipoFactura=' + tipoFactura : ''}
+    `)
     .then(async (respuesta) => {
       console.log("getReportFactura: ", respuesta);
       setFacturas(respuesta.data.data.results);
@@ -56,15 +53,20 @@ const ReporteVentas = () => {
   }
 
   const consultar = async () => {
-    await getSupplier();
     await getCustomer();
     await consultarDatos(10,1);
 
   }
   
   useEffect(() => {
-    const date = new Date();
-    const currentDate = date.toISOString().substring(0,10);
+    let date = new Date();
+    let currentDate = date.toISOString().substring(0,10);
+    document.getElementById('fechaFinal').value = currentDate;
+
+    date.setDate(date.getDate() - 7);
+    currentDate = date.toISOString().substring(0,10);
+    document.getElementById('fechaInicio').value = currentDate;
+
 
     consultar();
     // const someDate = new Date();
@@ -100,8 +102,8 @@ const ReporteVentas = () => {
   const handleChangeSelect = (valorSeleccionado, s) => {
     const { name } = s;
     const { value } = valorSeleccionado;
-    console.log("s: ", s);
-    console.log("valor Seleciconado:", valorSeleccionado);
+    // console.log("s: ", s);
+    // console.log("valor Seleciconado:", valorSeleccionado);
     setCampos({
       ...campos,
       [name]: valorSeleccionado,
@@ -109,7 +111,7 @@ const ReporteVentas = () => {
   };  
 
   const buscarFacturas = async () => {
-    consultarDatos(limit, page, campos.cliente.value);
+    consultarDatos(limit, page, campos.cliente.value, campos.tipoFactura.value);
   }
 
   const tipoFactura = [
@@ -153,7 +155,7 @@ const ReporteVentas = () => {
                 placeholder="Seleccione una opción"
               />
             </Form.Group>
-            <Form.Group id="proveedor" className="col-3">
+            <Form.Group className="col-3">
               <Form.Label>Tipo de Factura</Form.Label>
               <Select
                 options={tipoFactura}
@@ -162,8 +164,8 @@ const ReporteVentas = () => {
                   borderRadius: 8,
                   colors: { ...theme.colors, primary: "#333152" },
                 })}
-                name="proveedor"
-                value={campos.proveedor}
+                name="tipoFactura"
+                value={campos.tipoFactura}
                 onChange={handleChangeSelect}
                 placeholder="Seleccione una opción"
               />
