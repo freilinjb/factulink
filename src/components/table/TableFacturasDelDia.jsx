@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEllipsisH, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
+import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup, Badge } from '@themesberg/react-bootstrap';
 
 import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
 
 
-const TableFacturasDelDia = ({limit, page, setPage, search, showModalEditCategory}) => {
+const TableFacturasDelDia = ({limit, page, setPage, search, anularFactura}) => {
   const comprobanteContext = useContext(ComprobanteContext);
   const { getInvoiceForDay, facturas_del_dia, total_page, total_rows, getInvoice } = comprobanteContext;
 
@@ -48,7 +48,7 @@ const TableFacturasDelDia = ({limit, page, setPage, search, showModalEditCategor
           <td>{factura.NFC}</td>
           <td>{(factura.fecha.substring(10,factura.fecha.length)).trim() }</td>
           <td>{factura.cliente}</td>
-          <td>{factura.estatus}</td>
+          <td><Badge bg={factura.estatus == 'Activo' ? 'success' : 'danger'} className="me-1">{factura.estatus}</Badge> </td>
           <td>
           <Dropdown as={ButtonGroup}>
             <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
@@ -62,11 +62,15 @@ const TableFacturasDelDia = ({limit, page, setPage, search, showModalEditCategor
               >         
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Consultar Factura
               </Dropdown.Item>
-              <Dropdown.Item className="text-danger"
-                // onClick={deleteCategoryfn(categoria.idCategoria)}
-              >
-                <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Anular Factura
-              </Dropdown.Item>
+              {factura.estatus != 'Anulada' && (
+                  <Dropdown.Item className="text-danger"
+                  onClick={() => anularFactura(factura.numFactura)}
+                  // onClick={deleteCategoryfn(categoria.idCategoria)}
+                >
+                  <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Anular Factura
+                </Dropdown.Item>
+              )}
+              
             </Dropdown.Menu>
           </Dropdown>
         </td>

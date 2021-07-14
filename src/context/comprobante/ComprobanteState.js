@@ -23,6 +23,7 @@ const ComprobanteState = (props) => {
     comprobantesSelect: [],
     factura: [],
     facturas_del_dia: [],
+    reporte_facturas: [],
     total_page: [],
     page_cout: null,
     comprobanteEditar: {},
@@ -298,6 +299,33 @@ const ComprobanteState = (props) => {
     });
   }
 
+  const getReportFactura = async (limit, page, search = 0) => {
+    console.log('Prueba de este punto');
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+    dispatch({
+      type: INICIANDO_CONSULTA,
+    });
+    console.log('getInvoiceForDay: ');
+    await clienteAxios
+      .get(`/api/report/invoice/?page=${page > 0 ? page : 1} ${search == 0 ? '' : '&search='+search } &limit=${limit}`)
+      .then(async (respuesta) => {
+        console.log("getReportFactura: ", respuesta);
+
+        dispatch({
+          type: OBTENER_FACTURA_POR_DIA_ACTUAL,
+          payload: respuesta.data,
+        });
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      })
+      .finally(() => {
+        dispatch({
+          type: FINALIZANDO_CONSULTA,
+        });
+      });
+  }
+
   return (
     <ComprobanteContext.Provider
       value={{
@@ -311,6 +339,7 @@ const ComprobanteState = (props) => {
         mensajeComprobante: state.mensajeComprobante,
         factura: state.factura,
         facturas_del_dia: state.facturas_del_dia,
+        reporte_facturas: state.reporte_facturas,
         getAllComprobante,
         addComprobante,
         updateComprobante,
@@ -320,6 +349,7 @@ const ComprobanteState = (props) => {
         getInvoice,
         getInvoiceForDay,
         saludar,
+        getReportFactura,
       }}
     >
       {props.children}

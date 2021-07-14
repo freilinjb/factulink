@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import Select from "react-select";
 
-import { Link } from "react-router-dom";
+import cookie from "js-cookie";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
 import { faHome, faSearch, faCog, faCheck } from "@fortawesome/free-solid-svg-icons";
@@ -10,31 +10,77 @@ import {Col,Row,Card,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@theme
 // import CustomerForm from "../../../components/forms/CustomerForm";
 import SupplierContext from "../../../context/supplier/SupplierContext";
 import CustomerContext from "../../../context/customer/CustomerContext";
+import ComprobanteContext from "../../../context/comprobante/ComprobanteContext";
+
+import TableReporteFacturacion from "../../../components/table/TableReporteFacturacion";
+
+import clienteAxios from "../../../config/axios";
+
 
 const ReporteVentas = () => {
   const supplierContext = useContext(SupplierContext);
   const customerContext = useContext(CustomerContext);
+  // const comprobanteContext = useContext(ComprobanteContext);
 
   const { getCustomer, clientesSelect } = customerContext;
   const { getSupplier, proveedoresSelect } = supplierContext;
+  // const { getReportFactura } = comprobanteContext;
 
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
+  const [total_page, setTotal_page] = useState('');
+  const [facturas, setFacturas] = useState([]);
 
   const [campos, setCampos] = useState({
     proveedor:"",
     cliente: "",
+    fechaDesde: "",
+    fechaHasta: "",
   });
+
+  const consultarDatos = async (limit, page, cliente = 0, tipoFactura = 0, desde = '', hasta = '') => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+
+    await clienteAxios
+    .get(`/api/report/invoice/?page=${page > 0 ? page : 1} &limit=${limit} ${cliente > 0 ? '&cliente=' + cliente : ''} ${tipoFactura > 0 ? '&tipoFactura=' + tipoFactura : ''} `)
+    .then(async (respuesta) => {
+      console.log("getReportFactura: ", respuesta);
+      setFacturas(respuesta.data.data.results);
+      setTotal_page(respuesta.data.data.total_page);
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+    })
+    
+  }
 
   const consultar = async () => {
     await getSupplier();
     await getCustomer();
+    await consultarDatos(10,1);
+
   }
   
   useEffect(() => {
+    const date = new Date();
+    const currentDate = date.toISOString().substring(0,10);
+
     consultar();
+    // const someDate = new Date();
+    // const numberOfDaysToAdd = 3;
+    // const date = someDate.setDate(someDate.getDate() + numberOfDaysToAdd); 
+    // console.log('Prueba: ', date);
+    // setCampos({
+    //   ...campos,
+    //   fechaInicio : date
+    // })
   },[]);
+
+
+  useEffect(() => {
+    console.log('Facturacion: ', facturas);
+  },[facturas]);
 
   const handleClick = (e) => {
     console.log('prueba: ', e.target.text);
@@ -43,9 +89,13 @@ const ReporteVentas = () => {
 
   const handlePress =(e)=> {
     if(e.key == 'Enter') {
-      // getAllSupplier(limit, page, search);
+      // getReportFactura(limit, page, search);
     }
   }
+
+  useEffect(() => {
+    consultarDatos(limit, page);
+  },[page, limit]);
   
   const handleChangeSelect = (valorSeleccionado, s) => {
     const { name } = s;
@@ -58,6 +108,16 @@ const ReporteVentas = () => {
     });
   };  
 
+  const buscarFacturas = async () => {
+    consultarDatos(limit, page, campos.cliente.value);
+  }
+
+  const tipoFactura = [
+    { value: 13, label: "Contado" },
+    { value: 14, label: "Credito" },
+  ];
+
+
   return (
     <>
         <div className="d-xl-flex justify-content-between flex-wrap flex-md-nowrap align-items-center py-1">
@@ -69,14 +129,14 @@ const ReporteVentas = () => {
             <Breadcrumb.Item>
             <FontAwesomeIcon icon={faHome} />
             </Breadcrumb.Item>
-            <Breadcrumb.Item active> Admin Supplier </Breadcrumb.Item>
+            <Breadcrumb.Item active> Reportes de Facturación </Breadcrumb.Item>
           </Breadcrumb>
         </div>
       </div>
 
       <div className="table-settings mb-4">
         <Row className="justify-content-between align-items-center">
-          <Form.Group id="proveedor" className="col-3">
+          <Form.Group className="col-3">
               <Form.Label>Cliente</Form.Label>
               <Select
                 options={clientesSelect}
@@ -87,7 +147,7 @@ const ReporteVentas = () => {
                   colors: { ...theme.colors, primary: "#333152" },
                 })}
                 name="cliente"
-                isMulti
+                id="cliente"
                 value={campos.cliente}
                 onChange={handleChangeSelect}
                 placeholder="Seleccione una opción"
@@ -96,14 +156,13 @@ const ReporteVentas = () => {
             <Form.Group id="proveedor" className="col-3">
               <Form.Label>Tipo de Factura</Form.Label>
               <Select
-                options={proveedoresSelect}
+                options={tipoFactura}
                 theme={(theme) => ({
                   ...theme,
                   borderRadius: 8,
                   colors: { ...theme.colors, primary: "#333152" },
                 })}
                 name="proveedor"
-                isMulti
                 value={campos.proveedor}
                 onChange={handleChangeSelect}
                 placeholder="Seleccione una opción"
@@ -111,16 +170,16 @@ const ReporteVentas = () => {
             </Form.Group>
             <div className="form-group col-2">
               <label for="">Fecha Inicio</label>
-              <input type="date" class="form-control" name="fechaInicio" id="fechaInicio" value="11/12/2021" placeholder=""/>
+              <input type="date" class="form-control" name="fechaInicio" id="fechaInicio" defaultValue="10-09-2020" placeholder=""/>
             </div>
 
             <div className="form-group col-2">
               <label for="">Fecha Final</label>
-              <input type="date" class="form-control" name="fechaFinal" id="fechaFinal" value="11/12/2021" placeholder=""/>
+              <input type="date" class="form-control" name="fechaFinal" id="fechaFinal" placeholder=""/>
             </div>
               
             <div className="col-1 mt-4">
-              <Button>Buscar</Button>
+              <Button onClick={e => buscarFacturas()}>Buscar</Button>
             </div>
 
           <Col xs={2} md={2} xl={1} className="ps-md-0 text-end">
@@ -142,10 +201,10 @@ const ReporteVentas = () => {
             </Dropdown>
           </Col>
           </Row>
-
-          
-
       </div>
+
+      <TableReporteFacturacion limit={limit} page={page} setPage={setPage} search={search} facturas={facturas} total_page={total_page}/>
+
     </>
   );
 };

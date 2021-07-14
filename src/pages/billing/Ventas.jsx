@@ -1,10 +1,16 @@
 import React,{ useContext, useState, useEffect } from 'react';
+import cookie from "js-cookie";
+
+import Swal from "sweetalert2";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faSearch, faCog, faPrint } from "@fortawesome/free-solid-svg-icons";
 import {Col,Row,Form,Button,InputGroup, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 
 import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
 import TableFacturasDelDia from "../../components/table/TableFacturasDelDia";
+
+import clienteAxios from "../../config/axios";
 
 
 const Ventas = () => {
@@ -30,6 +36,50 @@ const Ventas = () => {
         if(e.key === 'Enter') {
           getInvoiceForDay(limit, page, search);
         }
+      }
+
+      const anularFactura = async (numFactura) => {
+        // console.log('anularFactura ', numFactura);
+        // return;
+
+        Swal.fire({
+          title: 'Estas seguro?',
+          text: `Seguro que deseas anular la Factura ${numFactura}`,
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Si, Anularlo!',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+
+            clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+    
+            clienteAxios
+            .put(`/api/billing/invoice/${numFactura}`)
+            .then(async (respuesta) => {
+              console.log("anularFactura: ", respuesta);
+
+              if(respuesta.data.success == 1) {
+                Swal.fire(
+                  'Anulada!',
+                  'Anulada de forma correcta.',
+                  'success'
+                )
+
+                getInvoiceForDay(limit, page, search);
+              }
+            })
+            .catch((error) => {
+              console.log("error: ", error);
+            })
+          }
+        })
+
+        
+
+        
       }
 
     return ( 
@@ -89,7 +139,7 @@ const Ventas = () => {
           
           <div className="row mx-2">
               <div className="col-6">
-                  <TableFacturasDelDia limit={limit} page={page} setPage={setPage} search={search}/>
+                  <TableFacturasDelDia limit={limit} page={page} setPage={setPage} search={search} anularFactura={anularFactura}/>
               </div>
 
               <div className="col-6 bg-light rounded-top">
