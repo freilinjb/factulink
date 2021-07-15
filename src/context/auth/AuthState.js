@@ -70,7 +70,7 @@ const AuthState = (props) => {
           payload: respuesta.data,
         });
 
-        // history.replace("/");
+        history.replace("/");
       })
       .catch((error) => {
           if(!error.response) {

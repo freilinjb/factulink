@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBoxOpen, faChartPie, faCog, faFileAlt, faHandHoldingUsd, faSignOutAlt, faTable, faTimes, faUser, faReceipt } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faBoxOpen, faChartPie, faUsers, faWarehouse, faHandHoldingUsd, faSignOutAlt, faTable, faTimes, faUser, faReceipt } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -112,26 +112,33 @@ export default (props = {}) => {
                 <NavItem title="SignIn" link={Routes.Signin.path} />
               </CollapsableNavItem>
               
-              <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} />
+              {/* <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} /> */}
               
-              <NavItem title="Admin Product" icon={faHandHoldingUsd} link={Routes.AdminProduct.path} />
-              <NavItem title="Suplidores" icon={faHandHoldingUsd} link={Routes.AdminSupplier.path} />
-              <NavItem title="Clientes" icon={faHandHoldingUsd} link={Routes.AdminCustomer.path} />
+              <NavItem title="Admin Productos" icon={faHandHoldingUsd} link={Routes.AdminProduct.path} />
+              <NavItem title="Suplidores" icon={faWarehouse} link={Routes.AdminSupplier.path} />
+              <NavItem title="Clientes" icon={faUsers} link={Routes.AdminCustomer.path} />
               <NavItem title="Usuarios" icon={faUser} link={Routes.AdminUser.path} />
               <NavItem title="Catalogo de C.F." icon={faUser} link={Routes.AdminComprobantes.path} />
               <NavItem title="Factuacion POS" icon={faHandHoldingUsd} link={Routes.Billing.path} />
               
-              <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} />
+              {/* <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} /> */}
 
               <CollapsableNavItem eventKey="reports/" title="Reportes" icon={faReceipt}>
                 <NavItem title="Reportes" link={Routes.Reports.path} />
               </CollapsableNavItem>
 
-              <CollapsableNavItem eventKey="tables/" title="Tables" icon={faTable}>
-                <NavItem title="Bootstrap Table" link={Routes.BootstrapTables.path} />
+              <CollapsableNavItem eventKey="configuration/" title="Configuracion" icon={faReceipt}>
+                <NavItem title="Comprobantes" link={Routes.Reports.path} />
+                <NavItem title="Cajas" link={Routes.Reports.path} />
+                <NavItem title="Reportes" link={Routes.Reports.path} />
+                <NavItem title="Permisos" link={Routes.Reports.path} />
               </CollapsableNavItem>
 
-              <CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>
+              {/* <CollapsableNavItem eventKey="tables/" title="Tables" icon={faTable}>
+                <NavItem title="Bootstrap Table" link={Routes.BootstrapTables.path} />
+              </CollapsableNavItem> */}
+
+              {/* <CollapsableNavItem eventKey="examples/" title="Page Examples" icon={faFileAlt}>
                 <NavItem title="Sign In" link={Routes.Signin.path} />
                 <NavItem title="Sign Up" link={Routes.Signup.path} />
                 <NavItem title="Forgot password" link={Routes.ForgotPassword.path} />
@@ -139,10 +146,10 @@ export default (props = {}) => {
                 <NavItem title="Lock" link={Routes.Lock.path} />
                 <NavItem title="404 Not Found" link={Routes.NotFound.path} />
                 <NavItem title="500 Server Error" link={Routes.ServerError.path} />
-              </CollapsableNavItem>
+              </CollapsableNavItem> */}
 
-              <NavItem external title="Plugins" link="https://demo.themesberg.com/volt-pro-react/#/plugins/charts" target="_blank" badgeText="Pro" icon={faChartPie} />
-
+              {/* <NavItem external title="Plugins" link="https://demo.themesberg.com/volt-pro-react/#/plugins/charts" target="_blank" badgeText="Pro" icon={faChartPie} /> */}
+{/* 
               <Dropdown.Divider className="my-3 border-indigo" />
 
               <CollapsableNavItem eventKey="documentation/" title="Getting Started" icon={faBook}>
@@ -172,9 +179,10 @@ export default (props = {}) => {
                 <NavItem title="Tabs" link={Routes.Tabs.path} />
                 <NavItem title="Toasts" link={Routes.Toasts.path} />
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
-              </CollapsableNavItem>
+              </CollapsableNavItem> */}
+
               {/* FIN PRUEBA */}
-              <NavItem external title="Themesberg" link="https://themesberg.com" target="_blank" image={ThemesbergLogo} />
+              {/* <NavItem external title="Themesberg" link="https://themesberg.com" target="_blank" image={ThemesbergLogo} /> */}
 
             </Nav>
           </div>

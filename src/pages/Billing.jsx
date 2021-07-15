@@ -260,17 +260,16 @@ const Billing = () => {
                         >
                           <FontAwesomeIcon icon={faEdit} className="me-2" /> Facturar
                         </Button>
-
-                        <Button className="m-1 btn-primary"
-                          onClick={e => window.print() }
-                        >
-                          <FontAwesomeIcon icon={faEdit} className="me-2" /> Imprimir
-                        </Button>
                         </div>
                         
                         <div className="col-12">
                             
-                        <Card border="light" className="shadow-sm mb-0 mt-4">
+                        
+                            {productBilling.length == 0 ? (
+                            <h5 className="text-center">Agregar producto para crear la factura de veta</h5>) : 
+                            (
+                              <>
+<Card border="light" className="shadow-sm mb-0 mt-4">
                             <Card.Body className="pb-0">
                                 <Table responsive className="table-striped table-centered table-nowrap rounded mb-0">
                                 <thead className="thead-light">
@@ -309,53 +308,52 @@ const Billing = () => {
                                 </Table>
                             </Card.Body>
                             </Card>
-                            {productBilling.length == 0 && (<h5 className="text-center">Agregar producto para crear la factura de veta</h5>)}
-                            {/* <h1 className="text-center p-1 bg-primary text-white">Venta:</h1> */}
+
                             <div className="row">
-                {/* <!-- accepted payments column --> */}
-                <div className="col-6">
-                  <p className="lead">Payment Methods:</p>
-                  <Image src="../../dist/img/credit/visa.png" alt="Visa"/>
-                  <Image src="../../dist/img/credit/mastercard.png" alt="Mastercard"/>
-                  <Image src="../../dist/img/credit/american-express.png" alt="American Express"/>
-                  <Image src="../../dist/img/credit/paypal2.png" alt="Paypal"/>
+                            {/* <!-- accepted payments column --> */}
+                            <div className="col-6">
+                              <p className="lead">Metodos de pagos:</p>
+                              <Image src="http://pngimg.com/uploads/visa/visa_PNG30.png" alt="Visa" style={{height: "15px", weigth: "15px"}}/>
+                              <Image src="https://upload.wikimedia.org/wikipedia/commons/7/72/MasterCard_early_1990s_logo.png" alt="Mastercard" style={{height: "15px", weigth: "15px"}}/>
+                              <Image src="https://logos-marcas.com/wp-content/uploads/2020/11/American-Express-Logo.png" alt="American Express" style={{height: "15px", weigth: "15px"}}/>
+                              <Image src="http://pngimg.com/uploads/visa/visa_PNG30.png" alt="Paypal" style={{height: "15px", weigth: "15px"}}/>
 
-                  <p className="text-muted well well-sm shadow-none" >
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem
-                    plugg
-                    dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
-                  </p>
-                </div>
-                {/* <!-- /.col --> */}
-                <div className="col-6">
-                  <div className="table-responsive">
-                    <table className="table">
-                      <tbody><tr>
-                        <th >SUBTOTAL:</th>
-                        <td><div id="subTotal">{sumatoria.subTotal.toFixed(2)}</div></td>
-                      </tr>
-                      <tr>
-                        <th>ITBIS (18%)</th>
-                        <td> RD$ <div id="itbisTotal">{sumatoria.itbis.toFixed(2) } </div> </td>
-                      </tr>
-                      <tr>
-                        <th>TOTAL:</th>
-                        <td> <div id="total">{sumatoria.total.toFixed(2)} </div>  </td>
-                      </tr>
-                    </tbody></table>
-                  </div>
-                </div>
-                {/* <Button variant="outline-primary" className="m-1">
-                  <FontAwesomeIcon icon={faEdit} className="me-2" /> Facturar
-                </Button> */}
-                <Button variant="outline-danger" className="m-1">
-                  <FontAwesomeIcon icon={faEdit} className="me-2" /> Cancelar
-                </Button>
-
-                          <PagoFacturacionModal handleClose={handleClose} showModal={mostrarModal} isEdit={isEdit}/>
-                          <FacturarModal handleClose={handleCloseFacturar} showModal={mostrarModalFacturar} facturar={facturar}/>
+                              <p className="text-muted well well-sm shadow-none" >
+                                
+                              </p>
                             </div>
-                            {/*  */}
+                            {/* <!-- /.col --> */}
+                            <div className="col-6">
+                              <div className="table-responsive">
+                                <table className="table">
+                                  <tbody><tr>
+                                    <th >SUBTOTAL:</th>
+                                    <td><div id="subTotal">{sumatoria.subTotal.toFixed(2)}</div></td>
+                                  </tr>
+                                  <tr>
+                                    <th>ITBIS (18%)</th>
+                                    <td> RD$ <div id="itbisTotal">{sumatoria.itbis.toFixed(2) } </div> </td>
+                                  </tr>
+                                  <tr>
+                                    <th>TOTAL:</th>
+                                    <td> <div id="total">{sumatoria.total.toFixed(2)} </div>  </td>
+                                  </tr>
+                                </tbody></table>
+                              </div>
+                            </div>
+                            {/* <Button variant="outline-primary" className="m-1">
+                              <FontAwesomeIcon icon={faEdit} className="me-2" /> Facturar
+                            </Button> */}
+                            <Button variant="outline-danger" className="m-1">
+                              <FontAwesomeIcon icon={faEdit} className="me-2" /> Cancelar
+                            </Button>
+
+                            <PagoFacturacionModal handleClose={handleClose} showModal={mostrarModal} isEdit={isEdit}/>
+                            <FacturarModal handleClose={handleCloseFacturar} showModal={mostrarModalFacturar} facturar={facturar}/>
+                              </div>
+                              </>
+                            )
+                            }
                         </div>
                     </Row>
                 </Form>

@@ -55,18 +55,18 @@ const Signin = () => {
         <Container>
           <p className="text-center">
             <Card.Link as={Link} to={Routes.DashboardOverview.path} className="text-gray-700">
-              <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to homepage
+              <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Volver a Home
             </Card.Link>
           </p>
           <Row className="justify-content-center form-bg-image" style={{ backgroundImage: `url(${BgImage})` }}>
             <Col xs={12} className="d-flex align-items-center justify-content-center">
               <div className="bg-white shadow-soft border rounded border-light p-4 p-lg-5 w-100 fmxw-500">
                 <div className="text-center text-md-center mb-4 mt-md-0">
-                  <h3 className="mb-0">Inicia sesión 1</h3>
+                  <h3 className="mb-0">Inicia sesión #</h3>
                 </div>
                 <Form className="mt-4" onSubmit={handleSubmit}>
                   <Form.Group id="email" className="mb-4">
-                    <Form.Label>Your Email</Form.Label>
+                    <Form.Label>Correo</Form.Label>
                     <InputGroup>
                       <InputGroup.Text>
                         <FontAwesomeIcon icon={faEnvelope} />
@@ -76,7 +76,7 @@ const Signin = () => {
                   </Form.Group>
                   <Form.Group>
                     <Form.Group id="password" className="mb-4">
-                      <Form.Label>Your Password</Form.Label>
+                      <Form.Label>Contraseña</Form.Label>
                       <InputGroup>
                         <InputGroup.Text>
                           <FontAwesomeIcon icon={faUnlockAlt} />
@@ -87,18 +87,18 @@ const Signin = () => {
                     <div className="d-flex justify-content-between align-items-center mb-4">
                       <Form.Check type="checkbox">
                         <FormCheck.Input id="defaultCheck5" className="me-2" />
-                        <FormCheck.Label htmlFor="defaultCheck5" className="mb-0">Remember me</FormCheck.Label>
+                        <FormCheck.Label htmlFor="defaultCheck5" className="mb-0">Recordarme</FormCheck.Label>
                       </Form.Check>
-                      <Card.Link className="small text-end">Lost password?</Card.Link>
+                      <Card.Link className="small text-end">Olvido su contraseña</Card.Link>
                     </div>
                   </Form.Group>
                   <Button variant="primary" type="submit" className="w-100">
-                    Sign in
+                    Iniciar Sesion
                   </Button>
                 </Form>
 
                 <div className="mt-3 mb-4 text-center">
-                  <span className="fw-normal">or login with</span>
+                  <span className="fw-normal">O iniciar Sesion con</span>
                 </div>
                 <div className="d-flex justify-content-center my-4">
                   <Button variant="outline-light" className="btn-icon-only btn-pill text-facebook me-2">
@@ -113,9 +113,9 @@ const Signin = () => {
                 </div>
                 <div className="d-flex justify-content-center align-items-center mt-4">
                   <span className="fw-normal">
-                    Not registered?
+                    No te has registrado?
                     <Card.Link as={Link} to={Routes.Signup.path} className="fw-bold">
-                      {` Create account `}
+                      {` Crear una Cuenta `}
                     </Card.Link>
                   </span>
                 </div>

@@ -38,8 +38,8 @@ const ReporteVentas = () => {
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
 
     await clienteAxios
-    .get(`/api/report/invoice/?page=${page > 0 ? page : 1} &limit=${limit} ${cliente > 0 ? '&cliente=' + cliente : ''} ${tipoFactura > 0 ? '&tipoFactura=' + tipoFactura : ''} 
-    ${desde > 0 ? '&fechaInicio=' + desde : ''} ${hasta > 0 ? '&tipoFactura=' + tipoFactura : ''}
+    .get(`/api/report/invoice/?page=${page > 0 ? page : 1} &limit=${limit} ${cliente > 0 ? '&cliente=' + cliente : ''}${tipoFactura > 0 ? '&tipoFactura=' + tipoFactura : ''} 
+    ${desde != '' ? '&fechaDesde=' + desde : ''}${hasta != '' ? '&fechaHasta=' + hasta : ''}
     `)
     .then(async (respuesta) => {
       console.log("getReportFactura: ", respuesta);
@@ -96,7 +96,11 @@ const ReporteVentas = () => {
   }
 
   useEffect(() => {
-    consultarDatos(limit, page);
+    let fechaFinal = document.getElementById('fechaFinal').value;
+    let fechaInicio = document.getElementById('fechaInicio').value;
+    console.log('fechaFinal: ', fechaFinal);
+    console.log('fechaInicio: ', fechaInicio);
+    consultarDatos(limit, page, campos.cliente.value, campos.tipoFactura.value, fechaInicio, fechaFinal);
   },[page, limit]);
   
   const handleChangeSelect = (valorSeleccionado, s) => {
@@ -111,7 +115,11 @@ const ReporteVentas = () => {
   };  
 
   const buscarFacturas = async () => {
-    consultarDatos(limit, page, campos.cliente.value, campos.tipoFactura.value);
+    let fechaFinal = document.getElementById('fechaFinal').value;
+    let fechaInicio = document.getElementById('fechaInicio').value;
+    console.log('fechaFinal: ', fechaFinal);
+    console.log('fechaInicio: ', fechaInicio);
+    consultarDatos(limit, page, campos.cliente.value, campos.tipoFactura.value, fechaInicio, fechaFinal);
   }
 
   const tipoFactura = [

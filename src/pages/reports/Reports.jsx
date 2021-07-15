@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome } from "@fortawesome/free-solid-svg-icons";
+import { faHome, faClipboardList, faCommentDollar, faSearchDollar, faUsers, faWarehouse } from "@fortawesome/free-solid-svg-icons";
 
 import { ListGroupItem, Card, ListGroup } from "@themesberg/react-bootstrap";
 
@@ -8,7 +8,7 @@ const Reports = () => {
   return (
     <>
       <div className="row justify-content-center">
-        <Card style={{ width: "18rem" }} className="col-12 m-4">
+        <Card style={{ width: "18rem" }} className="col-12 m-4 ">
           <Card.Body>
             <Card.Title>
               <FontAwesomeIcon icon={faHome} size="3x" /> Inventario
@@ -36,10 +36,10 @@ const Reports = () => {
           </Card.Body>
         </Card>
     
-        <Card style={{ width: "18rem" }} className="m-4">
+        <Card style={{ width: "18rem" }} className="m-4 hover-zoom">
           <Card.Body>
             <Card.Title>
-              <FontAwesomeIcon icon={faHome} size="3x" /> Ventas
+              <FontAwesomeIcon icon={faCommentDollar} size="3x" /> Ventas
             </Card.Title>
             {/* <Card.Text>
     </Card.Text> */}
@@ -66,7 +66,7 @@ const Reports = () => {
         <Card style={{ width: "18rem" }} className="m-4">
           <Card.Body>
             <Card.Title>
-              <FontAwesomeIcon icon={faHome} size="3x" /> Compras
+              <FontAwesomeIcon icon={faSearchDollar} size="3x" /> Compras
             </Card.Title>
             {/* <Card.Text>
     </Card.Text> */}
@@ -94,7 +94,7 @@ const Reports = () => {
         <Card style={{ width: "18rem" }} className="m-4">
           <Card.Body>
             <Card.Title>
-              <FontAwesomeIcon icon={faHome} size="3x" /> Clientes
+              <FontAwesomeIcon icon={faUsers} size="3x" /> Clientes
             </Card.Title>
             {/* <Card.Text>
     </Card.Text> */}
@@ -122,7 +122,7 @@ const Reports = () => {
         <Card style={{ width: "18rem" }} className="m-4">
           <Card.Body>
             <Card.Title>
-              <FontAwesomeIcon icon={faHome} size="3x" /> Proveedores
+              <FontAwesomeIcon icon={faWarehouse} size="3x" /> Proveedores
             </Card.Title>
             {/* <Card.Text>
     </Card.Text> */}

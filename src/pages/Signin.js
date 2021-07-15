@@ -66,7 +66,7 @@ export default () => {
         <Container>
           <p className="text-center">
             <Card.Link as={Link} to={Routes.DashboardOverview.path} className="text-gray-700">
-              <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Back to homepage
+              <FontAwesomeIcon icon={faAngleLeft} className="me-2" /> Volver a la pantalla principal
             </Card.Link>
           </p>
           <Row className="justify-content-center form-bg-image" style={{ backgroundImage: `url(${BgImage})` }}>
