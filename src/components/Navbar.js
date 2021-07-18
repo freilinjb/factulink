@@ -96,7 +96,9 @@ export default (props) => {
                 <Dropdown.Item className="fw-bold">
                   <FontAwesomeIcon icon={faUserCircle} className="me-2" /> Mi Perfil
                 </Dropdown.Item>
-                <Dropdown.Item className="fw-bold">
+                <Dropdown.Item className="fw-bold"
+                  href="/#/configuracion"
+                >
                   <FontAwesomeIcon icon={faCog} className="me-2" /> Configuracion
                 </Dropdown.Item>
                 <Dropdown.Item className="fw-bold">

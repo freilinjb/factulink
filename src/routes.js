@@ -80,4 +80,7 @@ export const Routes = {
     //REPORTS
     Reports: { path: '/reports' },
     ReporteVenta: { path: '/reports/billing' },
+    //Configuracion
+    Configuracion: { path: '/configuracion' },
+
 };

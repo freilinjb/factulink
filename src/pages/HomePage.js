@@ -100,6 +100,9 @@ import Comprobantes from "./comprobantes/Comprobantes";
 import Reports from "./reports/Reports";
 import ReporteVentas from "./reports/ventas/ReporteVentas";
 
+//Comprobantes
+import Configuracion from "./Configuracion";
+
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -529,6 +532,12 @@ export default () => (
                   exact
                   path={Routes.ReporteVenta.path}
                   component={ReporteVentas}
+                />
+
+              <RouteWithSidebar
+                  exact
+                  path={Routes.Configuracion.path}
+                  component={Configuracion}
                 />
 
                 <Redirect to={Routes.NotFound.path} />

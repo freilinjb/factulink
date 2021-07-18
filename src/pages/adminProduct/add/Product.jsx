@@ -18,7 +18,10 @@ const Product = () => {
             <Breadcrumb.Item>
               <FontAwesomeIcon icon={faHome} />
             </Breadcrumb.Item>
-            <Breadcrumb.Item><Link to={'/product'}><a>Admin Product</a></Link></Breadcrumb.Item>
+            <Breadcrumb.Item
+              href="/product"
+            >Admin Product
+            </Breadcrumb.Item>
             <Breadcrumb.Item active>Add Product</Breadcrumb.Item>
           </Breadcrumb>
         </div>

@@ -51,7 +51,9 @@ const AdminProduct = () => {
           <ButtonGroup>
             <Button variant="outline-primary" size="sm">Share</Button>
             <Button variant="outline-primary" size="sm">Export</Button>
-            <Button variant="outline-primary" size="sm"><Link to={'/product/add'}>+ New Product</Link></Button>
+            <Button variant="outline-primary" size="sm">
+              <Link to={'/product/add'}>+ New Product</Link>
+             </Button>
           </ButtonGroup>
         </div>
       </div>
