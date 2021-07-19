@@ -60,6 +60,7 @@ const ReporteVentas = () => {
   
   useEffect(() => {
     let date = new Date();
+    date.setDate(date.getDate() - 1);
     let currentDate = date.toISOString().substring(0,10);
     document.getElementById('fechaFinal').value = currentDate;
 

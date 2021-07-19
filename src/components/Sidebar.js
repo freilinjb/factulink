@@ -118,7 +118,7 @@ export default (props = {}) => {
               <NavItem title="Suplidores" icon={faWarehouse} link={Routes.AdminSupplier.path} />
               <NavItem title="Clientes" icon={faUsers} link={Routes.AdminCustomer.path} />
               <NavItem title="Usuarios" icon={faUser} link={Routes.AdminUser.path} />
-              <NavItem title="Cuentas por Cobrar" icon={faUser} link={Routes.AdminUser.path} />
+              <NavItem title="Cuentas por Cobrar" icon={faUser} link={Routes.CuentaPorCobrar.path} />
               <NavItem title="Cuentas por Pagar" icon={faUser} link={Routes.AdminUser.path} />
               <NavItem title="Compras" icon={faUser} link={Routes.AdminUser.path} />
               <NavItem title="Catalogo de C.F." icon={faUser} link={Routes.AdminComprobantes.path} />
@@ -152,7 +152,7 @@ export default (props = {}) => {
               </CollapsableNavItem> */}
 
               {/* <NavItem external title="Plugins" link="https://demo.themesberg.com/volt-pro-react/#/plugins/charts" target="_blank" badgeText="Pro" icon={faChartPie} /> */}
-{/* 
+
               <Dropdown.Divider className="my-3 border-indigo" />
 
               <CollapsableNavItem eventKey="documentation/" title="Getting Started" icon={faBook}>
@@ -182,7 +182,7 @@ export default (props = {}) => {
                 <NavItem title="Tabs" link={Routes.Tabs.path} />
                 <NavItem title="Toasts" link={Routes.Toasts.path} />
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
-              </CollapsableNavItem> */}
+              </CollapsableNavItem>
 
               {/* FIN PRUEBA */}
               {/* <NavItem external title="Themesberg" link="https://themesberg.com" target="_blank" image={ThemesbergLogo} /> */}

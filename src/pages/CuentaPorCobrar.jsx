@@ -25,6 +25,7 @@ const CuentaPorCobrar = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [total_page, setTotal_page] = useState('');
+  const [totalRow, setTotalRow] = useState(0);
   const [facturas, setFacturas] = useState([]);
 
   const [campos, setCampos] = useState({

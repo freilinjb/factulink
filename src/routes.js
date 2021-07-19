@@ -82,5 +82,7 @@ export const Routes = {
     ReporteVenta: { path: '/reports/billing' },
     //Configuracion
     Configuracion: { path: '/configuracion' },
+    CuentaPorCobrar: { path: '/cuentaPorCobrar' },
+
 
 };

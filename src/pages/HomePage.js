@@ -102,6 +102,8 @@ import ReporteVentas from "./reports/ventas/ReporteVentas";
 
 //Comprobantes
 import Configuracion from "./Configuracion";
+//Cuenta por cobrar
+import CuentaPorCobrar from "./CuentaPorCobrar";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -538,6 +540,12 @@ export default () => (
                   exact
                   path={Routes.Configuracion.path}
                   component={Configuracion}
+                />
+
+              <RouteWithSidebar
+                  exact
+                  path={Routes.CuentaPorCobrar.path}
+                  component={CuentaPorCobrar}
                 />
 
                 <Redirect to={Routes.NotFound.path} />
