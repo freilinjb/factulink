@@ -103,7 +103,8 @@ import ReporteVentas from "./reports/ventas/ReporteVentas";
 //Comprobantes
 import Configuracion from "./Configuracion";
 //Cuenta por cobrar
-import CuentaPorCobrar from "./CuentaPorCobrar";
+import CuentaPorCobrar from "./cuentaPorCobrar/CuentaPorCobrar";
+import DetalleCuentaPorCobrar from "./cuentaPorCobrar/DetalleCuentaPorCobrar";
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -547,6 +548,14 @@ export default () => (
                   path={Routes.CuentaPorCobrar.path}
                   component={CuentaPorCobrar}
                 />
+
+                <RouteWithSidebar
+                  exact
+                  path={Routes.DetalleCuentaPorCobrar.path}
+                  component={DetalleCuentaPorCobrar}
+                />
+
+
 
                 <Redirect to={Routes.NotFound.path} />
               </Switch>

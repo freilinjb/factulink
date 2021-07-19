@@ -8,11 +8,11 @@ import { faHome, faCog, faCheck } from "@fortawesome/free-solid-svg-icons";
 import {Col,Row,Form,Button, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 
 // import CustomerForm from "../../../components/forms/CustomerForm";
-import CustomerContext from "../context/customer/CustomerContext";
+import CustomerContext from "../../context/customer/CustomerContext";
 
-import TableReporteCuentaPorCobrar from "../components/table/TableReporteCuentaPorCobrar";
+import TableReporteCuentaPorCobrar from "../../components/table/TableReporteCuentaPorCobrar";
 
-import clienteAxios from "../config/axios";
+import clienteAxios from "../../config/axios";
 
 
 const CuentaPorCobrar = () => {

@@ -71,7 +71,7 @@ const TableReporteCuentaPorCobrar = ({limit, page, setPage, search, facturas, to
                 <FontAwesomeIcon icon={faEye} className="me-2" /> Ver Detalles
               </Dropdown.Item>
               <Dropdown.Item>
-                <Link to={`/customer/edit/${factura.numFactura}`}>
+                <Link to={`/cuentaPorCobrar/${factura.idCliente}`}>
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Realizar Pago
                 </Link>
               </Dropdown.Item>

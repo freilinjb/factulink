@@ -83,6 +83,7 @@ export const Routes = {
     //Configuracion
     Configuracion: { path: '/configuracion' },
     CuentaPorCobrar: { path: '/cuentaPorCobrar' },
+    DetalleCuentaPorCobrar: { path: '/cuentaPorCobrar/:id'},
 
 
 };
