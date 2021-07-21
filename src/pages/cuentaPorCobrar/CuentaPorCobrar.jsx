@@ -69,7 +69,6 @@ const CuentaPorCobrar = () => {
     currentDate = date.toISOString().substring(0,10);
     document.getElementById('fechaInicio').value = currentDate;
 
-
     consultar();
     // const someDate = new Date();
     // const numberOfDaysToAdd = 3;
