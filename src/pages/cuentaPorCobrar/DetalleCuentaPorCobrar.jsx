@@ -24,6 +24,7 @@ const DetalleCuentaPorCobrar = () => {
   const [search, setSearch] = useState('');
   const [total_page, setTotal_page] = useState('');
   const [facturas, setFacturas] = useState([]);
+  const [montoTotal, setMontoTotal] = useState(0);
   const [cliente, setCliente] = useState({});
   const { id } = useParams();
 
@@ -41,14 +42,28 @@ const DetalleCuentaPorCobrar = () => {
     }).catch((error)=> {
       console.log('Error: ', error);
     })
-
+    handleClose();
   }
   useEffect(() => {
     consultarDatos();
-    const fecha = new Date();
-    document.getElementById('fecha').value = fecha.toISOString().substring(0,10);
-
+    // const fecha = new Date();
+    // // document.getElementById('fecha').value = fecha.toISOString().substring(0,10);
+    // document.getElementById('fecha').value = fecha.toISOString().substring(0,10);
   },[]);
+
+  useEffect(() => {
+    if(facturas.length > 0) {
+      let sum = 0;
+      facturas.forEach((key) => {
+        if(key.estado === 'pendiente') {
+          sum += Number(key.total) - Number(key.pagado);
+          console.log('Total: ', key.total);
+        }
+      })
+
+      setMontoTotal(sum);
+    }
+  },[facturas]);
 
   return (
     <>
@@ -121,15 +136,15 @@ const DetalleCuentaPorCobrar = () => {
               </Col>
             </Form.Group>
 
-            <Form.Group as={Row} className="mb-3"controlId="formPlaintextPassword">
+            {/* <Form.Group as={Row} className="mb-3"controlId="formPlaintextPassword">
               <Form.Label column sm="3">
-                Facha
+                Fecha
               </Form.Label>
               <Col sm="9">
-                <Form.Control type="date" id="fecha"/>
+                <Form.Control type="date" id="fecha" className="fechaPago"/>
               </Col>
-            </Form.Group>
-
+            </Form.Group> */}
+{/* 
             <Form.Group as={Row} className="mb-3"controlId="formPlaintextPassword">
               <Form.Label column sm="3">
                 Monto
@@ -137,14 +152,14 @@ const DetalleCuentaPorCobrar = () => {
               <Col sm="9">
                 <Form.Control type="number" value="0.00" placeholder="Ingrese el monto apagar" />
               </Col>
-            </Form.Group>
+            </Form.Group> */}
 
             <Form.Group as={Row} className="mb-3" className="justify-content-between">
               <Form.Label column sm="auto">
                 Facturas Pendientes
               </Form.Label>
               <Col sm="auto">
-                <Form.Control type="password" placeholder="RD $19000.99" readOnly plaintext />
+                <Form.Control type="text" value={facturas.length} readOnly plaintext />
               </Col>
             </Form.Group>
 
@@ -153,13 +168,7 @@ const DetalleCuentaPorCobrar = () => {
                 Deuda total
               </Form.Label>
               <Col sm="auto">
-                <Form.Control type="password" placeholder="RD $19000.99" readOnly plaintext />
-              </Col>
-            </Form.Group>
-
-            <Form.Group as={Row} className="mb-3">
-              <Col sm="12">
-                <Form.Control type="text" placeholder="Observación"/>
+                <Form.Control type="text" readOnly plaintext value={"RD$" + montoTotal} />
               </Col>
             </Form.Group>
 
@@ -174,7 +183,7 @@ const DetalleCuentaPorCobrar = () => {
             <TableDetalleFacturasCredito limit={limit} page={page} setPage={setPage} search={search} facturas={facturas} total_page={total_page}/>
         </div>
       </Row>
-      <RealizarPagoModal handleClose={handleClose} showModal={showModal} isEdit={true}/>
+      <RealizarPagoModal handleClose={handleClose} showModal={showModal} montoTotal={montoTotal} idCliente={id} consultarDatos={consultarDatos}/>
 
     </>
   );

@@ -60,7 +60,7 @@ const TableDetalleFacturasCredito = ({limit, page, setPage, search, facturas, to
           <td>{factura.vencimiento.substring(0,10)}</td>
           <td>{factura.diferencia}</td>
           <td>{factura.total}</td>
-          <td>{factura.pagado}</td>
+          <td>{factura.pagado.toFixed(2)}</td>
           <td>{<Badge bg={porcentaje == 100 ? 'success' : 'danger'} className="me-1">{porcentaje + '%'}</Badge>}</td>
           <td>{<Badge bg={factura.estado == 'pagada' ? 'success' : 'danger'} className="me-1">{factura.estado}</Badge>}</td>
           <td>
