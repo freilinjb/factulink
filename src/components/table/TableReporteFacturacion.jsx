@@ -59,7 +59,7 @@ const TableReporteFacturacion = ({limit, page, setPage, search, facturas, total_
           <td>{factura.NFC}</td>
           <td>{factura.fecha}</td>
           <td>{factura.total}</td>
-          <td>{<Badge bg={factura.estado == 'Pagada' ? 'success' : 'danger'} className="me-1">{factura.estado}</Badge>}</td>
+          <td>{<Badge bg={factura.estado == 'pagada' ? 'success' : 'danger'} className="me-1">{factura.estado}</Badge>}</td>
           {/* <td>
           <Dropdown as={ButtonGroup}>
             <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">

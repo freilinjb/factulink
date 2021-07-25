@@ -106,6 +106,9 @@ import Configuracion from "./Configuracion";
 import CuentaPorCobrar from "./cuentaPorCobrar/CuentaPorCobrar";
 import DetalleCuentaPorCobrar from "./cuentaPorCobrar/DetalleCuentaPorCobrar";
 
+import ReciboDePago from "./billing/ReciboDePago";
+
+
 const RouteWithLoader = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -553,6 +556,12 @@ export default () => (
                   exact
                   path={Routes.DetalleCuentaPorCobrar.path}
                   component={DetalleCuentaPorCobrar}
+                />
+
+                <RouteWithOutLoader
+                  exact
+                  path={Routes.ReciboDePago.path}
+                  component={ReciboDePago}
                 />
 
 

@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import CustomerContext from "../../context/customer/CustomerContext";
 import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
 
-const TableDetalleFacturasCredito = ({limit, page, setPage, search, facturas, total_page}) => {
+const TableDetalleFacturasCredito = ({limit, page, setPage, search, facturas, total_page, setIdPago, mostrarModalPago}) => {
   const customerContext = useContext(CustomerContext);
   const { getCustomerPage, clientes } = customerContext;
   // const { getReportFactura } = comprobanteContext;
@@ -35,6 +35,11 @@ const TableDetalleFacturasCredito = ({limit, page, setPage, search, facturas, to
 
   const nextPage = () => {
     setPage(page+1);
+  }
+
+  const cargarListasPagos = (id) => {
+    setIdPago(id);
+    mostrarModalPago();
   }
 
   let items = [];
@@ -71,14 +76,16 @@ const TableDetalleFacturasCredito = ({limit, page, setPage, search, facturas, to
               </span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item className="text-primary">
+              <Dropdown.Item className="text-primary"
+                onClick={ () => cargarListasPagos(factura.numFactura)}
+              >
                 <FontAwesomeIcon icon={faEye} className="me-2" /> Consultar Historial de abonos
               </Dropdown.Item>
-              <Dropdown.Item className="text-secondary">
+              {/* <Dropdown.Item className="text-secondary">
                 <Link to={`/cuentaPorCobrar/${factura.idCliente}`}>
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Realizar Pago
                 </Link>
-              </Dropdown.Item>
+              </Dropdown.Item> */}
               <Dropdown.Item className="text-info">
                 <FontAwesomeIcon icon={faTrashAlt} className="me-2" /> Imprimir Estado
               </Dropdown.Item>

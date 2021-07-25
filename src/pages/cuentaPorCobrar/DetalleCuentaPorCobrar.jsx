@@ -10,6 +10,7 @@ import clienteAxios from "../../config/axios";
 import TableDetalleFacturasCredito from "../../components/table/TableDetalleFacturasCredito";
 
 import RealizarPagoModal from "../../components/modal/RealizarPagoModal";
+import PagoHistorialModal from "../../components/modal/PagoHistorialModal";
 
 const DetalleCuentaPorCobrar = () => {
 
@@ -29,8 +30,15 @@ const DetalleCuentaPorCobrar = () => {
   const { id } = useParams();
 
   const [showModal, setShowModal] = useState(false);
+
+  const [mostrarModalPagos, setMostrarModalPagos] = useState(false);
+  const [idPago, setIdPago] = useState(0);
+
   const handleClose = () => setShowModal(false);
-  const mostrarModal = () => setShowModal(true)
+  const mostrarModal = () => setShowModal(true);
+
+  const handleClosePago = () => setMostrarModalPagos(false);
+  const mostrarModalPago = () => setMostrarModalPagos(true);
 
   const consultarDatos = async () => {
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
@@ -180,10 +188,11 @@ const DetalleCuentaPorCobrar = () => {
         </div>
         <div className="col-9">
             <h6 className="bg-primary p-1 rounded-3 text-white text-center">Facturas</h6>
-            <TableDetalleFacturasCredito limit={limit} page={page} setPage={setPage} search={search} facturas={facturas} total_page={total_page}/>
+            <TableDetalleFacturasCredito limit={limit} page={page} setPage={setPage} search={search} facturas={facturas} total_page={total_page} setIdPago={setIdPago} mostrarModalPago={mostrarModalPago}/>
         </div>
       </Row>
       <RealizarPagoModal handleClose={handleClose} showModal={showModal} montoTotal={montoTotal} idCliente={id} consultarDatos={consultarDatos}/>
+      <PagoHistorialModal handleClosePago={handleClosePago} mostrarModalPagos={mostrarModalPagos} idPago={idPago}/>
 
     </>
   );

@@ -32,19 +32,28 @@ const Invoice = () => {
     {factura.length > 0 && (
         <section className="invoice" id="invoice">
         <div className="row">
-          <div className="col-auto me-auto">
+          <div className="col-4 me-auto">
             <h2 className="page-header">
               <i className="fas fa-globe"></i> FactuLink, Inc.
               <br/>
               <small className="float-right">{factura[0].tipoFactura}</small>
             </h2>
           </div>
-          <div className="col-auto">
-              <h2>
+          <div className="col-4">
+              <h3>
+                    <small className="float-right"> -- .::[ FACTURA ]::. -- </small>
+                    {/* <small className="float-right">#: { ('0000000000'+Number(factura[0].numFactura)).slice(-10) }</small> */}
+                    {/* <small className="float-right">Numero de Factura: {factura[0].fecha.substring(0,10) }</small> */}
+              </h3>
+          </div>
+
+          <div className="col-4">
+              <h5>
                     <small className="float-right">#: { ('0000000000'+Number(factura[0].numFactura)).slice(-10) }</small>
                     {/* <small className="float-right">Numero de Factura: {factura[0].fecha.substring(0,10) }</small> */}
-              </h2>
+              </h5>
           </div>
+          
         </div>
         <div className="row invoice-info">
           <div className="col-sm-4 invoice-col col-4">
