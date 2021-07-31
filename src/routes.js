@@ -86,4 +86,7 @@ AdminUser: { path: '/user' },
     DetalleCuentaPorCobrar: { path: '/cuentaPorCobrar/:id'},
     //Recibo de pago
     ReciboDePago: { path: '/report/pay/:id'},
+    //Compras
+    Compras: { path: '/compras'},
+
 };

@@ -68,6 +68,7 @@ import UnidState from "../context/unid/UnidState";
 import ComprobanteState from "../context/comprobante/ComprobanteState";
 
 import ProductEdit from "./adminProduct/edit/ProductEdit";
+import Product from "./adminProduct/add/Product";
 import AdminProduct from "./adminProduct/AdminProduct";
 
 import Supplier from "./adminSupplier/Supplier";
@@ -107,6 +108,9 @@ import CuentaPorCobrar from "./cuentaPorCobrar/CuentaPorCobrar";
 import DetalleCuentaPorCobrar from "./cuentaPorCobrar/DetalleCuentaPorCobrar";
 
 import ReciboDePago from "./billing/ReciboDePago";
+//Compras
+import Compras from "./compras/Compras";
+
 
 
 const RouteWithLoader = ({ component: Component, ...rest }) => {
@@ -425,7 +429,13 @@ export default () => (
                 <RouteWithSidebar
                   exact
                   path={Routes.AdminProduct.path}
-                  component={AdminProduct}
+                  component={Product}
+                />
+                {/* PAGINAS DE PRUEBAS */}
+                <RouteWithSidebar
+                  exact
+                  path={Routes.Product.path}
+                  component={Product}
                 />
                 <RouteWithSidebar
                   exact
@@ -562,6 +572,12 @@ export default () => (
                   exact
                   path={Routes.ReciboDePago.path}
                   component={ReciboDePago}
+                />
+
+                <RouteWithSidebar
+                  exact
+                  path={Routes.Compras.path}
+                  component={Compras}
                 />
 
 
