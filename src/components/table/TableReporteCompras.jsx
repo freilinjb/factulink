@@ -6,18 +6,16 @@ import { Link } from 'react-router-dom';
 
 
 import CustomerContext from "../../context/customer/CustomerContext";
-import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
 
 const TableReporteCompras = ({limit, page, setPage, search, compras, total_page, consultarDatos}) => {
   const customerContext = useContext(CustomerContext);
-  const { getCustomerPage, clientes } = customerContext;
   // const { getReportFactura } = comprobanteContext;
 
-  useEffect(() => {
-    // getCustomerPage(limit,1);
-    // getReportFactura(limit, 1);
-    console.log('TableReporteCuentaPorCobrar: ', consultarDatos(limit, 1));
-  },[]);
+  // useEffect(() => {
+  //   // getCustomerPage(limit,1);
+  //   // getReportFactura(limit, 1);
+  //   console.log('TableReporteCuentaPorCobrar: ', consultarDatos(limit, 1));
+  // },[]);
 
   useEffect(() => {
     //  getCustomerPage(limit, page, search);
@@ -53,11 +51,13 @@ const TableReporteCompras = ({limit, page, setPage, search, compras, total_page,
       <>
         <tr key={index +'-'+ compra.idCompra}>
           <td>{(compra.idCompra)}</td>
-          <td>{compra.nombre}</td>
-          <td>{compra.razonSocial}</td>
+          <td>{compra.documento}</td>
+          <td>{compra.fecha.substring(0,10)}</td>
+          <td>{compra.tipoCompra}</td>
+          <td>{compra.proveedor}</td>
           <td>{compra.telefono}</td>
           <td>{compra.correo}</td>
-          <td>{compra.identificacion}</td>
+          <td>{compra.monto}</td>
           <td>{<Badge bg={compra.proveedor == 'pagada' ? 'success' : 'danger'} className="me-1">{compra.estado}</Badge>}</td>
           <td>
           <Dropdown as={ButtonGroup}>
@@ -102,6 +102,7 @@ const TableReporteCompras = ({limit, page, setPage, search, compras, total_page,
                  <th className="border-bottom">Proveedor</th>
                  <th className="border-bottom">Telefono</th>
                  <th className="border-bottom">Correo</th>
+                 <th className="border-bottom">Monto total</th>
                  <th className="border-bottom">Estado</th>
                  <th className="border-bottom">Acción</th>
                </tr>

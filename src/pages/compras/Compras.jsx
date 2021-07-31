@@ -9,7 +9,8 @@ import { faHome, faCog, faCheck, faBackward, faPlus, faPrint } from "@fortawesom
 import {Col,Row,Form,Button, ButtonGroup, Dropdown} from "@themesberg/react-bootstrap";
 
 // import CustomerForm from "../../../components/forms/CustomerForm";
-import CustomerContext from "../../context/customer/CustomerContext";
+// import CustomerContext from "../../context/customer/CustomerContext";
+import SupplierContext from "../../context/supplier/SupplierContext";
 
 import TableReporteCompras from "../../components/table/TableReporteCompras";
 
@@ -17,9 +18,11 @@ import clienteAxios from "../../config/axios";
 
 
 const Compras = () => {
-  const customerContext = useContext(CustomerContext);
+  // const customerContext = useContext(CustomerContext);
+  const supplierContext = useContext(SupplierContext);
 
-  const { getCustomer, clientesSelect } = customerContext;
+  const { getSupplier, proveedoresSelect } = supplierContext;
+  // const { getCustomer, clientesSelect } = customerContext;
   // const { getReportFactura } = comprobanteContext;
 
   const [limit, setLimit] = useState(10);
@@ -56,7 +59,8 @@ const Compras = () => {
   }
 
   const consultar = async () => {
-    await getCustomer();
+    // await getCustomer();
+    await getSupplier();
     await consultarDatos(10,1);
 
   }
@@ -154,7 +158,7 @@ const Compras = () => {
           <Form.Group className="col-3">
               <Form.Label>Proveedor</Form.Label>
               <Select
-                options={clientesSelect}
+                options={proveedoresSelect}
                 
                 theme={(theme) => ({
                   ...theme,
