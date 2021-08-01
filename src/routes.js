@@ -88,5 +88,7 @@ AdminUser: { path: '/user' },
     ReciboDePago: { path: '/report/pay/:id'},
     //Compras
     Compras: { path: '/compras'},
+    ComprasForm: { path: '/compras/add'},
+    ComprasEdit: { path: '/compras/:id'},
 
 };

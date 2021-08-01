@@ -67,6 +67,7 @@ const Compras = () => {
   
   useEffect(() => {
     let date = new Date();
+    date.setDate(date.getDate() - 7);
     let currentDate = date.toISOString().substring(0,10);
     document.getElementById('fechaInicio').value = currentDate;
 
@@ -191,7 +192,7 @@ const Compras = () => {
           <ButtonGroup>
             <Button variant="outline-primary" size="sm"><FontAwesomeIcon icon={faPrint} />Imprimir</Button>
             <Button variant="outline-primary" size="sm">
-              <Link to={'/product/add'}><FontAwesomeIcon icon={faPlus}/> Registrar nueva compra</Link>
+              <Link to={'/compras/add'}><FontAwesomeIcon icon={faPlus}/> Registrar nueva compra</Link>
              </Button>
           </ButtonGroup>
         </div>

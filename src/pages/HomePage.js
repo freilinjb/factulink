@@ -110,6 +110,7 @@ import DetalleCuentaPorCobrar from "./cuentaPorCobrar/DetalleCuentaPorCobrar";
 import ReciboDePago from "./billing/ReciboDePago";
 //Compras
 import Compras from "./compras/Compras";
+import CompraRegistro from "./compras/CompraRegistro";
 
 
 
@@ -437,6 +438,7 @@ export default () => (
                   path={Routes.Product.path}
                   component={Product}
                 />
+
                 <RouteWithSidebar
                   exact
                   path={Routes.AdminUnid.path}
@@ -580,7 +582,11 @@ export default () => (
                   component={Compras}
                 />
 
-
+                <RouteWithSidebar
+                  exact
+                  path={Routes.ComprasForm.path}
+                  component={CompraRegistro}
+                />
 
                 <Redirect to={Routes.NotFound.path} />
               </Switch>
