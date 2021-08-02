@@ -57,7 +57,7 @@ const TableReporteCompras = ({limit, page, setPage, search, compras, total_page,
           <td>{compra.proveedor}</td>
           <td>{compra.telefono}</td>
           <td>{compra.correo}</td>
-          <td>{compra.monto}</td>
+          <td>{(compra.monto).toFixed(2)}</td>
           <td>{<Badge bg={compra.proveedor == 'pagada' ? 'success' : 'danger'} className="me-1">{compra.estado}</Badge>}</td>
           <td>
           <Dropdown as={ButtonGroup}>

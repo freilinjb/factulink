@@ -430,7 +430,7 @@ export default () => (
                 <RouteWithSidebar
                   exact
                   path={Routes.AdminProduct.path}
-                  component={Product}
+                  component={AdminProduct}
                 />
                 {/* PAGINAS DE PRUEBAS */}
                 <RouteWithSidebar

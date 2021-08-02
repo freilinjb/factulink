@@ -4,7 +4,7 @@ import { faAngleDown, faAngleUp, faArrowDown, faArrowUp, faEdit, faShoppingCart,
 import { Col, Form, Nav, Card, Image, Button, Table, Dropdown, InputGroup, Pagination, ButtonGroup } from '@themesberg/react-bootstrap';
 import ProductContext from "../../context/product/ProductContext";
 
-const TableRegistroCompras = ({productosCompras}) => {
+const TableRegistroCompras = ({productosCompras, setProductoComporas}) => {
   const [campos, setCampos] = useState({});
   const productContext = useContext(ProductContext);
 
@@ -20,28 +20,41 @@ const TableRegistroCompras = ({productosCompras}) => {
     });
   };
 
-  const TablaRowProducto = ({producto, index}) => {
+  const eliminarProducto = (product) => {
+    console.log('Eliminando producto');
+    const resultados = productosCompras.filter(p => p.idProducto !== product.idProducto);
 
+    setProductoComporas(resultados);
+  };
+
+  const TablaRowProducto = ({producto, index}) => {
 
     return (
       <>
         <tr key={index +'-'+ producto.idProducto}>
           <td>{(index)}</td>
-          <td>{producto.nombre + ' ' + producto.marca} </td>
-          <td>{producto.categoria} </td>
-          <td>{producto.nombre + ' ' + producto.marca} </td>
+          <td>{producto.nombre} </td>
+          <td>{producto.marca}   </td>
           <td>   
               <Form.Group>
-              <Form.Control onChange={handleChange} type="number" name={`precio-${producto.idProducto}`} size="sm" min="1" placeholder="Ingrese el precio" value="1" value={campos[`precio-${producto.idProducto}`] ? campos[`precio-${producto.idProducto}`] : producto.precio } />
+              <Form.Control onChange={handleChange} type="number" name={`precio-${producto.idProducto}`} id={`idProductoPrecio${Number(producto.idProducto)}`} size="sm" min="1" placeholder="Ingrese el precio" value="1" value={campos[`precio-${producto.idProducto}`] ? campos[`precio-${producto.idProducto}`] : producto.precio } />
             </Form.Group>
           </td>
 
           <td>   
               <Form.Group>
-              <Form.Control onChange={handleChange} type="number" name={`cantidad-${producto.idProducto}`} size="sm" min="1" placeholder="Ingrese la Cantidad" value="1" value={campos[`cantidad-${producto.idProducto}`] ? campos[`cantidad-${producto.idProducto}`] : producto.cantidad } />
+              <Form.Control onChange={handleChange} type="number" name={`cantidad-${producto.idProducto}`} id={`idProductoCantidad${Number(producto.idProducto)}`} size="sm" min="1" placeholder="Ingrese la Cantidad" value="1" value={campos[`cantidad-${producto.idProducto}`] ? campos[`cantidad-${producto.idProducto}`] : producto.cantidad } />
             </Form.Group>
           </td>
-          <td>{producto.importe}</td>
+          <td>{(producto.precio * producto.cantidad).toFixed(2)} </td>
+          <td>
+            {/* <a className="text-info"
+              // onClick={() => mostrarModalEditarProducto(product)}
+            ><FontAwesomeIcon icon={faEdit} className="me-2" /></a> */}
+            <a className="text-danger"
+              onClick={() => eliminarProducto(producto)}
+            ><FontAwesomeIcon icon={faTrashAlt} size="lg"  /></a>
+            </td>
         </tr>
       </>
     )
