@@ -6,7 +6,6 @@ import ProductContext from "../../context/product/ProductContext";
 
 const TableRegistroCompras = ({productosCompras, setProductoComporas}) => {
   const [campos, setCampos] = useState({});
-  const productContext = useContext(ProductContext);
 
   const handleChange = (e) => {
     const target = e.target;
@@ -27,6 +26,12 @@ const TableRegistroCompras = ({productosCompras, setProductoComporas}) => {
     setProductoComporas(resultados);
   };
 
+  // const actualizarCantidadProducto = (produco, cantidad) => {
+  //   const resultados = productosCompras.filter(p => p.idProducto !== produco.idProducto);
+  //   producto.
+
+  // }
+
   const TablaRowProducto = ({producto, index}) => {
 
     return (
@@ -43,7 +48,7 @@ const TableRegistroCompras = ({productosCompras, setProductoComporas}) => {
 
           <td>   
               <Form.Group>
-              <Form.Control onChange={handleChange} type="number" name={`cantidad-${producto.idProducto}`} id={`idProductoCantidad${Number(producto.idProducto)}`} size="sm" min="1" placeholder="Ingrese la Cantidad" value="1" value={campos[`cantidad-${producto.idProducto}`] ? campos[`cantidad-${producto.idProducto}`] : producto.cantidad } />
+              <Form.Control onChange={handleChange} type="number" name={`cantidad-${producto.idProducto}`} id={`idProductoCantidad${Number(producto.idProducto)}`}  size="sm" min="1" placeholder="Ingrese la Cantidad" value="1" value={campos[`cantidad-${producto.idProducto}`] ? campos[`cantidad-${producto.idProducto}`] : producto.cantidad } />
             </Form.Group>
           </td>
           <td>{(producto.precio * producto.cantidad).toFixed(2)} </td>

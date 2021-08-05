@@ -62,6 +62,11 @@ const TableFacturasDelDia = ({limit, page, setPage, search, anularFactura}) => {
               >         
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Consultar Factura
               </Dropdown.Item>
+              <Dropdown.Item
+                onClick={() => getInvoice(factura.numFactura)}
+              >         
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />Devolución de articulos
+              </Dropdown.Item>
               {factura.estatus != 'Anulada' && (
                   <Dropdown.Item className="text-danger"
                   onClick={() => anularFactura(factura.numFactura)}

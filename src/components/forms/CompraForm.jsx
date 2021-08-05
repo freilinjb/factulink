@@ -200,6 +200,20 @@ const CompraForm = ({id}) => {
     // return;
     const resultados = validarSupplier(campos);
     ///Enviando datos;
+
+    console.log('Datos enviados: ', productosCompras);
+    const productos = productosCompras;
+    productosCompras.forEach((key, index) => {
+      if(productos[index].idProducto === key.idProducto) {
+        const cantidad = document.getElementById(`idProductoCantidad${key.idProducto}`).value;
+        productos[index].cantidad = Number(cantidad);
+      } 
+      if(productos[index].idProducto === key.idProducto) {
+        const precio = document.getElementById(`idProductoPrecio${key.idProducto}`).value;
+        productos[index].cantidad = Number(precio);
+      } 
+    });
+
     await clienteAxios.post('/api/report/compra',{
       documento: campos.documento,
       fecha: campos.fecha,
@@ -469,23 +483,6 @@ const CompraForm = ({id}) => {
 
                       <hr className="mt-3"/>
 
-                    {/* <Form.Group className="col-6">
-                    <Form.Label>Producto</Form.Label>
-                      <Select
-                        options={provincias}
-                        
-                        theme={(theme) => ({
-                          ...theme,
-                          borderRadius: 8,
-                          colors: { ...theme.colors, primary: "#333152" },
-                        })}
-                        name="almacen"
-                        value={campos.almacen}
-                        onChange={handleChangeSelect}
-                        placeholder="Seleccione una opcion"
-                      />
-                    </Form.Group> */}
-
                     <Form.Group className="col-6">
                       <Form.Label>Producto</Form.Label>
                         <AsyncSelect
@@ -538,31 +535,6 @@ const CompraForm = ({id}) => {
                           onChange={handleChange}
                         ></Form.Control>
                       </Form.Group>
-
-
-                     
-
-                  {/* <Form.Group className="mb-3" className="col-9">
-                    <Form.Label>Observación</Form.Label>
-                    <Form.Control as="textarea" rows="1" name="observacion" value={campos.observacion} onChange={handleChange} autoComplete="off"/>
-                  </Form.Group> */}
-
-                  
-                
-                  {/* <Form.Group id="estado" className="col-3">
-                    <Form.Label>Estado</Form.Label>
-                    <Select
-                      options={estado}
-                      theme={(theme) => ({
-                        ...theme,
-                        borderRadius: 8,
-                        colors: { ...theme.colors, primary: "#333152" },
-                      })}
-                      name="estado"
-                      onChange={handleChangeSelect}
-                      value={campos.estado}
-                    />
-                  </Form.Group> */}
 
                   <div className="w-100"></div>
                   <div className="mt-3 col-auto">
