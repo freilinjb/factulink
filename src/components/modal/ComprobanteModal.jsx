@@ -93,7 +93,6 @@ const ComprobanteModal = ({handleClose, showModal, isEdit}) => {
     e.preventDefault();
     const validacion = ValidarComprobante(campos);
     // console.log('Campos a registrar2: ', validacion);
-    console.log('Campos validados: ', campos);
     // return;
     if(Object.entries(validacion).length === 0) {
       if(isEdit > 0) {
@@ -134,18 +133,7 @@ const ComprobanteModal = ({handleClose, showModal, isEdit}) => {
       <Modal.Body>
         <Form>
           <Row>
-            {/* <Form.Group id="nombre">
-              <input type="hidden" name="idSubCategoria" id="idSubCategoria" value={isEdit}/>
-              <Form.Label>Nombre</Form.Label>
-              <Form.Control
-                type="text"
-                name="nombre"
-                autoComplete="off"
-                placeholder="nombre"
-                value={campos.nombre}
-                onChange={handleChange}
-              ></Form.Control>
-            </Form.Group> */}
+
             <label htmlFor="">En esta pantalla se definen los parametros para ingresar 
             el NFC(Numero de comprobante fiscal). Estos codigos son asignados por la
              direccion general de Impuestos Internos (DGII) y deben se solicitados 
@@ -223,8 +211,7 @@ const ComprobanteModal = ({handleClose, showModal, isEdit}) => {
                     min="0"
                     className="form-control"
                     name="secuencia"
-                    value={campos.cantidadAprobada}
-                    onChange={handleChange}
+                    value={campos.inicio > 0 ? (campos.inicio - campos.final) : 0}
                     autoComplete="off"
                     aria-label="Amount (to the nearest dollar)"
                   />
@@ -239,8 +226,7 @@ const ComprobanteModal = ({handleClose, showModal, isEdit}) => {
                     min="0"
                     className="form-control"
                     name="proximoComprobante"
-                    value={campos.proximoComprobante}
-                    onChange={handleChange}
+                    value={(campos.inicio - campos.final) > 0 ? campos.inicio+1 : 0}
                     autoComplete="off"
                     aria-label="Amount (to the nearest dollar)"
                   />

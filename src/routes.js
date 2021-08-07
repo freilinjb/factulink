@@ -83,6 +83,7 @@ AdminUser: { path: '/user' },
     //Configuracion
     Configuracion: { path: '/configuracion' },
     CuentaPorCobrar: { path: '/cuentaPorCobrar' },
+    PagoFacturaDocumento: { path: '/cuentaPorCobrar/bolante/:id' },
     DetalleCuentaPorCobrar: { path: '/cuentaPorCobrar/:id'},
     //Recibo de pago
     ReciboDePago: { path: '/report/pay/:id'},
@@ -90,5 +91,6 @@ AdminUser: { path: '/user' },
     Compras: { path: '/compras'},
     ComprasForm: { path: '/compras/add'},
     ComprasEdit: { path: '/compras/:id'},
+    PagoFactura: { path: '/compra/:id'},
 
 };

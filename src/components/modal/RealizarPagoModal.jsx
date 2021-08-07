@@ -96,10 +96,11 @@ const RealizarPagoModal = ({handleClose, showModal, montoTotal, idCliente, consu
         monto: Number(campos.monto),
         observacion: campos.observacion,
       }).then(async (resultados) => {
-        console.log('consultarDatos: ', resultados.data.success);
+        console.log('consultarDatos: ', resultados.data);
         if(resultados.data.success == 1) {
           consultarDatos();
           handleClose();
+          window.open(`/#/cuentaPorCobrar/bolante/${resultados.data.data}`);
         }
       }).catch((error)=> {
         console.log('Error: ', error);
@@ -109,8 +110,8 @@ const RealizarPagoModal = ({handleClose, showModal, montoTotal, idCliente, consu
   })
 
     setErrores(validacion);
-
   }  
+
 
   return (
     <Modal as={Modal.Dialog} centered show={showModal} onHide={handleClose}>

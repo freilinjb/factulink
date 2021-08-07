@@ -111,6 +111,8 @@ import ReciboDePago from "./billing/ReciboDePago";
 //Compras
 import Compras from "./compras/Compras";
 import CompraRegistro from "./compras/CompraRegistro";
+import PagoFacturaDocumento from "./compras/PagoFacturaDocumento";
+import PagoDocumento from "./cuentaPorCobrar/PagoDocumento";
 
 
 
@@ -572,6 +574,13 @@ export default () => (
 
                 <RouteWithOutLoader
                   exact
+                  path={Routes.PagoFacturaDocumento.path}
+                  component={PagoDocumento}
+                />
+
+
+                <RouteWithOutLoader
+                  exact
                   path={Routes.ReciboDePago.path}
                   component={ReciboDePago}
                 />
@@ -587,6 +596,14 @@ export default () => (
                   path={Routes.ComprasForm.path}
                   component={CompraRegistro}
                 />
+
+                <RouteWithOutLoader
+                  exact
+                  path={Routes.PagoFactura.path}
+                  component={PagoFacturaDocumento}
+                />
+
+                
 
                 <Redirect to={Routes.NotFound.path} />
               </Switch>
