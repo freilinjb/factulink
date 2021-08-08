@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faEllipsisH, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup, Modal } from '@themesberg/react-bootstrap';
@@ -6,10 +6,22 @@ import { Nav, Card, Button, Table, Dropdown, Pagination, ButtonGroup, Modal } fr
 // import { Link } from 'react-router-dom';
 
 import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
+import ComprobanteDetalleTablaModal from '../modal/ComprobanteDetalleTablaModal';
 
 const TableComprobante = ({limit, page, setPage, search, showModalEditComprobante, deleteCategoryfn}) => {
   const comprobanteContext = useContext(ComprobanteContext);
   const { getAllComprobante, comprobantes, total_page, total_rows, mensajeComprobante} = comprobanteContext;
+  const [mostrarModalDetalle, MostrarModalDetalle] = useState(false);
+  const [tipoComprobante, setTipoComprobante] = useState(0);
+
+  const handleOpen = (id) => {
+    setTipoComprobante(id);
+    MostrarModalDetalle(true);
+  }
+  const handleClose = () => {
+    setTipoComprobante(0);
+    MostrarModalDetalle(false);
+  }
 
   useEffect(() => {
     getAllComprobante(limit,1);
@@ -68,6 +80,9 @@ const TableComprobante = ({limit, page, setPage, search, showModalEditComprobant
               >         
                   <FontAwesomeIcon icon={faEdit} className="me-2" />Edit
               </Dropdown.Item>
+              <Dropdown.Item onClick={() => handleOpen(comprobante.tipoComprobante)}>         
+                  <FontAwesomeIcon icon={faEdit} className="me-2" />Detalles comprobates
+              </Dropdown.Item>
               <Dropdown.Item className="text-danger"
                 // onClick={deleteCategoryfn(comprobante.idCategoria)}
               >
@@ -83,6 +98,7 @@ const TableComprobante = ({limit, page, setPage, search, showModalEditComprobant
   }
 
   return (
+    <>
     <Card border="light" className="table-wrapper table-responsive shadow-sm">
       <Card.Body className="p-0">
        
@@ -126,6 +142,9 @@ const TableComprobante = ({limit, page, setPage, search, showModalEditComprobant
         </Card.Footer>
       </Card.Body>
     </Card>
+
+    <ComprobanteDetalleTablaModal handleClose={handleClose} mostrarModalDetalle={mostrarModalDetalle} tipoComprobante={tipoComprobante}/>
+    </>
   );
 };
 

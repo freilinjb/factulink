@@ -211,7 +211,7 @@ const ComprobanteModal = ({handleClose, showModal, isEdit}) => {
                     min="0"
                     className="form-control"
                     name="secuencia"
-                    value={campos.inicio > 0 ? (campos.inicio - campos.final) : 0}
+                    value={campos.inicio > 0 ? (campos.final - campos.inicio) : 0}
                     autoComplete="off"
                     aria-label="Amount (to the nearest dollar)"
                   />
