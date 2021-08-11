@@ -119,7 +119,7 @@ export default (props = {}) => {
               <NavItem title="Clientes" icon={faUsers} link={Routes.AdminCustomer.path} />
               <NavItem title="Usuarios" icon={faUser} link={Routes.AdminUser.path} />
               <NavItem title="Cuentas por Cobrar" icon={faUser} link={Routes.CuentaPorCobrar.path} />
-              <NavItem title="Cuentas por Pagar" icon={faUser} link={Routes.AdminUser.path} />
+              <NavItem title="Cuentas por Pagar" icon={faUser} link={Routes.CuentasPorPagar.path} />
               <NavItem title="Compras" icon={faUser} link={Routes.Compras.path} />
               <NavItem title="Catalogo de C.F." icon={faUser} link={Routes.AdminComprobantes.path} />
               <NavItem title="Factuacion POS" icon={faHandHoldingUsd} link={Routes.Billing.path} />

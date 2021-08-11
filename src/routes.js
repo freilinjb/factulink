@@ -92,5 +92,11 @@ AdminUser: { path: '/user' },
     ComprasForm: { path: '/compras/add'},
     ComprasEdit: { path: '/compras/:id'},
     PagoFactura: { path: '/compra/:id'},
+    //Cuenta por pagar
+    CuentasPorPagar: { path: '/cuentasPorPagar'},
+    registrarPagoCXP: { path: '/cuentasPorPagar/add'},
+    consultarPagoCXP: { path: '/cuentasPorPagar/:id'},
+
+
 
 };
