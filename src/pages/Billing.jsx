@@ -1,5 +1,10 @@
 import React,{ useState, useContext, useEffect } from 'react';
+
 import Select from "react-select";
+import AsyncSelect from "react-select/async";
+
+import clienteAxios from "../config/axios";
+import cookie from "js-cookie";
 
 import {Col, Card,Row,Form,Button,InputGroup, ButtonGroup, Table, Image, Dropdown} from "@themesberg/react-bootstrap";
 import { faSearch, faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -17,6 +22,8 @@ import { useToasts } from 'react-toast-notifications';
 
 
 const Billing = () => {
+  const [modoPos, setModoPos] = useState(true);
+
   const { addToast } = useToasts();
 
     const productContext = useContext(ProductContext);
@@ -42,6 +49,7 @@ const Billing = () => {
         secuencia: "",
         sucursal: "",
         estado: "",
+        productoPos: ""
       });
 
     const [sumatoria, setSumatoria] = useState({
@@ -91,6 +99,18 @@ const Billing = () => {
             [name]: valorSeleccionado,
         });
     }; 
+
+    const handleChange = (e) => {
+      const target = e.target;
+      const value = target.type === "checkbox" ? target.checked : target.value;
+      const name = target.name;
+  
+      // console.log(`${e.target.name}`, e.target.value);
+      setCampos({
+        ...campos,
+        [name]: value,
+      });
+    };
 
   const tipoFactura = [
     { value: 13, label: "Contado" },
@@ -207,21 +227,183 @@ const Billing = () => {
     setProductBilling(resultados);
   }
 
+  const LoadingMessage  = props => {
+    return (
+      <div
+        {...props.innerProps}
+        style={props.getStyles('loadingMessage', props)}
+      >
+        {props.children}
+      </div>
+    )
+  }
+
+  const promiseOptions = inputValue =>
+  new Promise(resolve => {
+
+    // setTimeout(() => {
+      resolve(filterProducto(inputValue));
+    // }, 1000);
+  });
+
+  const filterProducto = async (inputValue) => {
+    if(inputValue.length >= 4) {
+      clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+
+      return new Promise((resolve, reject) => {
+        clienteAxios.get(`/api/product?search=${inputValue}`)
+         .then(function ({data}) {
+          console.log('ResoyestaR: ', data.data);
+          let resultados = [];
+
+          data.data.forEach((key, index) => {
+            
+            console.log('key: ', key);
+              resultados.push({
+                value: key.idProducto,
+                label: key.nombre
+            });
+          })
+
+          // const productos = productBilling;
+          // productos.filter(p => p.idProducto === data.data[0].idProducto);
+
+
+
+          //  return;
+          // resultados = [];
+          let cantidad = 10;
+
+          let productosTemp = productBilling;
+          productosTemp.push({
+            idProducto: data.data[0].idProducto,
+            codigo: data.data[0].codigo,
+            nombre: data.data[0].nombre,
+            marca: data.data[0].marca,
+            precio: data.data[0].precioVenta,
+            categoria: data.data[0].categoria,
+            subcategoria: data.data[0].subcategoria,
+            cantidad: cantidad,
+            itbis: (data.data[0].precioVenta * cantidad) * 0.18,
+          });
+
+          //Actualiza el precio del INPUT del formulario
+          setCampos({
+            ...campos,
+            precio: data.data[0].precioVenta
+          });
+
+          console.log('productosTemp: ', productosTemp);
+
+          setProductBilling(productosTemp);
+          
+          let itbis = 0,subTotal = 0, total = 0;
+          productosTemp.forEach((key) => {
+            itbis += (key.cantidad * key.precio) * 0.18;
+            subTotal += (key.cantidad * key.precio);
+            total += (key.cantidad * key.precio) * 1.18;
+          })
+          setSumatoria({
+            ...sumatoria,
+            itbis: itbis,
+            subTotal: subTotal,
+            total: total,
+            });
+
+          // data.data.forEach((key, index) => {
+          //   console.log('Recorrido: ', key);
+          //   resultados.push({
+          //     value: key.idProducto,
+          //     label: key.nombre
+          //   });
+          // })
+          console.log("getReportFactura: ", resultados);
+          // return(resultados);
+
+          resolve(resultados);
+         })
+         .catch(function (error) {
+          resolve();
+         });
+       });
+    }
+  }
+
   
     return ( 
         <>
-      <Row className="mx-2 mt-2">
-        <Col lg={5} >
+      <Row className="mx-2 mt-2 justify-content-center">
+        {modoPos ?
+        (
+          <Col lg={7} className="row justify-content-center">
+            <Form.Group className="col-6 mb-3">
+              <Form.Label>Producto</Form.Label>
+                <AsyncSelect
+                  cacheOptions
+                  defaultOptions
+                  styles={{
+                    loadingMessage: base => ({
+                      ...base,
+                      color: 'white',
+                    }),
+                  }}
+                  theme={(theme) => ({
+                    ...theme,
+                    borderRadius: 8,
+                    colors: { ...theme.colors, primary: "#333152" },
+                  })}
+                  components={{ LoadingMessage }}
+                  loadOptions={promiseOptions}
+                  name="productoPos"
+                  value={campos.productoPos}
+                  onChange={handleChangeSelect}
+                  placeholder="Seleccione un producto"
+                />
+            </Form.Group>
+
+            <Form.Group
+                className="col-lg-3 col-md-3 col-sm-6"> 
+              <Form.Label>Precio</Form.Label>
+              <Form.Control
+                type="number"
+                name="precio"
+                autoComplete="off"
+                placeholder="Precio del producto"
+                value={campos.precio}
+                onChange={handleChange}
+              ></Form.Control>
+            </Form.Group>
+
+            <Form.Group
+              className="col-lg-3 col-md-3 col-sm-6"> 
+            <Form.Label>Cantidad</Form.Label>
+            <Form.Control
+              type="number"
+              name="cantidad"
+              autoComplete="off"
+              placeholder="Cantidad de productos"
+              value={campos.cantidad}
+              onChange={handleChange}
+            ></Form.Control>
+          </Form.Group>          
+                      
+            </Col>
+        )
+        : 
+        (
+          <Col lg={5} >
             <InputGroup>
-                <InputGroup.Text>
-                <FontAwesomeIcon icon={faSearch} />
-                </InputGroup.Text>
-                <Form.Control type="text" placeholder="Buscar Producto" value={search} onChange={e=> setSearch(e.target.value)} onKeyPress={handlePress}/>
+              <InputGroup.Text>
+              <FontAwesomeIcon icon={faSearch} />
+              </InputGroup.Text>
+              <Form.Control type="text" placeholder="Buscar Producto" value={search} onChange={e=> setSearch(e.target.value)} onKeyPress={handlePress}/>
             </InputGroup>
             
             <TableProductoFacturacion limit={limit} page={page} setPage={setPage} search={search} addProduct={addProduct} varificarsiExiste={varificarsiExiste}/>
-            </Col>
-            <Col lg={7} >
+          </Col>
+        )
+        }
+            <Col lg={modoPos ? 12 : 7 } >
                 <h3 className="bg-primary p-1 rounded-3 text-white text-center">Ventas</h3>
                 <Form style={{height: "100vh"}}>
                     <Row className="justify-content-between">
