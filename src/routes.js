@@ -94,8 +94,9 @@ AdminUser: { path: '/user' },
     PagoFactura: { path: '/compra/:id'},
     //Cuenta por pagar
     CuentasPorPagar: { path: '/cuentasPorPagar'},
-    registrarPagoCXP: { path: '/cuentasPorPagar/add'},
-    consultarPagoCXP: { path: '/cuentasPorPagar/:id'},
+    CuentaPorPagarProveedor: { path: '/cuentasPorPagarProveedor'},
+    registrarPagoCXP: { path: '/cuentasPorPagarProveedor/add'},
+    PagarCXP: { path: '/cxp/:id'},
 
 
 

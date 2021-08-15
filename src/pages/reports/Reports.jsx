@@ -73,6 +73,9 @@ const Reports = () => {
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroupItem>
+              <Card.Link href="/#/compras">Reportes de Compras</Card.Link>
+            </ListGroupItem>
+            <ListGroupItem>
               <Card.Link href="#">Reportes de Entrada</Card.Link>
             </ListGroupItem>
             <ListGroupItem>

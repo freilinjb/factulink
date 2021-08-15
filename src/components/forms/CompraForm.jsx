@@ -64,8 +64,8 @@ const CompraForm = ({id}) => {
   }
 
   const tipoCompra = [
-    {value: 13, label: "Credito"},
-    {value: 14, label: "Contado"}
+    {value: 14, label: "Credito"},
+    {value: 13, label: "Contado"}
   ]
 
   const garantias = [
@@ -185,17 +185,6 @@ const CompraForm = ({id}) => {
         cantidad: Number(cantidad),
       })
     })
-    let datos = {
-        documento: campos.documento,
-        fecha: document.getElementById('fecha').value,
-        idProveedor: campos.proveedor.value,
-        idTipoFactura: campos.tipoCompra.value,
-        idAlmacen: campos.almacen.value,
-        garantia: true,
-        diasGarantia: campos.garantia.value,
-        idEstadoCompra: 1,
-        productos: product_arr
-    };
     // console.log('Datos del forumario: ', datos);
     // return;
     const resultados = validarSupplier(campos);
