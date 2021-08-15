@@ -108,18 +108,17 @@ export default (props = {}) => {
                 <NavItem title="Category" link={Routes.AdminCategory.path} />
                 <NavItem title="SubCategory" link={Routes.AdminSubCategory.path} />
                 <NavItem title="Unidad" link={Routes.AdminUnid.path} />
-                <NavItem title="Product Register" link={Routes.Product.path} />
                 <NavItem title="SignIn" link={Routes.Signin.path} />
               </CollapsableNavItem>
               
               {/* <NavItem title="Transactions" icon={faHandHoldingUsd} link={Routes.Transactions.path} /> */}
               
-              <NavItem title="Admin Productos" icon={faHandHoldingUsd} link={Routes.AdminProduct.path} />
+              {/* <NavItem title="Admin Productos" icon={faHandHoldingUsd} link={Routes.AdminProduct.path} /> */}
               <NavItem title="Suplidores" icon={faWarehouse} link={Routes.AdminSupplier.path} />
               <NavItem title="Clientes" icon={faUsers} link={Routes.AdminCustomer.path} />
               <NavItem title="Usuarios" icon={faUser} link={Routes.AdminUser.path} />
               <NavItem title="Cuentas por Cobrar" icon={faUser} link={Routes.CuentaPorCobrar.path} />
-              <NavItem title="Cuentas por Pagar" icon={faUser} link={Routes.CuentasPorPagar.path} />
+              <NavItem title="Cuentas por Pagar" icon={faUser} link={Routes.CuentaPorPagarProveedor.path} />
               <NavItem title="Compras" icon={faUser} link={Routes.Compras.path} />
               <NavItem title="Catalogo de C.F." icon={faUser} link={Routes.AdminComprobantes.path} />
               <NavItem title="Factuacion POS" icon={faHandHoldingUsd} link={Routes.Billing.path} />
@@ -128,6 +127,14 @@ export default (props = {}) => {
 
               <CollapsableNavItem eventKey="reports/" title="Reportes" icon={faReceipt}>
                 <NavItem title="Reportes" link={Routes.Reports.path} />
+              </CollapsableNavItem>
+
+              <CollapsableNavItem eventKey="configuration/" title="Transacciones" icon={faReceipt}>
+                <NavItem title="Nota de Credito" link={Routes.Reports.path} />
+                <NavItem title="Compras" link={Routes.Reports.path} />
+                <NavItem title="Movimientos" link={Routes.Reports.path} />
+                <NavItem title="Ajustes de Inventario" link={Routes.Reports.path} />
+                <NavItem title="Permisos" link={Routes.Reports.path} />
               </CollapsableNavItem>
 
               <CollapsableNavItem eventKey="configuration/" title="Configuracion" icon={faReceipt}>
@@ -155,7 +162,7 @@ export default (props = {}) => {
 
               <Dropdown.Divider className="my-3 border-indigo" />
 
-              <CollapsableNavItem eventKey="documentation/" title="Getting Started" icon={faBook}>
+              {/* <CollapsableNavItem eventKey="documentation/" title="Getting Started" icon={faBook}>
                 <NavItem title="Overview" link={Routes.DocsOverview.path} />
                 <NavItem title="Download" link={Routes.DocsDownload.path} />
                 <NavItem title="Quick Start" link={Routes.DocsQuickStart.path} />
@@ -182,7 +189,7 @@ export default (props = {}) => {
                 <NavItem title="Tabs" link={Routes.Tabs.path} />
                 <NavItem title="Toasts" link={Routes.Toasts.path} />
                 <NavItem title="Tooltips" link={Routes.Tooltips.path} />
-              </CollapsableNavItem>
+              </CollapsableNavItem> */}
 
               {/* FIN PRUEBA */}
               {/* <NavItem external title="Themesberg" link="https://themesberg.com" target="_blank" image={ThemesbergLogo} /> */}

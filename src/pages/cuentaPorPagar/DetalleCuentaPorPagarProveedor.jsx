@@ -1,24 +1,17 @@
 import React, {useEffect, useState} from "react";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
-import {Col,Row,Form,Button,ButtonGroup, Card, Table, Dropdown} from "@themesberg/react-bootstrap";
+import {Col,Row,Form,Button,ButtonGroup, Card, Table, Dropdown, Badge} from "@themesberg/react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Breadcrumb } from "@themesberg/react-bootstrap";
 import { faEye, faEdit, faHome, faEllipsisH, faPrint, faBackward, faPlus} from "@fortawesome/free-solid-svg-icons";
 import cookie from "js-cookie";
 import clienteAxios from "../../config/axios";
-import TableDetalleFacturasCredito from "../../components/table/TableDetalleFacturasCredito";
 
 import RealizarPagoModalCXP from "../../components/modal/RealizarPagoModalCXP";
-import PagoHistorialModal from "../../components/modal/PagoHistorialModal";
+import PagoHistorialModalCXP from "../../components/modal/PagoHistorialModalCXP";
 
 const DetalleCuentaPorCobrar = () => {
-
-  const [campos, setCampos] = useState({
-    fechaPago: "",
-    monto: "",
-    observacion: ""
-  });
 
   const [datos, setDatos] = useState([]);
   const [montoTotal, setMontoTotal] = useState(0);
@@ -49,12 +42,21 @@ const DetalleCuentaPorCobrar = () => {
     setCompra({
       ...compra,
       idCompra: compra.idCompra,
-      monto: compra.total
+      monto: compra.total - compra.pagado
     });
     setShowModal(true);
   };
   const handleClosePago = () => setMostrarModalPagos(false);
-  const mostrarModalPago = () => setMostrarModalPagos(true);
+  const mostrarModalPago = (compra) => {
+    console.log('Compra: ', compra);
+    setCompra({
+      ...compra,
+      idCompra: compra.idCompra,
+      monto: compra.total - compra.pagado
+    });
+    
+    setMostrarModalPagos(true);
+  };
 
   const consultarDatos = async () => {
     clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
@@ -123,12 +125,15 @@ const DetalleCuentaPorCobrar = () => {
         <div className="col-3">
         <h6 className="bg-primary p-1 rounded-3 text-white text-center">Datos Generales</h6>
           <Form>
-            <Form.Group as={Row} className="mb-3 ">
+            {datos.length > 0 && (
+              <Form.Group as={Row} className="mb-3 ">
               <Form.Label column sm="3">Proveedor</Form.Label>
               <Col sm="9">
-                <Form.Control readOnly defaultValue={cliente.cliente}/>
+                <Form.Control readOnly defaultValue={datos[0].proveedor}/>
               </Col>
             </Form.Group>
+            )} 
+            
 
             <Form.Group as={Row} className="mb-3">
               <Form.Label column sm="3">Vendedor</Form.Label>
@@ -174,11 +179,11 @@ const DetalleCuentaPorCobrar = () => {
             <h6 className="bg-primary p-1 rounded-3 text-white text-center">Facturas por pagar</h6>
             <Card border="light" className="table-wrapper table-responsive shadow-sm">
                 <Card.Body className="p-0">
-                <Table hover className="user-table align-items-center">
+                <Table hover className="user-table align-items-center" style={{minHeight: "40vh"}}>
                   <thead className="thead-dark">
                     <tr>
                       <th className="border-bottom">#</th>
-                      <th className="border-bottom">Factura</th>
+                      <th className="border-bottom">Bolante</th>
                       <th className="border-bottom">Fecha</th>
                       <th className="border-bottom">Total</th>
                       <th className="border-bottom">Pagodo</th>
@@ -196,7 +201,8 @@ const DetalleCuentaPorCobrar = () => {
                           <td>{new Intl.NumberFormat("en-IN").format(dato.total)}</td>
                           <td>{new Intl.NumberFormat("en-IN").format(dato.pagado)}</td>
                           <td> {((dato.pagado / dato.total) * 100).toFixed(2)}  %</td>
-                          <td>{dato.estado}</td>
+                          <td>{<Badge bg={dato.estado == 'pagada' ? 'success' : 'danger'} className="me-1">{dato.estado}</Badge>}</td>
+
                           <td>
                             <Dropdown as={ButtonGroup}>
                               <Dropdown.Toggle as={Button} split variant="link" className="text-dark m-0 p-0">
@@ -205,16 +211,18 @@ const DetalleCuentaPorCobrar = () => {
                                 </span>
                               </Dropdown.Toggle>
                               <Dropdown.Menu>
-                                <Dropdown.Item>
-                                  <FontAwesomeIcon icon={faEye} className="me-2" /> Consultar compra
-                                </Dropdown.Item>
                                 <Dropdown.Item
-                                    onClick={() => mostrarModalCompra(dato)}
+                                  onClick={() => mostrarModalPago(dato)}
                                 >
-                                    <FontAwesomeIcon icon={faEdit} className="me-2" />Realizar Pago
-                                  {/* <Link to={`/cuentasPorPagarProveedor/${dato.idProveedor}`}> */}
-                                  {/* </Link> */}
+                                  <FontAwesomeIcon icon={faEye} className="me-2" /> Consultar pagos
                                 </Dropdown.Item>
+                                {dato.estado == 'pendiente' && (
+                                  <Dropdown.Item
+                                    onClick={() => mostrarModalCompra(dato)}
+                                    >
+                                      <FontAwesomeIcon icon={faEdit} className="me-2" />Realizar Pago
+                                    </Dropdown.Item>
+                                )}
                               </Dropdown.Menu>
                             </Dropdown>
                           </td>
@@ -227,7 +235,7 @@ const DetalleCuentaPorCobrar = () => {
         </div>
       </Row>
       <RealizarPagoModalCXP handleClose={handleClose} showModal={showModal} montoTotal={montoTotal} idCliente={id} consultarDatos={consultarDatos} compra={compra}/>
-      <PagoHistorialModal handleClosePago={handleClosePago} mostrarModalPagos={mostrarModalPagos} idPago={idPago} compra={compra}/>
+      <PagoHistorialModalCXP handleClosePago={handleClosePago} mostrarModalPagos={mostrarModalPagos} idPago={idPago} compra={compra}/>
 
     </>
   );

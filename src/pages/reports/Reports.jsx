@@ -30,10 +30,6 @@ const Reports = () => {
               <Card.Link href="#">Reportes de Entrada</Card.Link>
             </ListGroupItem>
           </ListGroup>
-          <Card.Body>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-          </Card.Body>
         </Card>
     
         <Card style={{ width: "18rem" }} className="m-4 hover-zoom">
@@ -49,7 +45,7 @@ const Reports = () => {
               <Card.Link href="/#/reports/billing">Reportes de Facturas</Card.Link>
             </ListGroupItem>
             <ListGroupItem>
-              <Card.Link href="/#/reports/billing">Reportes de Productos</Card.Link>
+              <Card.Link href="/#/billing/sales">Reportes de Facturas POS</Card.Link>
             </ListGroupItem>
             <ListGroupItem>
               <Card.Link href="#">Producto en Stock</Card.Link>
@@ -58,11 +54,8 @@ const Reports = () => {
               <Card.Link href="#">Reportes de Entrada</Card.Link>
             </ListGroupItem>
           </ListGroup>
-          <Card.Body>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-          </Card.Body>
         </Card>
+
         <Card style={{ width: "18rem" }} className="m-4">
           <Card.Body>
             <Card.Title>
@@ -76,78 +69,42 @@ const Reports = () => {
               <Card.Link href="/#/compras">Reportes de Compras</Card.Link>
             </ListGroupItem>
             <ListGroupItem>
-              <Card.Link href="#">Reportes de Entrada</Card.Link>
+              <Card.Link href="/#/cuentasPorPagarProveedor">Cuentas por Pagar</Card.Link>
             </ListGroupItem>
             <ListGroupItem>
-              <Card.Link href="#">Reportes de Salida</Card.Link>
-            </ListGroupItem>
-            <ListGroupItem>
-              <Card.Link href="#">Producto en Stock</Card.Link>
-            </ListGroupItem>
-            <ListGroupItem>
-              <Card.Link href="#">Reportes de Entrada</Card.Link>
+              <Card.Link href="/#/cuentasPorPagar">Cuenta por Pagar por proveedor</Card.Link>
             </ListGroupItem>
           </ListGroup>
-          <Card.Body>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-          </Card.Body>
         </Card>
 
         <Card style={{ width: "18rem" }} className="m-4">
           <Card.Body>
             <Card.Title>
-              <FontAwesomeIcon icon={faUsers} size="3x" /> Clientes
+              <FontAwesomeIcon icon={faWarehouse} size="3x" /> Supplier/Client
             </Card.Title>
             {/* <Card.Text>
     </Card.Text> */}
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroupItem>
-              <Card.Link href="#">Reportes de Entrada</Card.Link>
+              <Card.Link href="/#/customer">Reportes Clientes</Card.Link>
             </ListGroupItem>
             <ListGroupItem>
-              <Card.Link href="#">Reportes de Salida</Card.Link>
+              <Card.Link href="/admin/supplier">Reportes Proveedores</Card.Link>
             </ListGroupItem>
             <ListGroupItem>
-              <Card.Link href="#">Producto en Stock</Card.Link>
+              <Card.Link href="/#/product/category">Producto Categorias</Card.Link>
             </ListGroupItem>
             <ListGroupItem>
-              <Card.Link href="#">Reportes de Entrada</Card.Link>
+              <Card.Link href="/#/product/subCategory">Reportes SubCategorias</Card.Link>
+            </ListGroupItem>
+            <ListGroupItem>
+              <Card.Link href="/#/product/unid">Reportes Unidades</Card.Link>
+            </ListGroupItem>
+            <ListGroupItem>
+              <Card.Link href="/#/comprobantes">Catalogo de NCF</Card.Link>
             </ListGroupItem>
           </ListGroup>
-          <Card.Body>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-          </Card.Body>
-        </Card>
-
-        <Card style={{ width: "18rem" }} className="m-4">
-          <Card.Body>
-            <Card.Title>
-              <FontAwesomeIcon icon={faWarehouse} size="3x" /> Proveedores
-            </Card.Title>
-            {/* <Card.Text>
-    </Card.Text> */}
-          </Card.Body>
-          <ListGroup className="list-group-flush">
-            <ListGroupItem>
-              <Card.Link href="#">Reportes de Entrada</Card.Link>
-            </ListGroupItem>
-            <ListGroupItem>
-              <Card.Link href="#">Reportes de Salida</Card.Link>
-            </ListGroupItem>
-            <ListGroupItem>
-              <Card.Link href="#">Producto en Stock</Card.Link>
-            </ListGroupItem>
-            <ListGroupItem>
-              <Card.Link href="#">Reportes de Entrada</Card.Link>
-            </ListGroupItem>
-          </ListGroup>
-          <Card.Body>
-            <Card.Link href="#">Card Link</Card.Link>
-            <Card.Link href="#">Another Link</Card.Link>
-          </Card.Body>
         </Card>
     
       </div>

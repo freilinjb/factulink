@@ -118,7 +118,6 @@ const Comprobantes = () => {
       </div>
 
       <TableComprobante limit={limit} page={page} setPage={setPage} search={search} showModalEditComprobante={showModalEditComprobante} deleteCategoryfn={deleteCategoryfn}/>
-      <Button variant="primary" className="my-3" onClick={() => setShowModal(true)}>Default</Button>
 
         <ComprobanteModal handleClose={handleClose} showModal={showModal} isEdit={isEdit}/>
       </>

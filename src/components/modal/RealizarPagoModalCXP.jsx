@@ -83,22 +83,57 @@ const RealizarPagoModalCXP = ({handleClose, showModal, montoTotal, idCliente, co
         // return;
       clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
 
-      clienteAxios.post('/api/report/cuentaPorCobrar',{
-        idCliente: Number(idCliente),
-        formaPago: Number(campos.formaPago.value),
-        fecha: document.getElementById('fecha').value,
-        monto: Number(campos.monto),
-        observacion: campos.observacion,
-      }).then(async (resultados) => {
-        console.log('consultarDatos: ', resultados.data);
-        if(resultados.data.success == 1) {
-          consultarDatos();
-          handleClose();
-          // window.open(`/#/cuentaPorCobrar/bolante/${resultados.data.data}`);
-        }
-      }).catch((error)=> {
-        console.log('Error: ', error);
-      })
+      if(compra.idCompra > 0) {
+        //Cuando es para una sola factura, 
+        console.log('Pagando factura peque;a', compra);
+        
+        clienteAxios.post('/api/pagarFactura',{
+          idUsuario: 1,
+          idCompra: compra.idCompra,
+          saldado: (campos.monto >= compra.monto) ? true: false,
+          idFormaPago: Number(campos.formaPago.value),
+          monto: Number(campos.monto),
+          observacion: campos.observacion
+
+        }).then(async (resultados) => {
+          console.log('consultarDatos: ', resultados.data);
+          if(resultados.data.success == 1) {
+            Swal.fire(
+              'Good job!',
+              'Se ha guardado de forma correcta!',
+              'success'
+            ).then((respuesta2) => {
+              //Redireccionar
+              // history.replace("/product/category");
+              consultarDatos();
+              handleClose();
+            });
+            // window.open(`/#/cuentaPorCobrar/bolante/${resultados.data.data}`);
+          }
+        }).catch((error)=> {
+          console.log('Error: ', error);
+        })
+
+      } else {
+        //Cuando es para multiples facturas
+        clienteAxios.post('/api/report/cuentaPorCobrar',{
+          idCliente: Number(idCliente),
+          formaPago: Number(campos.formaPago.value),
+          fecha: document.getElementById('fecha').value,
+          monto: Number(campos.monto),
+          observacion: campos.observacion,
+        }).then(async (resultados) => {
+          console.log('consultarDatos: ', resultados.data);
+          if(resultados.data.success == 1) {
+            consultarDatos();
+            handleClose();
+            // window.open(`/#/cuentaPorCobrar/bolante/${resultados.data.data}`);
+          }
+        }).catch((error)=> {
+          console.log('Error: ', error);
+        })
+      }
+     
 
     }
   })
@@ -153,7 +188,6 @@ const RealizarPagoModalCXP = ({handleClose, showModal, montoTotal, idCliente, co
                   type="text"
                   className="form-control"
                   name="monto"
-                  
                   value={campos.monto}
                   onChange={handleChange}
                   autoComplete="off"

@@ -143,9 +143,9 @@ const CuentaPorPagarProveedor = () => {
             <Breadcrumb.Item>
             <FontAwesomeIcon icon={faHome} />
             </Breadcrumb.Item>
-            <Breadcrumb.Item active> Administracion de compras </Breadcrumb.Item>
+            <Breadcrumb.Item active> Administracion de Cuentas por Pagar </Breadcrumb.Item>
           </Breadcrumb>
-          <h4>Administracion de Compras</h4>
+          <h4>Administracion de Cuentas por Pagar</h4>
         </div>
 
       </div>
@@ -248,7 +248,7 @@ const CuentaPorPagarProveedor = () => {
                         <FontAwesomeIcon icon={faEye} className="me-2" /> Consultar detalles
                       </Dropdown.Item>
                       <Dropdown.Item>
-                        <Link to={`/cuentasPorPagarProveedor/${dato.idProveedor}`}>
+                        <Link to={`/cxp/${dato.idProveedor}`}>
                           <FontAwesomeIcon icon={faEdit} className="me-2" />Realizar Pago
                         </Link>
                       </Dropdown.Item>
