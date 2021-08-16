@@ -231,7 +231,7 @@ const NotaCredito = () => {
         </Card.Body>
       </Card>
 
-      <NotaCreditoModal handleClose={handleClose} showModal={showModal} />
+      <NotaCreditoModal handleClose={handleClose} showModal={showModal} consultarDatos={consultarDatos}/>
 
     </>
   );
