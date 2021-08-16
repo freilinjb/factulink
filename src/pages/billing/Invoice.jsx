@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
@@ -10,6 +10,11 @@ import ComprobanteContext from "../../context/comprobante/ComprobanteContext";
 const Invoice = () => {
     const comprobanteContext = useContext(ComprobanteContext);
     const {  getInvoice, factura } = comprobanteContext;
+    const [total, setTotal] = useState({
+      total: 0,
+      subTotal: 0,
+      itbis: 0,
+    });
 
     const { id } = useParams();
 
@@ -22,9 +27,26 @@ const Invoice = () => {
         console.log('FacturaTotal: ', factura);
         if(factura.length > 0) {
             setTimeout(() => {
-                window.print();
+                // window.print();
             }, 100)
         }
+
+        let tl = 0;
+        let subTotal = 0;
+        let itbis = 0;
+        factura.forEach((key, index) => {
+          itbis += key.itbis;
+          tl += key.importe;
+          subTotal += key.cantidad * key.precio;
+        });
+
+        setTotal({
+          ...total,
+          total: tl,
+          subTotal: subTotal,
+          itbis: itbis,
+        });
+
     }, [factura])
 
   return (
@@ -57,21 +79,21 @@ const Invoice = () => {
         </div>
         <div className="row invoice-info">
           <div className="col-sm-4 invoice-col col-4">
-            From
+            De
             <address>
               <strong>FactuLink</strong>
               <br />
-              795 Folsom Ave, Suite 600
+              Villa Progreso, La Herradura, Edif13.
               <br />
               San Francisco, CA 94107
               <br />
-              Phone: (804) 123-5432
+              <strong>Telefono:</strong> (829) 529-5432
               <br />
-              Email: info@almasaeedstudio.com
+              <strong>Correo:</strong> soporte@factulink.com
             </address>
           </div>
           <div className="col-sm-4 invoice-col col-4">
-            To
+            A
             <address>
               <strong>{factura.length > 0 && factura[0].nombre }</strong>
               <br />
@@ -79,21 +101,18 @@ const Invoice = () => {
               <br />
               {factura.length > 0 && factura[0].direccion }
               <br />
-              Phone: {factura.length > 0 && factura[0].telefono }
+              <strong>Telefono:</strong> {factura.length > 0 && factura[0].telefono }
               <br />
-              Email: {factura.length > 0 && factura[0].correo }
+              <strong>Correo:</strong> {factura.length > 0 && factura[0].correo }
             </address>
           </div>
           <div className="col-sm-4 invoice-col col-4">
             <b>Factura {factura[0].numFactura}</b>
             <br />
-            <b>NFC {factura[0].NFC}</b>
+            <b><strong>NCF:</strong> {factura[0].NFC}</b>
             <br />
-            <b>Order ID:</b> 4F3S8J
+            <b><strong>Fecha:</strong>: </b> {factura[0].fecha.substring(0,10)}
             <br />
-            <b>Payment Due:</b> 2/22/2014
-            <br />
-            <b>Account:</b> 968-34567
           </div>
         </div>
 
@@ -145,31 +164,27 @@ const Invoice = () => {
               className="text-muted well well-sm shadow-none"
               style={{ marginTop: "10px" }}
             >
-              Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-              weebly ning heekya handango imeem plugg dopplr jibjab, movity
-              jajah plickers sifteo edmodo ifttt zimbra.
+              Tienes que enviar tus artículos en los primeros 14 días después de tu 
+              compra o no te devolveremos tu dinero”, puedes escribir “Envía los 
+              artículos en los primeros 14 días después de tu compra para recibir un 
+              reembolso.  
             </p>
           </div>
           <div className="col-6">
-            <p className="lead">Amount Due 2/22/2014</p>
 
             <div className="table-responsive">
               <table className="table">
                 <tr>
                   <th style={{ width: "50%" }}>Subtotal:</th>
-                  <td>$250.30</td>
+                  <td>{total.subTotal}</td>
                 </tr>
                 <tr>
-                  <th>Tax (9.3%)</th>
-                  <td>$10.34</td>
-                </tr>
-                <tr>
-                  <th>Shipping:</th>
-                  <td>$5.80</td>
+                  <th>Tax (18%)</th>
+                  <td>{total.itbis}</td>
                 </tr>
                 <tr>
                   <th>Total:</th>
-                  <td>$265.24</td>
+                  <td>{total.total}</td>
                 </tr>
               </table>
             </div>

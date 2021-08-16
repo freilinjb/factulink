@@ -5,6 +5,7 @@ import AsyncSelect from "react-select/async";
 
 import clienteAxios from "../config/axios";
 import cookie from "js-cookie";
+import Swal from "sweetalert2";
 
 import {Col, Card,Row,Form,Button,InputGroup, ButtonGroup, Table, Image, Dropdown} from "@themesberg/react-bootstrap";
 import { faSearch, faTrashAlt, faEdit } from "@fortawesome/free-solid-svg-icons";
@@ -246,6 +247,25 @@ const Billing = () => {
     // }, 1000);
   });
 
+  const mostrarModalFactura = () => {
+    
+    if(campos.cliente.value > 0 && campos.tipoFactura.value > 0) {
+      setMostrarModalFacturar(true);
+      return;
+    }
+
+    console.log('cLIENTE: ', campos);
+    
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: `Debe seleccionar el${campos.cliente.value > 0 ? ' Cliente ' : ' Tipo de Factura '}!`,
+    });
+
+
+
+  }
+
   const filterProducto = async (inputValue) => {
     if(inputValue.length >= 4) {
       clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
@@ -264,17 +284,12 @@ const Billing = () => {
                 label: key.nombre
             });
           })
+          
+          let cantidad = campos.cantidad ? campos.cantidad : 1;
 
-          // const productos = productBilling;
-          // productos.filter(p => p.idProducto === data.data[0].idProducto);
+          // let productosTemp = productBilling;
+          let productosTemp = productBilling.filter(p => p.idProducto !== data.data[0].idProducto);
 
-
-
-          //  return;
-          // resultados = [];
-          let cantidad = 10;
-
-          let productosTemp = productBilling;
           productosTemp.push({
             idProducto: data.data[0].idProducto,
             codigo: data.data[0].codigo,
@@ -381,8 +396,9 @@ const Billing = () => {
               type="number"
               name="cantidad"
               autoComplete="off"
+              min="1"
               placeholder="Cantidad de productos"
-              value={campos.cantidad}
+              value={campos.cantidad ? campos.cantidad : 1}
               onChange={handleChange}
             ></Form.Control>
           </Form.Group>          
@@ -438,7 +454,7 @@ const Billing = () => {
 
                         <div className="col-auto">
                         <Button className="m-1 btn-primary"
-                          onClick={e => setMostrarModalFacturar(true) }
+                          onClick={e => mostrarModalFactura() }
                         >
                           <FontAwesomeIcon icon={faEdit} className="me-2" /> Facturar
                         </Button>

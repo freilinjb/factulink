@@ -25,9 +25,10 @@ import {
 
 const NotaCreditoModal = ({handleClose, showModal, consultarDatos}) => {
   const comprobanteContext = useContext(ComprobanteContext);
-  const {  getInvoice, factura } = comprobanteContext;
+  // const {  getInvoice, factura } = comprobanteContext;
 
   const [productosSelect, setFacturaSelect] = useState([]);
+  const [factura, setFactura] = useState([]);
 
   const [campos, setCampos] = useState({
     nombre: "",
@@ -139,6 +140,20 @@ const NotaCreditoModal = ({handleClose, showModal, consultarDatos}) => {
         {props.children}
       </div>
     )
+  }
+
+  const getInvoice = async (number) => {
+    clienteAxios.defaults.headers.common['authorization'] = `Bearer ${cookie.get("token")}`;
+
+    await clienteAxios
+      .get(`/api/nota_credito/facturasDetalle/${number}`)
+      .then(async (respuesta) => {
+        console.log('invoice: ', respuesta.data.data);
+        setFactura(respuesta.data.data);
+      })
+      .catch((error) => {
+        console.log("error: ", error);
+      })
   }
 
   const promiseOptions = inputValue =>
@@ -346,14 +361,14 @@ const NotaCreditoModal = ({handleClose, showModal, consultarDatos}) => {
                         <td>{p.marca}</td>
                         <td>{p.categoria}</td>
                         <td>{p.cantidad}</td>
-                        <td>{p.devuelto == 0 ? (
+                        <td>{p.cantidad >= 1 ? (
                           <input type="number" className="form-control" name={`producto_cantidad_${p.idProducto}`} max={p.cantidad} min="1" id={`producto_cantidad_${p.idProducto}`} value={campos[`producto_cantidad_${p.idProducto}`] ? campos[`producto_cantidad_${p.idProducto}`] : 1} onChange={handleChange}/>
                         ) : (
                           <p className="text-danger">Producto devuelto</p>
                         )}
                         </td>
                         <td> 
-                          <input type="checkbox" className="form-check-input checkProducto" name={`producto_${p.idProducto}`} id={`producto_${p.idProducto}`} value={campos[`producto_${p.idProducto}`]} onChange={handleChange} disabled={p.devuelto == 1}/>
+                          <input type="checkbox" className="form-check-input checkProducto" name={`producto_${p.idProducto}`} id={`producto_${p.idProducto}`} value={campos[`producto_${p.idProducto}`]} onChange={handleChange} disabled={p.cantidad == 0 }/>
                         </td>
                       </tr>
                     ))}
