@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faEllipsisH, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPrint, faEllipsisH, faEye, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { Nav, Card, Image, Button, Table, Dropdown, Pagination, Badge } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -53,7 +53,14 @@ const TableReporteFacturacion = ({limit, page, setPage, search, facturas, total_
       <>
         <tr key={index +'-'+ factura.numFactura}>
           <td>{(index)}</td>
-          <td>{factura.numFactura}</td>
+          <td
+            onClick={() => window.open(`/#/billing/invoice/${factura.numFactura}`)}
+          >
+            <a>
+              <FontAwesomeIcon icon={faPrint} className="me-2" />{factura.numFactura}
+            </a>
+          </td>
+
           <td>{<Badge bg={factura.tipoFactura == 'Contador' ? 'success' : 'danger'} className="me-1">{factura.tipoFactura}</Badge>}</td>
           <td>{factura.cliente}</td>
           <td>{factura.NFC}</td>

@@ -30,27 +30,6 @@ const PagoHistorialModal = ({handleClosePago, mostrarModalPagos, isEdit, idPago}
 
   const [errores, setErrores] = useState({});
 
-  const handleChange = (e) => {
-    console.log(`${e.target.name}`, e.target.value);
-    setCampos({
-      ...campos,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  useEffect(() => {
-    if(isEdit > 0) {
-      getUnidByID(isEdit);
-    } else {
-      setCampos({
-        ...campos,
-        nombre: "",        
-        estado: ""
-      });
-    }
-  }, [isEdit]);
-
-
   useEffect(() => {
     console.log('PAGO CAMBIADO', idPago);
     if(idPago > 0) {
@@ -131,7 +110,7 @@ const PagoHistorialModal = ({handleClosePago, mostrarModalPagos, isEdit, idPago}
   return (
     <Modal as={Modal.Dialog} size="lg"  centered show={mostrarModalPagos} onHide={handleClosePago}>
       <Modal.Header>
-        <Modal.Title className="h6"> { isEdit > 0 ? 'Update Unid' : 'New Unid' }</Modal.Title>
+        <Modal.Title className="h6"> Historial de Pagos</Modal.Title>
         <Button variant="close" aria-label="Close" onClick={handleClosePago} />
       </Modal.Header>
       <Modal.Body>

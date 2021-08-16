@@ -97,6 +97,8 @@ AdminUser: { path: '/user' },
     CuentaPorPagarProveedor: { path: '/cuentasPorPagarProveedor'},
     registrarPagoCXP: { path: '/cuentasPorPagarProveedor/add'},
     PagarCXP: { path: '/cxp/:id'},
+    //Cuenta por pagar
+    NotasCredito: { path: '/NotasCredito'},
 
 
 

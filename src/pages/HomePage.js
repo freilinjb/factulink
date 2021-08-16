@@ -117,6 +117,8 @@ import PagoDocumento from "./cuentaPorCobrar/PagoDocumento";
 import CuentaPorPagar from "./cuentaPorPagar/CuentaPorPagar";
 import CuentaPorPagarProveedor from "./cuentaPorPagar/CuentaPorPagarProveedor";
 import DetalleCuentaPorPagarProveedor from "./cuentaPorPagar/DetalleCuentaPorPagarProveedor";
+//Notas de credito
+import NotaCredito from "./notaCredito/NotaCredito";
 
 
 
@@ -623,6 +625,12 @@ export default () => (
                   exact
                   path={Routes.PagarCXP.path}
                   component={DetalleCuentaPorPagarProveedor}
+                />
+
+                <RouteWithSidebar
+                  exact
+                  path={Routes.NotasCredito.path}
+                  component={NotaCredito}
                 />
 
                 

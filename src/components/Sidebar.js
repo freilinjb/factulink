@@ -130,7 +130,7 @@ export default (props = {}) => {
               </CollapsableNavItem>
 
               <CollapsableNavItem eventKey="configuration/" title="Transacciones" icon={faReceipt}>
-                <NavItem title="Nota de Credito" link={Routes.Reports.path} />
+                <NavItem title="Nota de Credito" link={Routes.NotasCredito.path} />
                 <NavItem title="Compras" link={Routes.Reports.path} />
                 <NavItem title="Movimientos" link={Routes.Reports.path} />
                 <NavItem title="Ajustes de Inventario" link={Routes.Reports.path} />
