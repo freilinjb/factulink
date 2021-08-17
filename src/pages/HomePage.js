@@ -93,6 +93,8 @@ import User from "./user/action/User";
 import Billing from "./Billing";
 import Ventas from "./billing/Ventas";
 import Invoice from "./billing/Invoice";
+import Caja from "./Caja";
+
 
 //Comprobantes
 import Comprobantes from "./comprobantes/Comprobantes";
@@ -539,6 +541,12 @@ export default () => (
                   exact
                   path={Routes.Sales.path}
                   component={Ventas}
+                />
+
+              <RouteWithNavbarPOS
+                  exact
+                  path={Routes.CajaConfiguracion.path}
+                  component={Caja}
                 />
 
                 <RouteWithOutLoader

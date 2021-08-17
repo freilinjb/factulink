@@ -254,16 +254,12 @@ const Billing = () => {
       return;
     }
 
-    console.log('cLIENTE: ', campos);
     
     Swal.fire({
       icon: 'error',
       title: 'Oops...',
       text: `Debe seleccionar el${campos.cliente.value > 0 ? ' Cliente ' : ' Tipo de Factura '}!`,
     });
-
-
-
   }
 
   const filterProducto = async (inputValue) => {
@@ -377,7 +373,7 @@ const Billing = () => {
             </Form.Group>
 
             <Form.Group
-                className="col-lg-3 col-md-3 col-sm-6"> 
+                className="col-lg-2 col-md-2 col-sm-5"> 
               <Form.Label>Precio</Form.Label>
               <Form.Control
                 type="number"
@@ -390,7 +386,7 @@ const Billing = () => {
             </Form.Group>
 
             <Form.Group
-              className="col-lg-3 col-md-3 col-sm-6"> 
+              className="col-lg-2 col-md-2 col-sm-5"> 
             <Form.Label>Cantidad</Form.Label>
             <Form.Control
               type="number"
@@ -401,26 +397,37 @@ const Billing = () => {
               value={campos.cantidad ? campos.cantidad : 1}
               onChange={handleChange}
             ></Form.Control>
-          </Form.Group>          
-                      
+          </Form.Group>  
+
             </Col>
         )
         : 
         (
-          <Col lg={5} >
-            <InputGroup>
-              <InputGroup.Text>
-              <FontAwesomeIcon icon={faSearch} />
-              </InputGroup.Text>
-              <Form.Control type="text" placeholder="Buscar Producto" value={search} onChange={e=> setSearch(e.target.value)} onKeyPress={handlePress}/>
-            </InputGroup>
-            
+          <Col lg={5}>
+            <Row>
+
+              <InputGroup>
+                <InputGroup.Text>
+                <FontAwesomeIcon icon={faSearch} />
+                </InputGroup.Text>
+                <Form.Control type="text" placeholder="Buscar Producto" value={search} onChange={e=> setSearch(e.target.value)} onKeyPress={handlePress}/>
+              </InputGroup>
+              
+               
+          </Row>
             <TableProductoFacturacion limit={limit} page={page} setPage={setPage} search={search} addProduct={addProduct} varificarsiExiste={varificarsiExiste}/>
           </Col>
         )
         }
             <Col lg={modoPos ? 12 : 7 } >
-                <h3 className="bg-primary p-1 rounded-3 text-white text-center">Ventas</h3>
+                <h3 className="bg-primary p-1 rounded-3 text-white text-center">Ventas    
+                 <div className="form-check float-start">
+              <label className="form-check-label">
+                <input type="checkbox" className="form-check-input" name="modoPos" value="checkedValue" checked={modoPos} onChange={() => setModoPos(!modoPos)}/>
+                Modo Pos
+              </label>
+            </div>
+             </h3>
                 <Form style={{height: "100vh"}}>
                     <Row className="justify-content-between">
                         <Form.Group id="cliente" className="mt-1 col-6">

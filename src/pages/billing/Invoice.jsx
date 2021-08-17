@@ -176,15 +176,15 @@ const Invoice = () => {
               <table className="table">
                 <tr>
                   <th style={{ width: "50%" }}>Subtotal:</th>
-                  <td>{total.subTotal}</td>
+                  <td>{total.subTotal.toFixed(2)}</td>
                 </tr>
                 <tr>
                   <th>Tax (18%)</th>
-                  <td>{total.itbis}</td>
+                  <td>{total.itbis.toFixed(2)}</td>
                 </tr>
                 <tr>
                   <th>Total:</th>
-                  <td>{total.total}</td>
+                  <td>{total.total.toFixed(2)}</td>
                 </tr>
               </table>
             </div>
