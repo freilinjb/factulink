@@ -18,16 +18,13 @@ const Reports = () => {
           </Card.Body>
           <ListGroup className="list-group-flush">
             <ListGroupItem>
+              <Card.Link href="/#/reports/inventory">Producto en Stock</Card.Link>
+            </ListGroupItem>
+            <ListGroupItem>
               <Card.Link href="#">Reportes de Entrada</Card.Link>
             </ListGroupItem>
             <ListGroupItem>
               <Card.Link href="#">Reportes de Salida</Card.Link>
-            </ListGroupItem>
-            <ListGroupItem>
-              <Card.Link href="#">Producto en Stock</Card.Link>
-            </ListGroupItem>
-            <ListGroupItem>
-              <Card.Link href="#">Reportes de Entrada</Card.Link>
             </ListGroupItem>
           </ListGroup>
         </Card>

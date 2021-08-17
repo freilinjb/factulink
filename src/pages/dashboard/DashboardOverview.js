@@ -44,21 +44,21 @@ export default () => {
       <Row className="justify-content-md-center">
         <Col xs={12} className="mb-4 d-none d-sm-block">
           <SalesValueWidget
-            title="Sales Value"
+            title="Montos de ventas"
             value="10,567"
             percentage={10.57}
           />
         </Col>
         <Col xs={12} className="mb-4 d-sm-none">
           <SalesValueWidgetPhone
-            title="Sales Value"
+            title="Montos de ventas"
             value="10,567"
             percentage={10.57}
           />
         </Col>
         <Col xs={12} sm={6} xl={4} className="mb-4">
           <CounterWidget
-            category="Customers"
+            category="Clientes"
             title="345k"
             period="Feb 1 - Apr 1"
             percentage={18.2}
@@ -69,7 +69,7 @@ export default () => {
 
         <Col xs={12} sm={6} xl={4} className="mb-4">
           <CounterWidget
-            category="Revenue"
+            category="Venta del mes"
             title="$43,594"
             period="Feb 1 - Apr 1"
             percentage={28.4}
@@ -80,7 +80,7 @@ export default () => {
 
         <Col xs={12} sm={6} xl={4} className="mb-4">
           <CircleChartWidget
-            title="Traffic Share"
+            title="Categorias de ventas"
             data={trafficShares} />
         </Col>
       </Row>

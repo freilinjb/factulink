@@ -103,6 +103,10 @@ import Comprobantes from "./comprobantes/Comprobantes";
 import Reports from "./reports/Reports";
 import ReporteVentas from "./reports/ventas/ReporteVentas";
 
+//Reportes
+import InventarioReport from "./reports/InventarioReport";
+
+
 //Comprobantes
 import Configuracion from "./Configuracion";
 //Cuenta por cobrar
@@ -566,6 +570,12 @@ export default () => (
                   exact
                   path={Routes.ReporteVenta.path}
                   component={ReporteVentas}
+                />
+
+              <RouteWithSidebar
+                  exact
+                  path={Routes.ReporteInventario.path}
+                  component={InventarioReport}
                 />
 
               <RouteWithSidebar

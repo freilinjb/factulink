@@ -81,6 +81,7 @@ AdminUser: { path: '/user' },
     //REPORTS
     Reports: { path: '/reports' },
     ReporteVenta: { path: '/reports/billing' },
+    ReporteInventario: { path: '/reports/inventory' },
     //Configuracion
     Configuracion: { path: '/configuracion' },
     CuentaPorCobrar: { path: '/cuentaPorCobrar' },

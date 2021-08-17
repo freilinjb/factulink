@@ -4,7 +4,7 @@ import SimpleBar from 'simplebar-react';
 import { useLocation } from "react-router-dom";
 import { CSSTransition } from 'react-transition-group';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBoxOpen, faChartPie, faUsers, faWarehouse, faHandHoldingUsd, faSignOutAlt, faTable, faTimes, faUser, faReceipt } from "@fortawesome/free-solid-svg-icons";
+import { faBox, faCarCrash, faBookReader, faCommentDollar, faMoneyBill, faBoxOpen, faChartPie, faUsers, faWarehouse, faHandHoldingUsd, faSignOutAlt, faTable, faTimes, faUser, faReceipt } from "@fortawesome/free-solid-svg-icons";
 import { Nav, Badge, Image, Button, Dropdown, Accordion, Navbar } from '@themesberg/react-bootstrap';
 import { Link } from 'react-router-dom';
 
@@ -117,11 +117,11 @@ export default (props = {}) => {
               <NavItem title="Suplidores" icon={faWarehouse} link={Routes.AdminSupplier.path} />
               <NavItem title="Clientes" icon={faUsers} link={Routes.AdminCustomer.path} />
               <NavItem title="Usuarios" icon={faUser} link={Routes.AdminUser.path} />
-              <NavItem title="Cuentas por Cobrar" icon={faUser} link={Routes.CuentaPorCobrar.path} />
-              <NavItem title="Cuentas por Pagar" icon={faUser} link={Routes.CuentaPorPagarProveedor.path} />
-              <NavItem title="Compras" icon={faUser} link={Routes.Compras.path} />
-              <NavItem title="Catalogo de C.F." icon={faUser} link={Routes.AdminComprobantes.path} />
-              <NavItem title="Factuacion POS" icon={faHandHoldingUsd} link={Routes.Billing.path} />
+              <NavItem title="Cuentas por Cobrar" icon={faCommentDollar} link={Routes.CuentaPorCobrar.path} />
+              <NavItem title="Cuentas por Pagar" icon={faMoneyBill} link={Routes.CuentaPorPagarProveedor.path} />
+              <NavItem title="Compras" icon={faBox} link={Routes.Compras.path} />
+              <NavItem title="Catalogo de C.F." icon={faBookReader} link={Routes.AdminComprobantes.path} />
+              <NavItem title="Factuacion POS" icon={faCarCrash} link={Routes.Billing.path} />
               
               {/* <NavItem title="Settings" icon={faCog} link={Routes.Settings.path} /> */}
 
